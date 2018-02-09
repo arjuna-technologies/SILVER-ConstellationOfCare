@@ -22,7 +22,8 @@ import { OrganizationComponent }  from './organization/organization.component';
 import { AccessProcessComponent } from './access-process/access-process.component';
 import { DataSourceComponent }    from './data-source/data-source.component';
 
-import { DataService } from './data.service';
+import { AuthenticationService } from './authentication.service';
+import { DataService }           from './data.service';
 
 @NgModule
 ({
@@ -58,6 +59,7 @@ import { DataService } from './data.service';
     ],
     providers:
     [
+        AuthenticationService,
         DataService
     ],
     bootstrap:
