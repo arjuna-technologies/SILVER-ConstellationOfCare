@@ -73,7 +73,7 @@ export class AppComponent
 
     private loadFamilyFailed(error: any): void
     {
-         this.family        = null;
-         this.familyLoading = false;
+        this.family        = null;
+        this.familyLoading = false;
     }
 }

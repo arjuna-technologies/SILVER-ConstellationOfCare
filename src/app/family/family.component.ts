@@ -20,7 +20,7 @@ export class FamilyComponent implements OnChanges
 
     public constructor()
     {
-        this.family  = new Family([]);
+        this.family  = null;
         this.loading = false;
 
         this.familyName = '';
@@ -28,10 +28,10 @@ export class FamilyComponent implements OnChanges
 
     public ngOnChanges(changes: SimpleChanges)
     {
-        if (this.family === null)
-            this.familyName = '';
-        else
+        if (this.family)
             this.familyName = this.generateFamilyName(this.family.persons);
+        else
+            this.familyName = '';
     }
 
     private generateFamilyName(persons: Person[]): string

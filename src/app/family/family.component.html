@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-title><mat-icon>group</mat-icon> Family - {{familyName}}</mat-card-title>
     <mat-card-content>
-        <mat-list>
+        <mat-list *ngIf="family && family.persons">
             <mat-list-item *ngFor="let person of family.persons; last as last">
                 <cnstll-person [person]="person"></cnstll-person>
                 <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
