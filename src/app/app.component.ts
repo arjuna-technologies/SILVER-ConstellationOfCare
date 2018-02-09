@@ -26,7 +26,7 @@ export class AppComponent
         this.username    = '';
         this.showSideBar = false;
 
-        this.family        = new Family([]);
+        this.family        = null;
         this.familyLoading = false;
     }
 
@@ -45,7 +45,7 @@ export class AppComponent
 
     public doLoadFamily(familyId: string): void
     {
-        this.family        = new Family([]);
+        this.family        = null;
         this.familyLoading = true;
 
         this.dataService.loadFamily(familyId)
@@ -73,7 +73,7 @@ export class AppComponent
 
     private loadFamilyFailed(error: any): void
     {
-         this.family        = new Family([]);
+         this.family        = null;
          this.familyLoading = false;
     }
 }
