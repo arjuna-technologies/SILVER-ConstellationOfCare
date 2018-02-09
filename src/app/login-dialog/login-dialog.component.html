@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Login</h2>
+<mat-dialog-content>
+    <mat-form-field>
+        <input #username matInput placeholder="Username" type="text" value="">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input #password matInput placeholder="Password" type="password" value="">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="username.value">
+        <mat-icon>person</mat-icon>
+        <span>Login</span>
+    </button>
+    <button mat-button mat-dialog-close>
+        <mat-icon>clear</mat-icon>
+        <span>Cancel</span>
+    </button>
+</mat-dialog-actions>

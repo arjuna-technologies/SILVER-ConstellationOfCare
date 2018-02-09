@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+    <span>SILVER: Constellation of Care</span>
+    <span class="toolbar-spacer"></span>
+    <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-button (click)="doOpenLoginDialog()">
+        <mat-icon>person</mat-icon>
+        <span *ngIf="username">{{username}}</span>
+        <span *ngIf="! username">Login</span>
+    </button>
+</mat-toolbar>
+
+<mat-drawer-container>
+    <mat-drawer #drawer mode="side">
+        <mat-nav-list>
+            <mat-list-item><mat-icon>group</mat-icon>&nbsp;Family&nbsp;Bookmarks</mat-list-item>
+            <mat-list-item><button mat-button (click)="doLoadFamily('0')">James</button></mat-list-item>
+            <mat-list-item><button mat-button (click)="doLoadFamily('1')">Smith</button></mat-list-item>
+            <mat-list-item><button mat-button (click)="doLoadFamily('2')">Alan</button></mat-list-item>
+            <mat-list-item><button mat-button (click)="doLoadFamily('3')">Brown</button></mat-list-item>
+            <mat-list-item><button mat-button (click)="doLoadFamily('4')">Williams</button></mat-list-item>
+            <mat-list-item><button mat-button (click)="doLoadFamily('5')">Smith</button></mat-list-item>
+        </mat-nav-list>
+    </mat-drawer>
+
+    <cnstll-family [family]="family" [loading]="familyLoading"></cnstll-family>
+</mat-drawer-container>

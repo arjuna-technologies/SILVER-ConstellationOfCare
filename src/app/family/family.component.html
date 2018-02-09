@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-title><mat-icon>group</mat-icon> Family - {{familyName}}</mat-card-title>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item *ngFor="let person of family.persons; last as last">
+                <cnstll-person [person]="person"></cnstll-person>
+                <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
+            </mat-list-item>
+        </mat-list>
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    </mat-card-content>
+</mat-card>

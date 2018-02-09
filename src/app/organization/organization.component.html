@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-title><mat-icon>business</mat-icon> {{organization.name}}</mat-card-title>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item *ngFor="let dataSource of organization.dataSources; last as last">
+                <cnstll-data-source [dataSource]="dataSource"></cnstll-data-source>
+                <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
+            </mat-list-item>
+        </mat-list>
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    </mat-card-content>
+</mat-card>
