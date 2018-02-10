@@ -14,13 +14,14 @@ import { MatCardModule }        from '@angular/material/card';
 import { MatListModule }        from '@angular/material/list';
 import { MatChipsModule }       from '@angular/material/chips';
 
-import { AppComponent }           from './app.component';
-import { LoginDialogComponent }   from './login-dialog/login-dialog.component';
-import { FamilyComponent }        from './family/family.component';
-import { PersonComponent }        from './person/person.component';
-import { OrganizationComponent }  from './organization/organization.component';
-import { AccessProcessComponent } from './access-process/access-process.component';
-import { DataSourceComponent }    from './data-source/data-source.component';
+import { AppComponent }             from './app.component';
+import { LoginDialogComponent }     from './login-dialog/login-dialog.component';
+import { FamilyComponent }          from './family/family.component';
+import { FamilyBookmarksComponent } from './family-bookmarks/family-bookmarks.component';
+import { PersonComponent }          from './person/person.component';
+import { OrganizationComponent }    from './organization/organization.component';
+import { AccessProcessComponent }   from './access-process/access-process.component';
+import { DataSourceComponent }      from './data-source/data-source.component';
 
 import { AuthenticationService } from './authentication.service';
 import { DataService }           from './data.service';
@@ -32,6 +33,7 @@ import { DataService }           from './data.service';
         AppComponent,
         LoginDialogComponent,
         FamilyComponent,
+        FamilyBookmarksComponent,
         PersonComponent,
         OrganizationComponent,
         DataSourceComponent,

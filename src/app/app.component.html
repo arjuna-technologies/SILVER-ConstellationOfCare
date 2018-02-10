@@ -14,15 +14,7 @@
 
 <mat-drawer-container style="height: 100%">
     <mat-drawer #drawer mode="side">
-        <mat-nav-list>
-            <mat-list-item><mat-icon>group</mat-icon>&nbsp;Family&nbsp;Bookmarks</mat-list-item>
-            <mat-list-item><button mat-button (click)="doLoadFamily('0')">James</button></mat-list-item>
-            <mat-list-item><button mat-button (click)="doLoadFamily('1')">Smith</button></mat-list-item>
-            <mat-list-item><button mat-button (click)="doLoadFamily('2')">Alan</button></mat-list-item>
-            <mat-list-item><button mat-button (click)="doLoadFamily('3')">Brown</button></mat-list-item>
-            <mat-list-item><button mat-button (click)="doLoadFamily('4')">Williams</button></mat-list-item>
-            <mat-list-item><button mat-button (click)="doLoadFamily('5')">Smith</button></mat-list-item>
-        </mat-nav-list>
+        <cnstll-family-bookmarks [families]="familyBookmarks" [loading]="familyBookmarksLoading" ></cnstll-family-bookmarks>
     </mat-drawer>
 
     <cnstll-family style="height: 100%" [family]="family" [loading]="familyLoading"></cnstll-family>

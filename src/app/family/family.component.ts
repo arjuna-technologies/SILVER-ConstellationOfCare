@@ -26,7 +26,7 @@ export class FamilyComponent implements OnChanges
         this.familyName = '';
     }
 
-    public ngOnChanges(changes: SimpleChanges)
+    public ngOnChanges(changes: SimpleChanges): void
     {
         if (this.family)
             this.familyName = this.generateFamilyName(this.family.persons);

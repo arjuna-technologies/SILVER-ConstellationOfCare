@@ -17,7 +17,7 @@ export class DataSourceComponent implements OnChanges
 
     public constructor()
     {
-        this.dataSource = new DataSource('DS Name', []);
+        this.dataSource = new DataSource('0', 'DS Name', []);
         this.loading    = false;
     }
 

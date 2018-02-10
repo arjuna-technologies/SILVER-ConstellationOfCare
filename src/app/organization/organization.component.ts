@@ -17,11 +17,11 @@ export class OrganizationComponent implements OnChanges
 
     public constructor()
     {
-        this.organization  = new Organization('Org Name', []);
+        this.organization  = new Organization('0', 'Org Name', []);
         this.loading       = false;
     }
 
-    public ngOnChanges(changes: SimpleChanges)
+    public ngOnChanges(changes: SimpleChanges): void
     {
     }
 }

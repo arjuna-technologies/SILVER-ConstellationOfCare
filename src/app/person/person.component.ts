@@ -20,7 +20,7 @@ export class PersonComponent implements OnChanges
         this.loading = false;
     }
 
-    public ngOnChanges(changes: SimpleChanges)
+    public ngOnChanges(changes: SimpleChanges): void
     {
     }
 }
