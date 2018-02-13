@@ -1,7 +1,9 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Family } from '../family';
 import { Person } from '../person';
+
+import { DataService } from '../data.service';
 
 @Component
 ({
@@ -9,31 +11,50 @@ import { Person } from '../person';
     templateUrl: './family.component.html',
     styleUrls:   ['./family.component.scss']
 })
-export class FamilyComponent implements OnChanges
+export class FamilyComponent
 {
+    public familyName: string;
+
     public family:  Family;
     public loading: boolean;
 
-    public familyName: string;
+    public constructor(private dataService: DataService)
+    {
+        this.familyName = '';
 
-    public constructor()
+        this.family  = null;
+        this.loading = false;
+    }
+
+    public doLoadFamily(familyId: string): void
+    {
+        console.log('familyId: ' + familyId);
+        this.loadFamily(familyId);
+    }
+
+    private loadFamily(familyId: string): void
+    {
+        this.loading = true;
+
+        this.dataService.loadFamily(familyId)
+            .then(family => this.loadFamilySuccess(family))
+            .catch(error => this.loadFamilyFailed(error));
+    }
+
+    private loadFamilySuccess(family: Family): void
+    {
+        this.family  = family;
+        this.loading = false;
+
+        this.familyName = this.generateFamilyName(this.family.persons);
+    }
+
+    private loadFamilyFailed(error: any): void
     {
         this.family  = null;
         this.loading = false;
 
-        this.familyName = '';
-    }
-
-    public ngOnChanges(changes: SimpleChanges): void
-    {
-        if (this.family)
-            this.familyName = this.generateFamilyName(this.family.persons);
-        else
-            this.familyName = '';
-    }
-
-    public familySelect(familyId:string): void
-    {
+        this.familyName = this.generateFamilyName(this.family.persons);
     }
 
     private generateFamilyName(persons: Person[]): string

@@ -1,24 +1,26 @@
 <mat-toolbar color="primary">
-    <span>SILVER Constellation of Care</span>
-    <span class="toolbar-spacer"></span>
-    <button mat-button (click)="doOpenLoginDialog()">
-        <mat-icon>person</mat-icon>
-        <span *ngIf="username">{{username}}</span>
-        <span *ngIf="! username">Login</span>
-    </button>
-</mat-toolbar>
+    <mat-toolbar-row>
+        <span>SILVER Constellation of Care</span>
+        <span class="toolbar-spacer"></span>
+        <button mat-button (click)="doOpenLoginDialog()">
+            <mat-icon>person</mat-icon>
+            <span *ngIf="username">{{username}}</span>
+            <span *ngIf="! username">Login</span>
+        </button>
+    </mat-toolbar-row>
 
-<mat-toolbar-row color="primary">
-    <button mat-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-        <span>Families</span>
-    </button>
-</mat-toolbar-row>
+    <mat-toolbar-row>
+        <button mat-button (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+            <span>Families</span>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
 
 <mat-drawer-container style="height: 100%">
     <mat-drawer #drawer mode="side">
-        <cnstll-family-bookmarks (familySelect)="family.familySelect($event)"></cnstll-family-bookmarks>
+        <cnstll-family-bookmarks (familySelect)="family.doLoadFamily($event)"></cnstll-family-bookmarks>
     </mat-drawer>
 
-    <cnstll-family #family style="height: 100%" [family]="family" [loading]="familyLoading"></cnstll-family>
+    <cnstll-family #family style="height: 100%"></cnstll-family>
 </mat-drawer-container>
