@@ -11,9 +11,7 @@ import { Person } from '../person';
 })
 export class FamilyComponent implements OnChanges
 {
-    @Input()
     public family:  Family;
-    @Input()
     public loading: boolean;
 
     public familyName: string;
@@ -32,6 +30,10 @@ export class FamilyComponent implements OnChanges
             this.familyName = this.generateFamilyName(this.family.persons);
         else
             this.familyName = '';
+    }
+
+    public familySelect(familyId:string): void
+    {
     }
 
     private generateFamilyName(persons: Person[]): string

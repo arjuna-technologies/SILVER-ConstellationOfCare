@@ -1,10 +1,6 @@
 <mat-toolbar color="primary">
     <span>SILVER Constellation of Care</span>
     <span class="toolbar-spacer"></span>
-    <button mat-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-        <span>Families</span>
-    </button>
     <button mat-button (click)="doOpenLoginDialog()">
         <mat-icon>person</mat-icon>
         <span *ngIf="username">{{username}}</span>
@@ -12,10 +8,17 @@
     </button>
 </mat-toolbar>
 
+<mat-toolbar-row color="primary">
+    <button mat-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+        <span>Families</span>
+    </button>
+</mat-toolbar-row>
+
 <mat-drawer-container style="height: 100%">
     <mat-drawer #drawer mode="side">
-        <cnstll-family-bookmarks [families]="familyBookmarks" [loading]="familyBookmarksLoading" ></cnstll-family-bookmarks>
+        <cnstll-family-bookmarks (familySelect)="family.familySelect($event)"></cnstll-family-bookmarks>
     </mat-drawer>
 
-    <cnstll-family style="height: 100%" [family]="family" [loading]="familyLoading"></cnstll-family>
+    <cnstll-family #family style="height: 100%" [family]="family" [loading]="familyLoading"></cnstll-family>
 </mat-drawer-container>

@@ -1,6 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { Family } from '../family';
+
+import { DataService } from '../data.service';
 
 @Component
 ({
@@ -8,20 +10,55 @@ import { Family } from '../family';
     templateUrl: './family-bookmarks.component.html',
     styleUrls:   ['./family-bookmarks.component.scss']
 })
-export class FamilyBookmarksComponent implements OnChanges
+export class FamilyBookmarksComponent implements OnInit
 {
-    @Input()
-    public families: Family[];
-    @Input()
-    public loading: boolean;
+    @Output()
+    public familySelect: EventEmitter<string>;
 
-    public constructor()
+    public families: Family[];
+    public loading:  boolean;
+
+    public constructor(private dataService: DataService)
     {
+        this.familySelect = new EventEmitter<string>();
+
         this.families = null;
         this.loading  = true;
     }
 
-    public ngOnChanges(changes: SimpleChanges): void
+    public ngOnInit(): void
     {
+        this.loadFamilies();
+    }
+
+    public doFamilySelect(familyId: string): void
+    {
+        this.familySelect.emit(familyId);
+    }
+
+    public doReloadFamilies(): void
+    {
+        this.loadFamilies();
+    }
+
+    private loadFamilies(): void
+    {
+        this.loading = true;
+
+        this.dataService.loadFamilies()
+            .then(families => this.loadFamiliesSuccess(families))
+            .catch(error => this.loadFamiliesFailed(error));
+    }
+
+    private loadFamiliesSuccess(families: Family[]): void
+    {
+        this.families  = families;
+        this.loading   = false;
+    }
+
+    private loadFamiliesFailed(error: any): void
+    {
+        this.families = null;
+        this.loading  = false;
     }
 }

@@ -1,15 +1,10 @@
 <mat-card>
     <mat-card-title><mat-icon>group</mat-icon>Family Bookmarks</mat-card-title>
     <mat-card-content>
-        <mat-list-item><button mat-button (click)="doLoadFamily('0')">James</button></mat-list-item>
-        <mat-list-item><button mat-button (click)="doLoadFamily('1')">Smith</button></mat-list-item>
-        <mat-list-item><button mat-button (click)="doLoadFamily('2')">Alan</button></mat-list-item>
-        <mat-list-item><button mat-button (click)="doLoadFamily('3')">Brown</button></mat-list-item>
-        <mat-list-item><button mat-button (click)="doLoadFamily('4')">Williams</button></mat-list-item>
-        <mat-list-item><button mat-button (click)="doLoadFamily('5')">Smith</button></mat-list-item>
+        <mat-list-item *ngFor="let family of families"><button mat-button (click)="doFamilySelect(family.id)">{{family.id}}</button></mat-list-item>
         <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
     </mat-card-content>
     <mat-card-actions>
         <button mat-button><mat-icon>group</mat-icon>Reload</button>
-</mat-card-actions>
+    </mat-card-actions>
 </mat-card>
