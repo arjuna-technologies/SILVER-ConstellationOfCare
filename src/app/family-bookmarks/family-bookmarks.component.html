@@ -1,5 +1,5 @@
 <mat-card>
-    <mat-card-title><mat-icon>group</mat-icon> Family Bookmarks </mat-card-title>
+    <mat-card-title><mat-icon>group</mat-icon> Families </mat-card-title>
     <mat-card-content>
         <mat-list-item *ngFor="let family of families; index as index"><button mat-button (click)="doFamilySelect(family.id)">{{familyNames[index]}}</button></mat-list-item>
         <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>

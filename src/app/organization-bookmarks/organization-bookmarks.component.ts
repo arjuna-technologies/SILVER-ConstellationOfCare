@@ -47,10 +47,8 @@ export class OrganizationBookmarksComponent implements OnInit
 
     private loadOrganizationsSuccess(organizations: Organization[]): void
     {
-        console.log('length: ' + organizations.length);
-        this.organizations  = organizations;
-        this.loading        = false;
-        console.log('length: ' + this.organizations.length);
+        this.organizations = organizations;
+        this.loading       = false;
     }
 
     private loadOrganizationsFailed(error: any): void

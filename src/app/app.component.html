@@ -9,7 +9,7 @@
         </button>
     </mat-toolbar-row>
 
-    <mat-toolbar-row>
+    <mat-toolbar-row *ngIf="username">
         <button mat-button (click)="familiesdrawer.toggle()">
             <mat-icon>group</mat-icon>
             <span>Families</span>

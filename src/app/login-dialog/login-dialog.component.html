@@ -7,9 +7,11 @@
     <mat-form-field>
         <input #password matInput placeholder="Password" type="password" value="">
     </mat-form-field>
+    <p *ngIf="message">{{message}}</p>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="username.value">
+    <button mat-button (click)="doLogin(username.value, password.value)">
         <mat-icon>person</mat-icon>
         <span>Login</span>
     </button>
