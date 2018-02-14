@@ -10,17 +10,27 @@
     </mat-toolbar-row>
 
     <mat-toolbar-row>
-        <button mat-button (click)="drawer.toggle()">
-            <mat-icon>menu</mat-icon>
+        <button mat-button (click)="familiesdrawer.toggle()">
+            <mat-icon>group</mat-icon>
             <span>Families</span>
+        </button>
+        <button mat-button (click)="organizationsdrawer.toggle()">
+            <mat-icon>domain</mat-icon>
+            <span>Organization</span>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-drawer-container style="height: 100%">
-    <mat-drawer #drawer mode="side">
+    <mat-drawer #familiesdrawer position="start" mode="side">
         <cnstll-family-bookmarks (familySelect)="family.doLoadFamily($event)"></cnstll-family-bookmarks>
     </mat-drawer>
 
+    <mat-drawer #organizationsdrawer position="end" mode="side">
+        <cnstll-organization-bookmarks (organizationSelect)="organization.doLoadOrganization($event)"></cnstll-organization-bookmarks>
+    </mat-drawer>
+
     <cnstll-family #family style="height: 100%"></cnstll-family>
+
+    <cnstll-organization #organization style="height: 100%"></cnstll-organization>
 </mat-drawer-container>

@@ -28,7 +28,6 @@ export class FamilyComponent
 
     public doLoadFamily(familyId: string): void
     {
-        console.log('familyId: ' + familyId);
         this.loadFamily(familyId);
     }
 

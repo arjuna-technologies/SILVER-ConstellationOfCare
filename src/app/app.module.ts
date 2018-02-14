@@ -25,6 +25,7 @@ import { DataSourceComponent }      from './data-source/data-source.component';
 
 import { AuthenticationService } from './authentication.service';
 import { DataService }           from './data.service';
+import { OrganizationBookmarksComponent } from './organization-bookmarks/organization-bookmarks.component';
 
 @NgModule
 ({
@@ -37,7 +38,8 @@ import { DataService }           from './data.service';
         PersonComponent,
         OrganizationComponent,
         DataSourceComponent,
-        AccessProcessComponent
+        AccessProcessComponent,
+        OrganizationBookmarksComponent
     ],
     imports:
     [

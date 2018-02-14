@@ -1,6 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Organization } from '../organization';
+
+import { DataService } from '../data.service';
 
 @Component
 ({
@@ -8,20 +10,40 @@ import { Organization } from '../organization';
     templateUrl: './organization.component.html',
     styleUrls:   ['./organization.component.scss']
 })
-export class OrganizationComponent implements OnChanges
+export class OrganizationComponent
 {
-    @Input()
     public organization: Organization;
-    @Input()
     public loading:      boolean;
 
-    public constructor()
+    public constructor(private dataService: DataService)
     {
-        this.organization  = new Organization('0', 'Org Name', []);
+        this.organization  = null;
         this.loading       = false;
     }
 
-    public ngOnChanges(changes: SimpleChanges): void
+    public doLoadOrganization(organizationId: string): void
     {
+        this.loadOrganization(organizationId);
+    }
+
+    private loadOrganization(familyId: string): void
+    {
+        this.loading = true;
+
+        this.dataService.loadOrganization(familyId)
+            .then(family => this.loadOrganizationSuccess(family))
+            .catch(error => this.loadOrganizationFailed(error));
+    }
+
+    private loadOrganizationSuccess(organization: Organization): void
+    {
+        this.organization = organization;
+        this.loading      = false;
+    }
+
+    private loadOrganizationFailed(error: any): void
+    {
+        this.organization = null;
+        this.loading      = false;
     }
 }
