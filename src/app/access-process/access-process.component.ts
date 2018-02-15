@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-@Component({
-  selector: 'cnstll-access-process',
-  templateUrl: './access-process.component.html',
-  styleUrls: ['./access-process.component.scss']
+import { AccessProcess } from ',,/access-process';
+
+@Component
+({
+    selector:    'cnstll-access-process',
+    templateUrl: './access-process.component.html',
+    styleUrls:   ['./access-process.component.scss']
 })
-export class AccessProcessComponent implements OnInit {
+export class AccessProcessComponent
+{
+    @Input()
+    public dataSource: AccessProcess;
 
-  constructor() { }
+    public loading: boolean;
 
-  ngOnInit() {
-  }
-
+    public constructor()
+    {
+    }
 }

@@ -12,7 +12,7 @@ export class DataSourceComponent implements OnChanges
 {
     @Input()
     public dataSource: DataSource;
-    @Input()
+
     public loading:    boolean;
 
     public constructor()
