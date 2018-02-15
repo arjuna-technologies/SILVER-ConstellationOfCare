@@ -6,6 +6,7 @@ import { MatToolbarModule }     from '@angular/material/toolbar';
 import { MatSidenavModule }     from '@angular/material/sidenav';
 import { MatDialogModule }      from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatExpansionModule }   from '@angular/material/expansion';
 import { MatFormFieldModule }   from '@angular/material/form-field';
 import { MatInputModule }       from '@angular/material';
 import { MatButtonModule }      from '@angular/material/button';
@@ -52,6 +53,7 @@ import { DataService }           from './data.service';
         MatDialogModule,
         MatProgressBarModule,
         MatFormFieldModule,
+        MatExpansionModule,
         MatInputModule,
         MatButtonModule,
         MatIconModule,

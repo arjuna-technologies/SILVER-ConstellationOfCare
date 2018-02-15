@@ -1,3 +1,12 @@
-<p>
-  data-source works!
-</p>
+<mat-expansion-panel *ngIf="dataSource">
+    <mat-expansion-panel-header>
+        <mat-panel-title><mat-icon>business</mat-icon> Data Source: {{organization.name}} </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-list *ngIf="dataSource.accessProcesses">
+        <mat-list-item *ngFor="let accessProcess of dataSource.accessProcesses; last as last">
+            <cnstl-access-process [accessProcess]="accessProcess"></cnstl-access-process>
+            <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
+        </mat-list-item>
+    </mat-list>
+</mat-expansion-panel>

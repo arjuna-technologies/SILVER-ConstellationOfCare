@@ -1,39 +1,60 @@
 import { Injectable } from '@angular/core';
 
-import { Person }       from './person';
-import { Family }       from './family';
-import { Organization } from './organization';
+import { Person }        from './person';
+import { Family }        from './family';
+import { Organization }  from './organization';
+import { DataSource }    from './data-source';
+import { AccessProcess } from './access-process';
+import { Data }          from './data';
 
 @Injectable()
 export class DataService
 {
-    private persons:       Person[];
-    private families:      Family[];
-    private organizations: Organization[];
+    private persons:         Person[];
+    private families:        Family[];
+    private organizations:   Organization[];
+    private dataSources:     DataSource[];
+    private accessProcesses: AccessProcess[];
 
     constructor()
     {
         this.persons  = [];
 
-        const person00: Person = new Person('p0', 'Amy', 'Smith', '20/12/70', 'female');
-        const person01: Person = new Person('p1', 'Bill', 'Jones', '12/01/71', 'male');
-        const person02: Person = new Person('p2', 'Clare', 'Smith', '13/03/95', 'female');
-        const person03: Person = new Person('p3', 'David', 'Jones', '07/07/97', 'male');
+        const person00: Person = new Person('p00', 'Amy', 'Smith', '20/12/70', 'female');
+        const person01: Person = new Person('p01', 'Bill', 'Jones', '12/01/71', 'male');
+        const person02: Person = new Person('p02', 'Clare', 'Smith', '13/03/95', 'female');
+        const person03: Person = new Person('p03', 'David', 'Jones', '07/07/97', 'male');
 
-        const family0: Family = new Family('f0', [ person00, person01, person02, person03 ]);
+        const family0: Family = new Family('f00', [ person00, person01, person02, person03 ]);
 
-        const person10: Person = new Person('p4', 'Amy', 'Brown', '20/12/70', 'female');
-        const person11: Person = new Person('p5', 'Bill', 'Lee', '12/01/71', 'male');
-        const person12: Person = new Person('p6', 'Clare', 'Brown', '13/03/95', 'female');
-        const person13: Person = new Person('p3', 'David', 'Brown', '07/07/97', 'male');
+        const person10: Person = new Person('p04', 'Amy', 'Brown', '20/12/70', 'female');
+        const person11: Person = new Person('p05', 'Bill', 'Lee', '12/01/71', 'male');
+        const person12: Person = new Person('p06', 'Clare', 'Brown', '13/03/95', 'female');
+        const person13: Person = new Person('p07', 'David', 'Brown', '07/07/97', 'male');
 
-        const family1: Family = new Family('f1', [ person10, person11, person12, person13 ]);
+        const family1: Family = new Family('f01', [ person10, person11, person12, person13 ]);
 
-        this.families = [ family0, family1 ];
+        const person20: Person = new Person('p08', 'Amy', 'James', '20/12/70', 'female');
+        const person21: Person = new Person('p09', 'Bill', 'James', '12/01/71', 'male');
+        const person22: Person = new Person('p10', 'Clare', 'James', '13/03/95', 'female');
 
-        const organization0: Organization = new Organization('o0', 'Northumberland Tyne and Wear NHS Trust', []);
-        const organization1: Organization = new Organization('o1', 'ChildView Unit', []);
-        const organization2: Organization = new Organization('o2', 'Newcastle Hospital Trust NHS Trust', []);
+        const family2: Family = new Family('f02', [ person20, person21, person22 ]);
+
+        this.families = [ family0, family1, family2 ];
+
+        const accessProcess00: AccessProcess = new AccessProcess('ds00', "Physical Health System", "Physical Health System Test Text");
+        const accessProcess01: AccessProcess = new AccessProcess('ds01', "Mental Health System", "Mental Health System Test Text");
+
+        this.accessProcesses = [ accessProcess00, accessProcess01 ];
+
+        const dataSource00: DataSource = new DataSource('ds00', "Physical Health System", [accessProcess00, accessProcess01]);
+        const dataSource01: DataSource = new DataSource('ds01', "Mental Health System", []);
+
+        this.dataSources = [ dataSource00, dataSource00 ];
+
+        const organization0: Organization = new Organization('o00', 'Northumberland Tyne and Wear NHS Trust', [dataSource00, dataSource01]);
+        const organization1: Organization = new Organization('o01', 'ChildView Unit', []);
+        const organization2: Organization = new Organization('o02', 'Newcastle Hospital Trust NHS Trust', []);
 
         this.organizations = [ organization0, organization1, organization2 ];
     }

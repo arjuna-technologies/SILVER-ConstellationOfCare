@@ -10,11 +10,11 @@
     </mat-toolbar-row>
 
     <mat-toolbar-row *ngIf="username">
-        <button mat-button (click)="familiesdrawer.toggle()">
+        <button mat-button (click)="familiesdrawer.toggle(); organizationsdrawer.close()">
             <mat-icon>group</mat-icon>
             <span>Families</span>
         </button>
-        <button mat-button (click)="organizationsdrawer.toggle()">
+        <button mat-button (click)="organizationsdrawer.toggle(); familiesdrawer.close(); ">
             <mat-icon>domain</mat-icon>
             <span>Organization</span>
         </button>
