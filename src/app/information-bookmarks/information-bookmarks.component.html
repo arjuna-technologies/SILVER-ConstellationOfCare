@@ -1,0 +1,55 @@
+<mat-card>
+    <mat-card-title>
+        <mat-icon>info</mat-icon> Information
+        <button mat-icon-button (click)="doClose()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-card-title>        
+    <mat-card-content>
+        <mat-accordion>
+            <mat-expansion-panel *ngIf="organizations">
+                <mat-expansion-panel-header>
+                    <mat-panel-title *ngIf="! organization"><mat-icon>domain</mat-icon> Organization </mat-panel-title>
+                    <mat-panel-title *ngIf="organization"><mat-icon>domain</mat-icon> Organization: {{organization.name}} </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-list>
+                    <mat-list-item *ngFor="let organization of organizations; last as last">
+                        <button mat-button (click)="doOrganizationSelect(organization.id)">{{organization.name}}</button>
+                        <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel *ngIf="organization">
+                <mat-expansion-panel-header>
+                    <mat-panel-title *ngIf="! dataSource"><mat-icon>storage</mat-icon> Data Source </mat-panel-title>
+                    <mat-panel-title *ngIf="dataSource"><mat-icon>storage</mat-icon> Data Source: {{dataSource.name}} </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-list>
+                    <mat-list-item *ngFor="let dataSource of organization.dataSources; last as last">
+                        <button mat-button (click)="doDataSourceSelect(dataSource.id)">{{dataSource.name}}</button>
+                        <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel *ngIf="dataSource">
+                <mat-expansion-panel-header>
+                    <mat-panel-title *ngIf="! accessProcess"><mat-icon>local_library</mat-icon> Access Process </mat-panel-title>
+                        <mat-panel-title *ngIf="accessProcess"><mat-icon>local_library</mat-icon> Access Process: {{accessProcess.name}} </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <mat-list>
+                        <mat-list-item *ngFor="let accessProcess of dataSource.accessProcesses; last as last">
+                            <button mat-button (click)="doAccessProcessSelect(accessProcess.id)">{{accessProcess.name}}</button>
+                            <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
+                        </mat-list-item>
+                    </mat-list>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    </mat-card-content>
+</mat-card>

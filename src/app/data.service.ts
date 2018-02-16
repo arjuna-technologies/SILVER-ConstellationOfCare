@@ -42,8 +42,8 @@ export class DataService
 
         this.families = [ family0, family1, family2 ];
 
-        const accessProcess00: AccessProcess = new AccessProcess('ds00', "Physical Health System", "Physical Health System Test Text");
-        const accessProcess01: AccessProcess = new AccessProcess('ds01', "Mental Health System", "Mental Health System Test Text");
+        const accessProcess00: AccessProcess = new AccessProcess('ds00', 'Phone access', '019 123 1234');
+        const accessProcess01: AccessProcess = new AccessProcess('ds01', 'Online access', 'http://user@example.com');
 
         this.accessProcesses = [ accessProcess00, accessProcess01 ];
 
@@ -77,7 +77,7 @@ export class DataService
 
     public loadOrganizations(): Promise<Organization[]>
     {
-        return new Promise(resolve => setTimeout(() => resolve(this.organizations), 4000));
+        return new Promise(resolve => setTimeout(() => resolve(this.organizations), 1000));
     }
 
     public loadOrganization(organizationId: string): Promise<Organization>
@@ -88,6 +88,28 @@ export class DataService
             if (organizationId === current.id)
                 organization = current;
 
-        return new Promise(resolve => setTimeout(() => resolve(organization), 4000));
+        return new Promise(resolve => setTimeout(() => resolve(organization), 1000));
+    }
+
+    public loadDataSource(dataSourceId: string): Promise<DataSource>
+    {
+        let dataSource: DataSource = null;
+
+        for (let current of this.dataSources)
+            if (dataSourceId === current.id)
+                dataSource = current;
+
+        return new Promise(resolve => setTimeout(() => resolve(dataSource), 1000));
+    }
+
+    public loadAccessProcess(accessProcessId: string): Promise<AccessProcess>
+    {
+        let accessProcess: AccessProcess = null;
+
+        for (let current of this.accessProcesses)
+            if (accessProcessId === current.id)
+                accessProcess = current;
+
+        return new Promise(resolve => setTimeout(() => resolve(accessProcess), 1000));
     }
 }

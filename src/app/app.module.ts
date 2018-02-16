@@ -15,16 +15,16 @@ import { MatCardModule }        from '@angular/material/card';
 import { MatListModule }        from '@angular/material/list';
 import { MatChipsModule }       from '@angular/material/chips';
 
-import { AppComponent }                   from './app.component';
-import { LoginDialogComponent }           from './login-dialog/login-dialog.component';
-import { FamilyBookmarksComponent }       from './family-bookmarks/family-bookmarks.component';
-import { OrganizationBookmarksComponent } from './organization-bookmarks/organization-bookmarks.component';
-import { FamilyComponent }                from './family/family.component';
-import { PersonComponent }                from './person/person.component';
-import { OrganizationComponent }          from './organization/organization.component';
-import { DataSourceComponent }            from './data-source/data-source.component';
-import { AccessProcessComponent }         from './access-process/access-process.component';
-import { DataComponent }                  from './data/data.component';
+import { AppComponent }                  from './app.component';
+import { LoginDialogComponent }          from './login-dialog/login-dialog.component';
+import { FamilyBookmarksComponent }      from './family-bookmarks/family-bookmarks.component';
+import { InformationBookmarksComponent } from './information-bookmarks/information-bookmarks.component';
+import { FamilyComponent }               from './family/family.component';
+import { PersonComponent }               from './person/person.component';
+import { OrganizationComponent }         from './organization/organization.component';
+import { DataSourceComponent }           from './data-source/data-source.component';
+import { AccessProcessComponent }        from './access-process/access-process.component';
+import { DataComponent }                 from './data/data.component';
 
 import { AuthenticationService } from './authentication.service';
 import { DataService }           from './data.service';
@@ -36,7 +36,7 @@ import { DataService }           from './data.service';
         AppComponent,
         LoginDialogComponent,
         FamilyBookmarksComponent,
-        OrganizationBookmarksComponent,
+        InformationBookmarksComponent,
         FamilyComponent,
         PersonComponent,
         OrganizationComponent,

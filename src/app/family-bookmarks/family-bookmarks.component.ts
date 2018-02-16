@@ -13,32 +13,42 @@ import { DataService } from '../data.service';
 })
 export class FamilyBookmarksComponent implements OnInit
 {
+    public families:    Family[];
     public familyNames: string[];
-
-    public families: Family[];
-    public loading:  boolean;
+    public family:      Family;
+    public loading:     boolean;
 
     @Output()
-    public familySelect: EventEmitter<string>;
+    public familySelect: EventEmitter<Family>;
 
     public constructor(private dataService: DataService)
+    {
+        this.families    = null;
+        this.familyNames = [];
+        this.family      = null;
+        this.loading     = true;
+
+        this.familySelect = new EventEmitter<Family>();
+    }
+
+    public ngOnInit(): void
     {
         this.familyNames = [];
 
         this.families = null;
         this.loading  = true;
 
-        this.familySelect = new EventEmitter<string>();
-    }
-
-    public ngOnInit(): void
-    {
         this.loadFamilies();
     }
 
     public doFamilySelect(familyId: string): void
     {
-        this.familySelect.emit(familyId);
+        this.loadFamily(familyId);
+    }
+
+    public doClose(familyId: string): void
+    {
+        this.familySelect.emit(null);
     }
 
     private loadFamilies(): void
@@ -67,6 +77,31 @@ export class FamilyBookmarksComponent implements OnInit
 
         this.families = null;
         this.loading  = false;
+    }
+
+    private loadFamily(familyId: string): void
+    {
+        this.loading = true;
+
+        this.dataService.loadFamily(familyId)
+            .then(family => this.loadFamilySuccess(family))
+            .catch(error => this.loadFamilyFailed(error));
+    }
+
+    private loadFamilySuccess(family: Family): void
+    {
+        this.family  = family;
+        this.loading = false;
+
+        this.familySelect.emit(family);
+    }
+
+    private loadFamilyFailed(error: any): void
+    {
+        this.family  = null;
+        this.loading = false;
+
+        this.familySelect.emit(null);
     }
 
     private generateFamilyName(persons: Person[]): string

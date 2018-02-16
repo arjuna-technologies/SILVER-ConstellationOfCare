@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { AccessProcess } from ',,/access-process';
+import { AccessProcess } from '../access-process';
 
 @Component
 ({
@@ -10,12 +10,18 @@ import { AccessProcess } from ',,/access-process';
 })
 export class AccessProcessComponent
 {
-    @Input()
-    public dataSource: AccessProcess;
+    public accessProcess: AccessProcess;
 
     public loading: boolean;
 
     public constructor()
     {
+        this.accessProcess = null;
+        this.loading       = false;
+    }
+
+    public doShowAccessProcess(accessProcess: AccessProcess): void
+    {
+        this.accessProcess = accessProcess;
     }
 }

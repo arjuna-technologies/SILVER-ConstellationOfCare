@@ -1,7 +1,0 @@
-<mat-card>
-    <mat-card-title><mat-icon>domain</mat-icon> Organizations </mat-card-title>
-    <mat-card-content>
-        <mat-list-item *ngFor="let organization of organizations"><button mat-button (click)="doOrganizationSelect(organization.id)">{{organization.name}}</button></mat-list-item>
-        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-    </mat-card-content>
-</mat-card>

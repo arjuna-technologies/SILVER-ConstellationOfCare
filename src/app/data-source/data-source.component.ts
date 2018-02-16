@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { DataSource } from '../data-source';
 
@@ -8,20 +8,20 @@ import { DataSource } from '../data-source';
     templateUrl: './data-source.component.html',
     styleUrls:   ['./data-source.component.scss']
 })
-export class DataSourceComponent implements OnChanges
+export class DataSourceComponent
 {
-    @Input()
     public dataSource: DataSource;
 
     public loading:    boolean;
 
     public constructor()
     {
-        this.dataSource = new DataSource('0', 'DS Name', []);
+        this.dataSource = null;
         this.loading    = false;
     }
 
-    public ngOnChanges(changes: SimpleChanges)
+    public doShowDataSource(dataSource: DataSource): void
     {
+        this.dataSource = dataSource;
     }
 }

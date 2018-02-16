@@ -10,27 +10,33 @@
     </mat-toolbar-row>
 
     <mat-toolbar-row *ngIf="username">
-        <button mat-button (click)="familiesdrawer.toggle(); organizationsdrawer.close()">
+        <button mat-button (click)="familiesdrawer.toggle(); informationsdrawer.close()">
             <mat-icon>group</mat-icon>
             <span>Families</span>
         </button>
-        <button mat-button (click)="organizationsdrawer.toggle(); familiesdrawer.close(); ">
-            <mat-icon>domain</mat-icon>
-            <span>Organization</span>
+        <button mat-button (click)="informationsdrawer.toggle(); familiesdrawer.close(); ">
+            <mat-icon>info</mat-icon>
+            <span>Information</span>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-drawer-container style="height: 100%">
     <mat-drawer #familiesdrawer position="start" mode="side">
-        <cnstll-family-bookmarks (familySelect)="family.doLoadFamily($event)"></cnstll-family-bookmarks>
+        <cnstll-family-bookmarks (familySelect)="family.doShowFamily($event)"></cnstll-family-bookmarks>
     </mat-drawer>
 
-    <mat-drawer #organizationsdrawer position="end" mode="side">
-        <cnstll-organization-bookmarks (organizationSelect)="organization.doLoadOrganization($event)"></cnstll-organization-bookmarks>
+    <mat-drawer #informationsdrawer position="end" mode="side">
+        <cnstll-information-bookmarks (organizationSelect)="organization.doShowOrganization($event)" (dataSourceSelect)="datasource.doShowDataSource($event)" (accessProcessSelect)="accessprocess.doShowAccessProcess($event)"></cnstll-information-bookmarks>
     </mat-drawer>
 
-    <cnstll-family #family style="height: 100%"></cnstll-family>
+    <cnstll-family #family></cnstll-family>
 
-    <cnstll-organization #organization style="height: 100%"></cnstll-organization>
+    <mat-divider [inset]="true"></mat-divider>
+
+    <cnstll-access-process #accessprocess></cnstll-access-process>
+
+    <cnstll-data-source #datasource></cnstll-data-source>
+
+    <cnstll-organization #organization></cnstll-organization>
 </mat-drawer-container>

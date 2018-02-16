@@ -1,17 +1,11 @@
-<mat-card>
-    <mat-card-title><mat-icon>business</mat-icon> Organization </mat-card-title>
+<mat-card *ngIf="organization">
+    <mat-card-title><mat-icon>domain</mat-icon> Organization </mat-card-title>
     <mat-card-content>
-        <mat-expansion-panel *ngIf="organization">
+        <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title><mat-icon>business</mat-icon> Organization: {{organization.name}} </mat-panel-title>
             </mat-expansion-panel-header>
 
-            <mat-list *ngIf="organization.dataSources">
-                <mat-list-item *ngFor="let dataSource of organization.dataSources; last as last">
-                    <cnstll-data-source [dataSource]="dataSource"></cnstll-data-source>
-                    <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
-                </mat-list-item>
-            </mat-list>
         </mat-expansion-panel>
 
         <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>

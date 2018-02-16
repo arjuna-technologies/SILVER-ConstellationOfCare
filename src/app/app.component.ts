@@ -18,7 +18,7 @@ export class AppComponent
 
     public constructor(private dialog: MatDialog)
     {
-        this.username    = '';
+        this.username    = 'Stuart';
         this.showSideBar = false;
     }
 

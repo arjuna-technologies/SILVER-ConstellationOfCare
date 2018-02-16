@@ -13,47 +13,27 @@ import { DataService } from '../data.service';
 })
 export class FamilyComponent
 {
+    public family:     Family;
     public familyName: string;
-
-    public family:  Family;
-    public loading: boolean;
+    public loading:    boolean;
 
     public constructor(private dataService: DataService)
     {
+        this.family     = null;
         this.familyName = '';
-
-        this.family  = null;
-        this.loading = false;
+        this.loading    = false;
     }
 
-    public doLoadFamily(familyId: string): void
-    {
-        this.loadFamily(familyId);
-    }
-
-    private loadFamily(familyId: string): void
+    public doShowLoading(): void
     {
         this.loading = true;
-
-        this.dataService.loadFamily(familyId)
-            .then(family => this.loadFamilySuccess(family))
-            .catch(error => this.loadFamilyFailed(error));
     }
 
-    private loadFamilySuccess(family: Family): void
+    public doShowFamily(family: Family): void
     {
-        this.family  = family;
-        this.loading = false;
-
-        this.familyName = this.generateFamilyName(this.family.persons);
-    }
-
-    private loadFamilyFailed(error: any): void
-    {
-        this.family  = null;
-        this.loading = false;
-
-        this.familyName = this.generateFamilyName(this.family.persons);
+        this.family     = family;
+        this.familyName = this.generateFamilyName(family.persons);
+        this.loading    = false;
     }
 
     private generateFamilyName(persons: Person[]): string

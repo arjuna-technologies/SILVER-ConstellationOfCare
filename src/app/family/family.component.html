@@ -1,6 +1,6 @@
-<mat-card>
+<mat-card *ngIf="family">
     <mat-card-title><mat-icon>group</mat-icon> Family</mat-card-title>
-    <mat-card-content *ngIf="family">
+    <mat-card-content>
         <mat-list *ngIf="family.persons">
             <div mat-list-item><mat-icon>group</mat-icon> Family Name: {{familyName}} </div>
             <mat-list-item *ngFor="let person of family.persons; last as last">
