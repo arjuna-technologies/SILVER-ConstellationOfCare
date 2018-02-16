@@ -47,14 +47,14 @@ export class DataService
 
         this.accessProcesses = [ accessProcess00, accessProcess01 ];
 
-        const dataSource00: DataSource = new DataSource('ds00', "Physical Health System", [accessProcess00, accessProcess01]);
-        const dataSource01: DataSource = new DataSource('ds01', "Mental Health System", []);
+        const dataSource00: DataSource = new DataSource('ds00', 'Physical Health System', 'Data Source Test 1', [accessProcess00, accessProcess01]);
+        const dataSource01: DataSource = new DataSource('ds01', 'Mental Health System', 'Data Source Test 2', []);
 
         this.dataSources = [ dataSource00, dataSource00 ];
 
-        const organization0: Organization = new Organization('o00', 'Northumberland Tyne and Wear NHS Trust', [dataSource00, dataSource01]);
-        const organization1: Organization = new Organization('o01', 'ChildView Unit', []);
-        const organization2: Organization = new Organization('o02', 'Newcastle Hospital Trust NHS Trust', []);
+        const organization0: Organization = new Organization('o00', 'Northumberland Tyne and Wear NHS Trust', 'Test Text 1', [dataSource00, dataSource01]);
+        const organization1: Organization = new Organization('o01', 'ChildView Unit', 'Test Text 2', []);
+        const organization2: Organization = new Organization('o02', 'Newcastle Hospital Trust NHS Trust', 'Test Text 3', []);
 
         this.organizations = [ organization0, organization1, organization2 ];
     }

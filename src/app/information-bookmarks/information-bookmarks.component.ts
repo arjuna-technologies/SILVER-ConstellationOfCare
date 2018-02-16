@@ -21,9 +21,11 @@ export class InformationBookmarksComponent implements OnInit
     public loading:       boolean;
 
     @Output()
-    public organizationSelect: EventEmitter<Organization>;
+    public closeSelect:         EventEmitter<void>;
     @Output()
-    public dataSourceSelect: EventEmitter<DataSource>;
+    public organizationSelect:  EventEmitter<Organization>;
+    @Output()
+    public dataSourceSelect:    EventEmitter<DataSource>;
     @Output()
     public accessProcessSelect: EventEmitter<AccessProcess>;
 
@@ -35,6 +37,7 @@ export class InformationBookmarksComponent implements OnInit
         this.accessProcess = null;
         this.loading       = false;
 
+        this.closeSelect         = new EventEmitter<void>();
         this.organizationSelect  = new EventEmitter<Organization>();
         this.dataSourceSelect    = new EventEmitter<DataSource>();
         this.accessProcessSelect = new EventEmitter<AccessProcess>();
@@ -83,6 +86,8 @@ export class InformationBookmarksComponent implements OnInit
         this.organizationSelect.emit(null);
         this.dataSourceSelect.emit(null);
         this.accessProcessSelect.emit(null);
+
+        this.closeSelect.emit();
     }
 
     private loadOrganizations(): void

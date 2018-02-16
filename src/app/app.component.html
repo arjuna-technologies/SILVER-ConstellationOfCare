@@ -14,7 +14,7 @@
             <mat-icon>group</mat-icon>
             <span>Families</span>
         </button>
-        <button mat-button (click)="informationsdrawer.toggle(); familiesdrawer.close(); ">
+        <button mat-button (click)="informationsdrawer.toggle(); familiesdrawer.close()">
             <mat-icon>info</mat-icon>
             <span>Information</span>
         </button>
@@ -23,11 +23,11 @@
 
 <mat-drawer-container style="height: 100%">
     <mat-drawer #familiesdrawer position="start" mode="side">
-        <cnstll-family-bookmarks (familySelect)="family.doShowFamily($event)"></cnstll-family-bookmarks>
+        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="family.doShowFamily($event)"></cnstll-family-bookmarks>
     </mat-drawer>
 
     <mat-drawer #informationsdrawer position="end" mode="side">
-        <cnstll-information-bookmarks (organizationSelect)="organization.doShowOrganization($event)" (dataSourceSelect)="datasource.doShowDataSource($event)" (accessProcessSelect)="accessprocess.doShowAccessProcess($event)"></cnstll-information-bookmarks>
+        <cnstll-information-bookmarks (closeSelect)="informationsdrawer.close()" (organizationSelect)="organization.doShowOrganization($event)" (dataSourceSelect)="datasource.doShowDataSource($event)" (accessProcessSelect)="accessprocess.doShowAccessProcess($event)"></cnstll-information-bookmarks>
     </mat-drawer>
 
     <cnstll-family #family></cnstll-family>

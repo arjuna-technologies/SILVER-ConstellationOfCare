@@ -31,34 +31,42 @@ export class FamilyComponent
 
     public doShowFamily(family: Family): void
     {
-        this.family     = family;
-        this.familyName = this.generateFamilyName(family.persons);
-        this.loading    = false;
+        this.family = family;
+        if (family)
+            this.familyName = this.generateFamilyName(family.persons);
+        else
+            this.familyName = '';
+        this.loading = false;
     }
 
     private generateFamilyName(persons: Person[]): string
     {
-        let surnames: string[] = [];
+        if (persons)
+        {
+            let surnames: string[] = [];
 
-        for (let person of persons)
-            surnames.push(person.surname);
+            for (let person of persons)
+                surnames.push(person.surname);
 
-        surnames.sort();
+            surnames.sort();
 
-        let surnameIndex = 0;
-        while (surnameIndex < surnames.length - 1)
-            if (surnames[surnameIndex] === surnames[surnameIndex + 1])
-                surnames.splice(surnameIndex, 1);
-            else
-                surnameIndex++;
+            let surnameIndex = 0;
+            while (surnameIndex < surnames.length - 1)
+                if (surnames[surnameIndex] === surnames[surnameIndex + 1])
+                    surnames.splice(surnameIndex, 1);
+                else
+                    surnameIndex++;
 
-        let concatSurnames = '';
-        for (let surnameIndex = 0; surnameIndex < surnames.length; surnameIndex++)
-            if (surnameIndex === 0)
-                concatSurnames = surnames[surnameIndex];
-            else
-                concatSurnames = concatSurnames.concat('/', surnames[surnameIndex]);
+            let concatSurnames = '';
+            for (let surnameIndex = 0; surnameIndex < surnames.length; surnameIndex++)
+                if (surnameIndex === 0)
+                    concatSurnames = surnames[surnameIndex];
+                else
+                    concatSurnames = concatSurnames.concat('/', surnames[surnameIndex]);
 
-        return concatSurnames;
+            return concatSurnames;
+        }
+        else
+            return '';
     }
 }

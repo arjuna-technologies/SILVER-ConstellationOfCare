@@ -19,6 +19,8 @@ export class FamilyBookmarksComponent implements OnInit
     public loading:     boolean;
 
     @Output()
+    public closeSelect: EventEmitter<void>;
+    @Output()
     public familySelect: EventEmitter<Family>;
 
     public constructor(private dataService: DataService)
@@ -28,6 +30,7 @@ export class FamilyBookmarksComponent implements OnInit
         this.family      = null;
         this.loading     = true;
 
+        this.closeSelect  = new EventEmitter<void>();
         this.familySelect = new EventEmitter<Family>();
     }
 
@@ -49,6 +52,7 @@ export class FamilyBookmarksComponent implements OnInit
     public doClose(familyId: string): void
     {
         this.familySelect.emit(null);
+        this.closeSelect.emit();
     }
 
     private loadFamilies(): void
