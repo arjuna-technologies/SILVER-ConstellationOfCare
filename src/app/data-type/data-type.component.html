@@ -1,5 +1,4 @@
 <mat-card>
-    <mat-card-title><mat-icon>local_library</mat-icon> {{dataType.name}} </mat-card-title>
     <mat-card-content>
         <mat-tab-group>
             <mat-tab *ngFor="let data of dataType.datas" label="{{data.name}}"><cnstll-data [data]="data"></cnstll-data></mat-tab>

@@ -24,7 +24,10 @@ export class DataTypesComponent
 
     public doShowFamilyInformation(family: Family): void
     {
-        this.loadFamilyInformation();
+        if (family)
+            this.loadFamilyInformation();
+        else
+            this.dataTypes = null;
     }
 
     private loadFamilyInformation(): void
