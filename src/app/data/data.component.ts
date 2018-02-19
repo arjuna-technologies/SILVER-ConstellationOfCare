@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { Data } from '../data';
 
 @Component
 ({
@@ -6,13 +8,12 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './data.component.html',
     styleUrls:   ['./data.component.scss']
 })
-export class DataComponent implements OnInit
+export class DataComponent
 {
-    public constructor()
-    {
-    }
+    @Input()
+    public data: Data;
 
-    public ngOnInit(): void
+    public constructor()
     {
     }
 }

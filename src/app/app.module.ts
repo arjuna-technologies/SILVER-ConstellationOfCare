@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule }     from '@angular/material/toolbar';
 import { MatSidenavModule }     from '@angular/material/sidenav';
 import { MatDialogModule }      from '@angular/material/dialog';
+import { MatTabsModule }        from '@angular/material/tabs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule }   from '@angular/material/expansion';
 import { MatFormFieldModule }   from '@angular/material/form-field';
@@ -24,6 +25,8 @@ import { PersonComponent }               from './person/person.component';
 import { OrganizationComponent }         from './organization/organization.component';
 import { DataSourceComponent }           from './data-source/data-source.component';
 import { AccessProcessComponent }        from './access-process/access-process.component';
+import { DataTypesComponent }            from './data-types/data-types.component';
+import { DataTypeComponent }             from './data-type/data-type.component';
 import { DataComponent }                 from './data/data.component';
 
 import { AuthenticationService } from './authentication.service';
@@ -42,6 +45,8 @@ import { DataService }           from './data.service';
         OrganizationComponent,
         DataSourceComponent,
         AccessProcessComponent,
+        DataTypesComponent,
+        DataTypeComponent,
         DataComponent
     ],
     imports:
@@ -51,6 +56,7 @@ import { DataService }           from './data.service';
         MatToolbarModule,
         MatSidenavModule,
         MatDialogModule,
+        MatTabsModule,
         MatProgressBarModule,
         MatFormFieldModule,
         MatExpansionModule,

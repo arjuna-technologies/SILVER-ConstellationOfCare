@@ -23,7 +23,7 @@
 
 <mat-drawer-container style="height: 100%">
     <mat-drawer #familiesdrawer position="start" mode="side">
-        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="family.doShowFamily($event)"></cnstll-family-bookmarks>
+        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="family.doShowFamily($event); datatypes.doShowFamilyInformation($event)"></cnstll-family-bookmarks>
     </mat-drawer>
 
     <mat-drawer #informationsdrawer position="end" mode="side">
@@ -31,6 +31,10 @@
     </mat-drawer>
 
     <cnstll-family #family></cnstll-family>
+
+    <mat-divider [inset]="true"></mat-divider>
+
+    <cnstll-data-types #datatypes></cnstll-data-types>
 
     <mat-divider [inset]="true"></mat-divider>
 
