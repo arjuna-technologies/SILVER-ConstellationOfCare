@@ -1,6 +1,7 @@
 import { BrowserModule }           from '@angular/platform-browser';
 import { NgModule }                from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule }        from '@angular/flex-layout';
 
 import { MatToolbarModule }     from '@angular/material/toolbar';
 import { MatSidenavModule }     from '@angular/material/sidenav';
@@ -28,9 +29,12 @@ import { AccessProcessComponent }        from './access-process/access-process.c
 import { DataTypesComponent }            from './data-types/data-types.component';
 import { DataTypeComponent }             from './data-type/data-type.component';
 import { DataComponent }                 from './data/data.component';
+import { TimelineComponent }             from './timeline/timeline.component';
+import { EventsComponent }               from './events/events.component';
 
-import { AuthenticationService } from './authentication.service';
-import { DataService }           from './data.service';
+import { AuthenticationService }     from './authentication.service';
+import { DataService }               from './data.service';
+import { GoogleChartsLoaderService } from './googlecharts-loader.service';
 
 @NgModule
 ({
@@ -47,12 +51,15 @@ import { DataService }           from './data.service';
         AccessProcessComponent,
         DataTypesComponent,
         DataTypeComponent,
-        DataComponent
+        DataComponent,
+        TimelineComponent,
+        EventsComponent
     ],
     imports:
     [
         BrowserModule,
         BrowserAnimationsModule,
+        FlexLayoutModule,
         MatToolbarModule,
         MatSidenavModule,
         MatDialogModule,
@@ -74,7 +81,8 @@ import { DataService }           from './data.service';
     providers:
     [
         AuthenticationService,
-        DataService
+        DataService,
+        GoogleChartsLoaderService
     ],
     bootstrap:
     [

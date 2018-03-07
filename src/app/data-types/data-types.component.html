@@ -1,8 +1,12 @@
 <mat-card *ngIf="dataTypes">
     <mat-card-title><mat-icon>local_library</mat-icon> Family Information </mat-card-title>
     <mat-card-content>
+        <cnstll-timeline></cnstll-timeline>
         <mat-tab-group>
-            <mat-tab *ngFor="let dataType of dataTypes" label="{{dataType.name}}"><cnstll-data-type [dataType]="dataType"></cnstll-data-type></mat-tab>
+            <mat-tab *ngFor="let dataType of dataTypes" label="{{dataType.name}}">
+                <cnstll-data-type [dataType]="dataType"></cnstll-data-type>
+            </mat-tab>
         </mat-tab-group>
+        <cnstll-events></cnstll-events>
     </mat-card-content>
 </mat-card>
