@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 import { GoogleChartsLoaderService } from '../googlecharts-loader.service';
 
@@ -18,12 +18,16 @@ export class TimelineComponent implements AfterViewInit
     @Input()
     private data;
 
+    @Output()
+    public interactionSelection: EventEmitter<string>;
+
     private chart;
     private dataTable;
     private options;
 
     public constructor(private googleChartsLoaderService: GoogleChartsLoaderService)
     {
+        this.interactionSelection = new EventEmitter<string>();
     }
 
     public ngAfterViewInit()
@@ -36,7 +40,7 @@ export class TimelineComponent implements AfterViewInit
     {
         const selections = this.chart.getSelection();
         for (const selection of selections)
-            console.log('-' + JSON.stringify(selection));
+            this.interactionSelection.emit(this.dataTable.getValue(0, selection.row));
     }
 
     private setupTimeline()
