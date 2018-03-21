@@ -34,6 +34,13 @@
 
     <mat-divider [inset]="true"></mat-divider>
 
+    <button mat-button (click)="miginformation.doLoadInformation('4853379371')">
+        <mat-icon>group</mat-icon>
+        <span>MIG Information</span>
+    </button>
+
+    <cnstll-mig-information #miginformation></cnstll-mig-information>
+
     <cnstll-data-types #datatypes></cnstll-data-types>
 
     <mat-divider [inset]="true"></mat-divider>

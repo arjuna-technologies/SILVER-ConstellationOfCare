@@ -1,12 +1,14 @@
-import { BrowserModule }           from '@angular/platform-browser';
 import { NgModule }                from '@angular/core';
+import { BrowserModule }           from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule }        from '@angular/flex-layout';
+import { HttpClientModule }        from '@angular/common/http';
 
 import { MatToolbarModule }     from '@angular/material/toolbar';
 import { MatSidenavModule }     from '@angular/material/sidenav';
 import { MatDialogModule }      from '@angular/material/dialog';
 import { MatTabsModule }        from '@angular/material/tabs';
+import { MatTableModule }       from '@angular/material/table'
+import { MatPaginatorModule }   from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule }   from '@angular/material/expansion';
 import { MatFormFieldModule }   from '@angular/material/form-field';
@@ -16,6 +18,8 @@ import { MatIconModule }        from '@angular/material/icon';
 import { MatCardModule }        from '@angular/material/card';
 import { MatListModule }        from '@angular/material/list';
 import { MatChipsModule }       from '@angular/material/chips';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent }                  from './app.component';
 import { LoginDialogComponent }          from './login-dialog/login-dialog.component';
@@ -31,6 +35,8 @@ import { DataTypeComponent }             from './data-type/data-type.component';
 import { DataComponent }                 from './data/data.component';
 import { TimelineComponent }             from './timeline/timeline.component';
 import { EventsComponent }               from './events/events.component';
+import { MIGInformationComponent }       from './mig-information/mig-information.component';
+import { MIGEventComponent }             from './mig-event/mig-event.component';
 
 import { AuthenticationService }     from './authentication.service';
 import { DataService }               from './data.service';
@@ -53,17 +59,21 @@ import { GoogleChartsLoaderService } from './googlecharts-loader.service';
         DataTypeComponent,
         DataComponent,
         TimelineComponent,
-        EventsComponent
+        EventsComponent,
+        MIGInformationComponent,
+        MIGEventComponent
     ],
     imports:
     [
         BrowserModule,
         BrowserAnimationsModule,
-        FlexLayoutModule,
+        HttpClientModule,
         MatToolbarModule,
         MatSidenavModule,
         MatDialogModule,
         MatTabsModule,
+        MatTableModule,
+        MatPaginatorModule,
         MatProgressBarModule,
         MatFormFieldModule,
         MatExpansionModule,
@@ -72,7 +82,8 @@ import { GoogleChartsLoaderService } from './googlecharts-loader.service';
         MatIconModule,
         MatCardModule,
         MatListModule,
-        MatChipsModule
+        MatChipsModule,
+        FlexLayoutModule
     ],
     entryComponents:
     [

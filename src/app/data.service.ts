@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable }           from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { Person }        from './person';
 import { Family }        from './family';
@@ -9,6 +10,9 @@ import { AccessProcess } from './access-process';
 
 import { DataType }      from './data-type';
 import { Data }          from './data';
+
+import { MIGInformation } from './mig-information';
+import { MIGEvent }       from './mig-event';
 
 @Injectable()
 export class DataService
@@ -23,7 +27,7 @@ export class DataService
     private dataTypes: DataType[];
     private datas:     Data[];
 
-    constructor()
+    constructor(private httpClient: HttpClient)
     {
         this.persons  = [];
 
@@ -136,5 +140,29 @@ export class DataService
     public loadFamilyInformation(): Promise<DataType[]>
     {
         return new Promise(resolve => setTimeout(() => resolve(this.dataTypes), 1000));
+    }
+
+    public loadMIGInformation(nhsNumber: string): Promise<MIGInformation>
+    {
+        return this.httpClient.get("http://hackday.silver.arjuna.com/data/ws/mig?nhs_number=" + nhsNumber)
+                   .toPromise()
+                   .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(response)))
+                   .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(error)));
+    }
+
+    private loadMIGInformationSuccessHandler(body: any): MIGInformation
+    {
+        let migEvents: MIGEvent[] = [];
+        for (let event of body.events)
+            migEvents.push(new MIGEvent(event.id, event.displayTerm, event.eventType, event.effectiveTime));
+
+        return new MIGInformation(migEvents);
+    }
+
+    private loadMIGInformationErrorHandler(error: any): MIGInformation
+    {
+        console.log('MIG-Information Error Handler: ' + JSON.stringify(error));
+
+        return null;
     }
 }
