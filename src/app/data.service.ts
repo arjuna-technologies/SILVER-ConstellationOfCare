@@ -31,23 +31,23 @@ export class DataService
     {
         this.persons  = [];
 
-        const person00: Person = new Person('p00', 'Amy', 'Smith', '20/12/70', 'female');
-        const person01: Person = new Person('p01', 'Bill', 'Jones', '12/01/71', 'male');
-        const person02: Person = new Person('p02', 'Clare', 'Smith', '13/03/95', 'female');
-        const person03: Person = new Person('p03', 'David', 'Jones', '07/07/97', 'male');
+        const person00: Person = new Person('p00', 'Amy', 'Smith', '20/12/70', 'female', '4853379371');
+        const person01: Person = new Person('p01', 'Bill', 'Jones', '12/01/71', 'male', '6424561811');
+        const person02: Person = new Person('p02', 'Clare', 'Smith', '13/03/95', 'female', '9051292074');
+        const person03: Person = new Person('p03', 'David', 'Jones', '07/07/97', 'male', '5700200716');
 
         const family0: Family = new Family('f00', [ person00, person01, person02, person03 ]);
 
-        const person10: Person = new Person('p04', 'Amy', 'Brown', '20/12/70', 'female');
-        const person11: Person = new Person('p05', 'Bill', 'Lee', '12/01/71', 'male');
-        const person12: Person = new Person('p06', 'Clare', 'Brown', '13/03/95', 'female');
-        const person13: Person = new Person('p07', 'David', 'Brown', '07/07/97', 'male');
+        const person10: Person = new Person('p04', 'Amy', 'Brown', '20/12/70', 'female', '8225676149');
+        const person11: Person = new Person('p05', 'Bill', 'Lee', '12/01/71', 'male', '9620344472');
+        const person12: Person = new Person('p06', 'Clare', 'Brown', '13/03/95', 'female', '4160066348');
+        const person13: Person = new Person('p07', 'David', 'Brown', '07/07/97', 'male', '5894678846');
 
         const family1: Family = new Family('f01', [ person10, person11, person12, person13 ]);
 
-        const person20: Person = new Person('p08', 'Amy', 'James', '20/12/70', 'female');
-        const person21: Person = new Person('p09', 'Bill', 'James', '12/01/71', 'male');
-        const person22: Person = new Person('p10', 'Clare', 'James', '13/03/95', 'female');
+        const person20: Person = new Person('p08', 'Amy', 'James', '20/12/70', 'female', '8880028669');
+        const person21: Person = new Person('p09', 'Bill', 'James', '12/01/71', 'male', '6068998983');
+        const person22: Person = new Person('p10', 'Clare', 'James', '13/03/95', 'female', '4198838577');
 
         const family2: Family = new Family('f02', [ person20, person21, person22 ]);
 

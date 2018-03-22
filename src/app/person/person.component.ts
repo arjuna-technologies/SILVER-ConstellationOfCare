@@ -30,6 +30,7 @@ export class PersonComponent implements OnChanges
 
     public doSelectNHSNumber(): void
     {
-        this.selectNHSNumber.emit('4853379371');
+        if (this.person.nhsNumber !== '')
+            this.selectNHSNumber.emit(this.person.nhsNumber);
     }
 }
