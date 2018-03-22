@@ -32,8 +32,8 @@ export class TimelineComponent implements AfterViewInit
 
     public ngAfterViewInit()
     {
-      this.googleChartsLoaderService.load()
-          .then(() => { this.setupTimeline(); this.drawMap() });
+        this.googleChartsLoaderService.load()
+            .then(() => { this.setupTimeline(); this.drawMap() });
     }
 
     private selectHandler()

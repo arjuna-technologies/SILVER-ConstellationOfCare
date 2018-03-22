@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component , Output, EventEmitter } from '@angular/core';
 
 import { Family } from '../family';
 import { Person } from '../person';
@@ -17,11 +17,16 @@ export class FamilyComponent
     public familyName: string;
     public loading:    boolean;
 
+    @Output()
+    public selectNHSNumber: EventEmitter<string>;
+
     public constructor(private dataService: DataService)
     {
         this.family     = null;
         this.familyName = '';
         this.loading    = false;
+
+        this.selectNHSNumber = new EventEmitter<string>();
     }
 
     public doShowLoading(): void
@@ -37,6 +42,12 @@ export class FamilyComponent
         else
             this.familyName = '';
         this.loading = false;
+    }
+
+    public doSelectNHSNumber(nhsNumber: string): void
+    {
+        console.log('F=== ' + nhsNumber);  
+        this.selectNHSNumber.emit(nhsNumber);
     }
 
     private generateFamilyName(persons: Person[]): string

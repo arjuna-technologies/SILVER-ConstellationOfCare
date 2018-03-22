@@ -36,7 +36,6 @@ import { DataComponent }                 from './data/data.component';
 import { TimelineComponent }             from './timeline/timeline.component';
 import { EventsComponent }               from './events/events.component';
 import { MIGInformationComponent }       from './mig-information/mig-information.component';
-import { MIGEventComponent }             from './mig-event/mig-event.component';
 
 import { AuthenticationService }     from './authentication.service';
 import { DataService }               from './data.service';
@@ -60,8 +59,7 @@ import { GoogleChartsLoaderService } from './googlecharts-loader.service';
         DataComponent,
         TimelineComponent,
         EventsComponent,
-        MIGInformationComponent,
-        MIGEventComponent
+        MIGInformationComponent
     ],
     imports:
     [

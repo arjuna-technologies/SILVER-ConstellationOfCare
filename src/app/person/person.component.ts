@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 
 import { Person } from '../person';
 
@@ -14,13 +14,22 @@ export class PersonComponent implements OnChanges
     public person:  Person;
     @Input()
     public loading: boolean;
+    @Output()
+    public selectNHSNumber: EventEmitter<string>;
 
     public constructor()
     {
         this.loading = false;
+
+        this.selectNHSNumber = new EventEmitter<string>();
     }
 
     public ngOnChanges(changes: SimpleChanges): void
     {
+    }
+
+    public doSelectNHSNumber(): void
+    {
+        this.selectNHSNumber.emit('4853379371');
     }
 }

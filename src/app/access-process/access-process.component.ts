@@ -12,12 +12,9 @@ export class AccessProcessComponent
 {
     public accessProcess: AccessProcess;
 
-    public loading: boolean;
-
     public constructor()
     {
         this.accessProcess = null;
-        this.loading       = false;
     }
 
     public doShowAccessProcess(accessProcess: AccessProcess): void

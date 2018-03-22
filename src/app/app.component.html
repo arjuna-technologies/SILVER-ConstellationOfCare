@@ -30,14 +30,9 @@
         <cnstll-information-bookmarks (closeSelect)="informationsdrawer.close()" (organizationSelect)="organization.doShowOrganization($event)" (dataSourceSelect)="datasource.doShowDataSource($event)" (accessProcessSelect)="accessprocess.doShowAccessProcess($event)"></cnstll-information-bookmarks>
     </mat-drawer>
 
-    <cnstll-family #family></cnstll-family>
+    <cnstll-family #family (selectNHSNumber)="miginformation.doLoadInformation($event)"></cnstll-family>
 
     <mat-divider [inset]="true"></mat-divider>
-
-    <button mat-button (click)="miginformation.doLoadInformation('4853379371')">
-        <mat-icon>group</mat-icon>
-        <span>MIG Information</span>
-    </button>
 
     <cnstll-mig-information #miginformation></cnstll-mig-information>
 

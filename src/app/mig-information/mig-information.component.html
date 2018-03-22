@@ -1,7 +1,7 @@
 <mat-card *ngIf="information || loading">
     <mat-card-title>Medical Information Gateway (MIG)</mat-card-title>
     <mat-card-content>
-        <mat-table *ngIf="information" #table [dataSource]="dataSource">
+        <mat-table #table *ngIf="information" [dataSource]="dataSource">
             <ng-container matColumnDef="displayTerm">
                 <mat-header-cell *matHeaderCellDef> Display Term </mat-header-cell>
                 <mat-cell *matCellDef="let event"> {{event.displayTerm}} </mat-cell>
@@ -17,7 +17,7 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
-        <mat-paginator *ngIf="information" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event"></mat-paginator>
+        <mat-paginator #paginator *ngIf="information" [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>
         <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
     </mat-card-content>
 </mat-card>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, DoCheck, ViewChild }     from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import { DataService } from '../data.service';
 
@@ -11,7 +11,7 @@ import { MIGInformation } from '../mig-information';
     templateUrl: './mig-information.component.html',
     styleUrls:   ['./mig-information.component.scss']
 })
-export class MIGInformationComponent implements OnInit
+export class MIGInformationComponent implements DoCheck
 {
     public information: MIGInformation;
     public loading:     boolean;
@@ -19,10 +19,8 @@ export class MIGInformationComponent implements OnInit
     public displayedColumns = ['displayTerm', 'eventType', 'effectiveTime'];
     public dataSource       = new MatTableDataSource();
 
-    public length:          number;
-    public pageIndex:       number;
-    public pageSize:        number;
-    public pageSizeOptions: number[]
+    @ViewChild('paginator')
+    public paginator: MatPaginator;
 
     public constructor(private dataService: DataService)
     {
@@ -30,15 +28,12 @@ export class MIGInformationComponent implements OnInit
         this.loading     = false;
 
         this.dataSource = new MatTableDataSource();
-
-        this.length          = 0;
-        this.pageIndex       = 0;
-        this.pageSize        = 10;
-        this.pageSizeOptions = [5, 10, 20, 100];
     }
 
-    public ngOnInit()
+    public ngDoCheck(): void
     {
+        if (this.dataSource.paginator != this.paginator)
+            this.dataSource.paginator = this.paginator;
     }
 
     public doLoadInformation(nhsNumber: string)
@@ -55,19 +50,9 @@ export class MIGInformationComponent implements OnInit
         this.loading     = false;
 
         if (this.information && this.information.events)
-        {
-            this.dataSource = new MatTableDataSource(this.information.events);
-
-            this.length    = 0;
-            this.pageIndex = 0;
-        }
+            this.dataSource.data = this.information.events;
         else
-        {
-            this.dataSource = new MatTableDataSource();
-
-            this.length    = 0;
-            this.pageIndex = 0;
-        }
+            this.dataSource.data = null;
     }
 
     private doLoadInformationErrorHandler(error: any)
@@ -75,9 +60,6 @@ export class MIGInformationComponent implements OnInit
         this.information = null;
         this.loading     = false;
 
-        this.dataSource = new MatTableDataSource();
-
-        this.length    = 0;
-        this.pageIndex = 0;
+        this.dataSource.data = null;
     }
 }
