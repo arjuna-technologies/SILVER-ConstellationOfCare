@@ -144,7 +144,7 @@ export class DataService
 
     public loadMIGInformation(nhsNumber: string): Promise<MIGInformation>
     {
-        return this.httpClient.get("http://hackday.silver.arjuna.com/data/ws/mig?nhs_number=" + nhsNumber)
+        return this.httpClient.get("http://dataservice-mig.silver.arjuna.com/data/ws/mig?nhs_number=" + nhsNumber)
                    .toPromise()
                    .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(response)))
                    .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(error)));
