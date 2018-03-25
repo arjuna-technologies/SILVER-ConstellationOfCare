@@ -2,10 +2,12 @@
     <mat-toolbar-row>
         <span>SILVER Constellation of Care</span>
         <span class="toolbar-spacer"></span>
+        <button mat-button *ngIf="group"><mat-icon>group</mat-icon> {{group}} </button>
+        <button mat-button *ngIf="org"><mat-icon>domain</mat-icon> {{org}} </button>
         <button mat-button (click)="doOpenLoginDialog()">
             <mat-icon>person</mat-icon>
-            <span *ngIf="username">{{username}}</span>
-            <span *ngIf="! username">Login</span>
+            <span *ngIf="username"> {{username}} </span>
+            <span *ngIf="! username"> Login </span>
         </button>
     </mat-toolbar-row>
 

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { Family }               from './family';
-import { Person }               from './person';
 
 @Component
 ({
@@ -13,12 +11,16 @@ import { Person }               from './person';
 })
 export class AppComponent
 {
-    public username:    String;
-    public showSideBar: boolean;
+    public username:     string;
+    public org:          string;
+    public group:        string;
+    public showSideBar:  boolean;
 
     public constructor(private dialog: MatDialog)
     {
         this.username    = '';
+        this.org         = '';
+        this.group       = '';
         this.showSideBar = false;
     }
 
@@ -30,14 +32,26 @@ export class AppComponent
             loginDialogRef.afterClosed().subscribe((username) => this.processAfterClose(username));
         }
         else
+        {
             this.username = '';
+            this.org      = '';
+            this.group    = '';
+        }
     }
 
     private processAfterClose(username: string): void
     {
         if (username && (username !== ''))
+        {
             this.username = username;
+            this.org      = 'Newcastle City Council';
+            this.group    = 'Family Early Help';
+        }
         else
+        {
             this.username = '';
+            this.org      = '';
+            this.group    = '';
+        }
     }
 }

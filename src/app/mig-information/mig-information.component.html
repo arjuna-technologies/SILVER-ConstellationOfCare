@@ -1,5 +1,6 @@
 <mat-card *ngIf="information || loading">
-    <mat-card-title>Medical Information Gateway: {{information.nhsNumber}}</mat-card-title>
+    <mat-card-title *ngIf="information">Medical Information Gateway: {{information.nhsNumber}}</mat-card-title>
+    <mat-card-title *ngIf="! information">Medical Information Gateway</mat-card-title>
     <mat-card-content>
         <mat-table #table *ngIf="information && (information.status === 'Success')" [dataSource]="dataSource">
             <ng-container matColumnDef="displayTerm">
