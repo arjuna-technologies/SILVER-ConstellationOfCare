@@ -26,6 +26,7 @@ import { LoginDialogComponent }          from './login-dialog/login-dialog.compo
 import { FamilyBookmarksComponent }      from './family-bookmarks/family-bookmarks.component';
 import { InformationBookmarksComponent } from './information-bookmarks/information-bookmarks.component';
 import { FamilyComponent }               from './family/family.component';
+import { FamilyMemberComponent }         from './family-member/family-member.component';
 import { PersonComponent }               from './person/person.component';
 import { OrganizationComponent }         from './organization/organization.component';
 import { DataSourceComponent }           from './data-source/data-source.component';
@@ -50,6 +51,7 @@ import { GoogleChartsLoaderService } from './googlecharts-loader.service';
         FamilyBookmarksComponent,
         InformationBookmarksComponent,
         FamilyComponent,
+        FamilyMemberComponent,
         PersonComponent,
         OrganizationComponent,
         DataSourceComponent,

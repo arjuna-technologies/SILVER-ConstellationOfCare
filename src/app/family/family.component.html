@@ -1,9 +1,9 @@
 <mat-card *ngIf="family || loading">
     <mat-card-title><mat-icon>group</mat-icon> Family - {{familyName}} </mat-card-title>
     <mat-card-content>
-        <mat-list *ngIf="family.persons">
-            <mat-list-item *ngFor="let person of family.persons; last as last">
-                <cnstll-person [person]="person" (selectNHSNumber)="doSelectNHSNumber($event)"></cnstll-person>
+        <mat-list *ngIf="family.familyMembers">
+            <mat-list-item *ngFor="let familyMember of family.familyMembers; last as last">
+                <cnstll-family-member [familyMember]="familyMember" (selectNHSNumber)="doSelectNHSNumber($event)"></cnstll-family-member>
                 <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
             </mat-list-item>
         </mat-list>

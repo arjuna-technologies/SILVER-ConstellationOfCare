@@ -1,8 +1,8 @@
-import { Injectable }           from '@angular/core';
+import { Injectable }               from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
-import { Person }        from './person';
 import { Family }        from './family';
+import { FamilyMember }  from './family-member';
 
 import { Organization }  from './organization';
 import { DataSource }    from './data-source';
@@ -17,8 +17,8 @@ import { MIGEvent }       from './mig-event';
 @Injectable()
 export class DataService
 {
-    private persons:         Person[];
-    private families:        Family[];
+    private families:      Family[];
+    private familyMembers: FamilyMember[];
 
     private organizations:   Organization[];
     private dataSources:     DataSource[];
@@ -29,27 +29,27 @@ export class DataService
 
     constructor(private httpClient: HttpClient)
     {
-        this.persons  = [];
+        this.familyMembers  = [];
 
-        const person00: Person = new Person('p00', 'Amy', 'Smith', '20/12/70', 'female', '4853379371');
-        const person01: Person = new Person('p01', 'Bill', 'Jones', '12/01/71', 'male', '6424561811');
-        const person02: Person = new Person('p02', 'Clare', 'Smith', '13/03/95', 'female', '9051292074');
-        const person03: Person = new Person('p03', 'David', 'Jones', '07/07/97', 'male', '5700200716');
+        const familyMember00: FamilyMember = new FamilyMember('p00', 'Amy', 'Smith', '20/12/70', 'female', '4853379371');
+        const familyMember01: FamilyMember = new FamilyMember('p01', 'Bill', 'Jones', '12/01/71', 'male', '6424561811');
+        const familyMember02: FamilyMember = new FamilyMember('p02', 'Clare', 'Smith', '13/03/95', 'female', '9051292074');
+        const familyMember03: FamilyMember = new FamilyMember('p03', 'David', 'Jones', '07/07/97', 'male', '5700200716');
 
-        const family0: Family = new Family('f00', [ person00, person01, person02, person03 ]);
+        const family0: Family = new Family('f00', [ familyMember00, familyMember01, familyMember02, familyMember03 ]);
 
-        const person10: Person = new Person('p04', 'Amy', 'Brown', '20/12/70', 'female', '8225676149');
-        const person11: Person = new Person('p05', 'Bill', 'Lee', '12/01/71', 'male', '9620344472');
-        const person12: Person = new Person('p06', 'Clare', 'Brown', '13/03/95', 'female', '4160066348');
-        const person13: Person = new Person('p07', 'David', 'Brown', '07/07/97', 'male', '5894678846');
+        const familyMember10: FamilyMember = new FamilyMember('p04', 'Amy', 'Brown', '20/12/70', 'female', '8225676149');
+        const familyMember11: FamilyMember = new FamilyMember('p05', 'Bill', 'Lee', '12/01/71', 'male', '9620344472');
+        const familyMember12: FamilyMember = new FamilyMember('p06', 'Clare', 'Brown', '13/03/95', 'female', '4160066348');
+        const familyMember13: FamilyMember = new FamilyMember('p07', 'David', 'Brown', '07/07/97', 'male', '5894678846');
 
-        const family1: Family = new Family('f01', [ person10, person11, person12, person13 ]);
+        const family1: Family = new Family('f01', [ familyMember10, familyMember11, familyMember12, familyMember13 ]);
 
-        const person20: Person = new Person('p08', 'Amy', 'James', '20/12/70', 'female', '8880028669');
-        const person21: Person = new Person('p09', 'Bill', 'James', '12/01/71', 'male', '6068998983');
-        const person22: Person = new Person('p10', 'Clare', 'James', '13/03/95', 'female', '4198838577');
+        const familyMember20: FamilyMember = new FamilyMember('p08', 'Amy', 'James', '20/12/70', 'female', '8880028669');
+        const familyMember21: FamilyMember = new FamilyMember('p09', 'Bill', 'James', '12/01/71', 'male', '6068998983');
+        const familyMember22: FamilyMember = new FamilyMember('p10', 'Clare', 'James', '13/03/95', 'female', '4198838577');
 
-        const family2: Family = new Family('f02', [ person20, person21, person22 ]);
+        const family2: Family = new Family('f02', [ familyMember20, familyMember21, familyMember22 ]);
 
         this.families = [ family0, family1, family2 ];
 
@@ -146,23 +146,27 @@ export class DataService
     {
         return this.httpClient.get("http://dataservice-mig.silver.arjuna.com/data/ws/mig?nhs_number=" + nhsNumber)
                    .toPromise()
-                   .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(response)))
-                   .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(error)));
+                   .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
+                   .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
     }
 
-    private loadMIGInformationSuccessHandler(body: any): MIGInformation
+    private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation
     {
+        let status: string = body.status;
+
         let migEvents: MIGEvent[] = [];
         for (let event of body.events)
             migEvents.push(new MIGEvent(event.id, event.displayTerm, event.eventType, event.effectiveTime));
 
-        return new MIGInformation(migEvents);
+        console.log('Body = ' + status);
+
+        return new MIGInformation(nhsNumber, status, migEvents);
     }
 
-    private loadMIGInformationErrorHandler(error: any): MIGInformation
+    private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation
     {
         console.log('MIG-Information Error Handler: ' + JSON.stringify(error));
 
-        return null;
+        return new MIGInformation(nhsNumber, 'Failed', []);
     }
 }

@@ -2,10 +2,14 @@ import { MIGEvent } from './mig-event';
 
 export class MIGInformation
 {
-    public events: MIGEvent[];
+    public nhsNumber: string;
+    public status:    string;
+    public events:    MIGEvent[];
 
-    public constructor(events: MIGEvent[])
+    public constructor(nhsNumber: string, status: string, events: MIGEvent[])
     {
-        this.events = events;
+        this.nhsNumber = nhsNumber;
+        this.status    = status;
+        this.events    = events;
     }
 }

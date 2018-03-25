@@ -1,7 +1,7 @@
 import { Component , Output, EventEmitter } from '@angular/core';
 
-import { Family } from '../family';
-import { Person } from '../person';
+import { Family       } from '../family';
+import { FamilyMember } from '../family-member';
 
 import { DataService } from '../data.service';
 
@@ -38,7 +38,7 @@ export class FamilyComponent
     {
         this.family = family;
         if (family)
-            this.familyName = this.generateFamilyName(family.persons);
+            this.familyName = this.generateFamilyName(family.familyMembers);
         else
             this.familyName = '';
         this.loading = false;
@@ -46,18 +46,18 @@ export class FamilyComponent
 
     public doSelectNHSNumber(nhsNumber: string): void
     {
-        console.log('F=== ' + nhsNumber);  
+        console.log('F=== ' + nhsNumber);
         this.selectNHSNumber.emit(nhsNumber);
     }
 
-    private generateFamilyName(persons: Person[]): string
+    private generateFamilyName(familyMembers: FamilyMember[]): string
     {
-        if (persons)
+        if (familyMembers)
         {
             let surnames: string[] = [];
 
-            for (let person of persons)
-                surnames.push(person.surname);
+            for (let familyMember of familyMembers)
+                surnames.push(familyMember.surname);
 
             surnames.sort();
 

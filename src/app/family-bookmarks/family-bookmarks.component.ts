@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { Person } from '../person';
-import { Family } from '../family';
+import { Family }       from '../family';
+import { FamilyMember } from '../family-member';
 
 import { DataService } from '../data.service';
 
@@ -72,7 +72,7 @@ export class FamilyBookmarksComponent implements OnInit
         this.loading   = false;
 
         for (let family of families)
-            this.familyNames.push(this.generateFamilyName(family.persons));
+            this.familyNames.push(this.generateFamilyName(family.familyMembers));
     }
 
     private loadFamiliesFailed(error: any): void
@@ -108,12 +108,12 @@ export class FamilyBookmarksComponent implements OnInit
         this.familySelect.emit(null);
     }
 
-    private generateFamilyName(persons: Person[]): string
+    private generateFamilyName(familyMembers: FamilyMember[]): string
     {
         let surnames: string[] = [];
 
-        for (let person of persons)
-            surnames.push(person.surname);
+        for (let familyMember of familyMembers)
+            surnames.push(familyMember.surname);
 
         surnames.sort();
 
