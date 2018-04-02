@@ -78,7 +78,7 @@ export class DataService
         this.datas = [ data0, data1, data2, data3 ];
 
         const dataType0: DataType = new DataType('da00', 'Address', [ data0, data1 ]);
-        const dataType1: DataType = new DataType('da01', 'Contect', [ data2, data3 ]);
+        const dataType1: DataType = new DataType('da01', 'Content', [ data2, data3 ]);
 
         this.dataTypes = [ dataType0, dataType1 ];
     }
