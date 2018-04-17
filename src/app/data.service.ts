@@ -155,8 +155,9 @@ export class DataService
         let status: string = body.status;
 
         let migEvents: MIGEvent[] = [];
-        for (let event of body.events)
-            migEvents.push(new MIGEvent(event.id, event.displayTerm, event.eventType, event.effectiveTime));
+        if (body.healthinfo && body.healthinfo.events)
+            for (let event of body.healthinfo.events)
+                migEvents.push(new MIGEvent(event.id, event.displayTerm, event.eventType, event.effectiveTime));
 
         console.log('Body = ' + status);
 
