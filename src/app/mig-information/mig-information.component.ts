@@ -16,7 +16,7 @@ export class MIGInformationComponent implements DoCheck
     public information: MIGInformation;
     public loading:     boolean;
 
-    public displayedColumns = ['displayTerm', 'eventType', 'effectiveTime'];
+    public displayedColumns = ['id', 'patient', 'eventType', 'effectiveTime', 'availabilityTimeStamp', 'availabilityUserInRole', 'enteredByUserInRole', 'code', 'displayTerm', 'organisation', 'observation'];
     public dataSource       = new MatTableDataSource();
 
     @ViewChild('paginator')

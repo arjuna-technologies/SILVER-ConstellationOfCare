@@ -152,14 +152,16 @@ export class DataService
 
     private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation
     {
+        console.log('Body = ' + JSON.stringify(body));
+
         let status: string = body.status;
 
         let migEvents: MIGEvent[] = [];
-        if (body.healthinfo && body.healthinfo.events)
-            for (let event of body.healthinfo.events)
-                migEvents.push(new MIGEvent(event.id, event.displayTerm, event.eventType, event.effectiveTime));
+        if (body.healthDomain && body.healthDomain.events)
+            for (let event of body.healthDomain.events)
+                migEvents.push(new MIGEvent(event.id, event.patient, event.eventType, event.effectiveTime, event.availabilityTimeStamp, event.availabilityUserInRole, event.enteredByUserInRole, event.code, event.displayTerm, event.organisation, event.observation));
 
-        console.log('Body = ' + status);
+        console.log('Status = ' + status);
 
         return new MIGInformation(nhsNumber, status, migEvents);
     }
