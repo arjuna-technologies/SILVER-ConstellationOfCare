@@ -4,14 +4,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Family }        from './family';
 import { FamilyMember }  from './family-member';
 
-import { Organization }  from './organization';
-import { DataSource }    from './data-source';
-import { AccessProcess } from './access-process';
-
-import { DataType }      from './data-type';
-import { Data }          from './data';
-
 import { MIGInformation } from './mig-information';
+import { MIGProblem }     from './mig-problem';
 import { MIGEvent }       from './mig-event';
 
 @Injectable()
@@ -19,13 +13,6 @@ export class DataService
 {
     private families:      Family[];
     private familyMembers: FamilyMember[];
-
-    private organizations:   Organization[];
-    private dataSources:     DataSource[];
-    private accessProcesses: AccessProcess[];
-
-    private dataTypes: DataType[];
-    private datas:     Data[];
 
     constructor(private httpClient: HttpClient)
     {
@@ -52,35 +39,6 @@ export class DataService
         const family2: Family = new Family('f02', [ familyMember20, familyMember21, familyMember22 ]);
 
         this.families = [ family0, family1, family2 ];
-
-        const accessProcess00: AccessProcess = new AccessProcess('ds00', 'Phone access', '019 123 1234');
-        const accessProcess01: AccessProcess = new AccessProcess('ds01', 'Online access', 'http://user@example.com');
-
-        this.accessProcesses = [ accessProcess00, accessProcess01 ];
-
-        const dataSource00: DataSource = new DataSource('ds00', 'Physical Health System', 'Data Source Test 1', [accessProcess00, accessProcess01]);
-        const dataSource01: DataSource = new DataSource('ds01', 'Mental Health System', 'Data Source Test 2', []);
-
-        this.dataSources = [ dataSource00, dataSource00 ];
-
-        const organization0: Organization = new Organization('o00', 'Medical Information Gateway', 'Healthcare Gateway provided service', [dataSource00, dataSource01]);
-        const organization1: Organization = new Organization('o01', 'Northumberland Tyne and Wear NHS Trust', 'Test Text 1', []);
-        const organization2: Organization = new Organization('o02', 'ChildView Unit', 'Test Text 2', []);
-        const organization3: Organization = new Organization('o03', 'Newcastle Hospital Trust NHS Trust', 'Test Text 3', []);
-
-        this.organizations = [ organization0, organization1, organization2, organization3 ];
-
-        const data0: Data = new Data('d0', 'NHS', '123 The Street, The Town, SW1 1AA');
-        const data1: Data = new Data('d1', 'Local Authority', '132 The Street, The Town, SW1 1BB');
-        const data2: Data = new Data('d2', 'NHS', 'Dr Jones');
-        const data3: Data = new Data('d3', 'Local Authority', 'Mr Smith');
-
-        this.datas = [ data0, data1, data2, data3 ];
-
-        const dataType0: DataType = new DataType('da00', 'Address', [ data0, data1 ]);
-        const dataType1: DataType = new DataType('da01', 'Content', [ data2, data3 ]);
-
-        this.dataTypes = [ dataType0, dataType1 ];
     }
 
     public loadFamilies(): Promise<Family[]>
@@ -99,49 +57,6 @@ export class DataService
         return new Promise(resolve => setTimeout(() => resolve(family), 1000));
     }
 
-    public loadOrganizations(): Promise<Organization[]>
-    {
-        return new Promise(resolve => setTimeout(() => resolve(this.organizations), 1000));
-    }
-
-    public loadOrganization(organizationId: string): Promise<Organization>
-    {
-        let organization: Organization = null;
-
-        for (let current of this.organizations)
-            if (organizationId === current.id)
-                organization = current;
-
-        return new Promise(resolve => setTimeout(() => resolve(organization), 1000));
-    }
-
-    public loadDataSource(dataSourceId: string): Promise<DataSource>
-    {
-        let dataSource: DataSource = null;
-
-        for (let current of this.dataSources)
-            if (dataSourceId === current.id)
-                dataSource = current;
-
-        return new Promise(resolve => setTimeout(() => resolve(dataSource), 1000));
-    }
-
-    public loadAccessProcess(accessProcessId: string): Promise<AccessProcess>
-    {
-        let accessProcess: AccessProcess = null;
-
-        for (let current of this.accessProcesses)
-            if (accessProcessId === current.id)
-                accessProcess = current;
-
-        return new Promise(resolve => setTimeout(() => resolve(accessProcess), 1000));
-    }
-
-    public loadFamilyInformation(): Promise<DataType[]>
-    {
-        return new Promise(resolve => setTimeout(() => resolve(this.dataTypes), 1000));
-    }
-
     public loadMIGInformation(nhsNumber: string): Promise<MIGInformation>
     {
         return this.httpClient.get("http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=" + nhsNumber)
@@ -156,20 +71,23 @@ export class DataService
 
         let status: string = body.status;
 
+        let migProblems: MIGProblem[] = [];
+        if (body.healthDomain && body.healthDomain.problems)
+            for (let problem of body.healthDomain.problems)
+                migProblems.push(new MIGProblem(problem.id, problem.status, problem.significance, problem.expectedDuration, problem.endTime));
+
         let migEvents: MIGEvent[] = [];
         if (body.healthDomain && body.healthDomain.events)
             for (let event of body.healthDomain.events)
-                migEvents.push(new MIGEvent(event.id, event.patient, event.eventType, event.effectiveTime, event.availabilityTimeStamp, event.availabilityUserInRole, event.enteredByUserInRole, event.code, event.displayTerm, event.organisation, event.observation));
+                migEvents.push(new MIGEvent(event.id, event.patient, event.eventType, event.effectiveTime, event.availabilityTimeStamp, event.authorisingUserInRole, event.enteredByUserInRole, event.code, event.displayTerm, event.organisation, event.observation));
 
-        console.log('Status = ' + status);
-
-        return new MIGInformation(nhsNumber, status, migEvents);
+        return new MIGInformation(nhsNumber, status, [], migProblems, migEvents);
     }
 
     private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation
     {
         console.log('MIG-Information Error Handler: ' + JSON.stringify(error));
 
-        return new MIGInformation(nhsNumber, 'Failed', []);
+        return new MIGInformation(nhsNumber, 'Failed', [], [], []);
     }
 }

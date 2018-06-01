@@ -24,23 +24,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent }                  from './app.component';
 import { LoginDialogComponent }          from './login-dialog/login-dialog.component';
 import { FamilyBookmarksComponent }      from './family-bookmarks/family-bookmarks.component';
-import { InformationBookmarksComponent } from './information-bookmarks/information-bookmarks.component';
 import { FamilyComponent }               from './family/family.component';
 import { FamilyMemberComponent }         from './family-member/family-member.component';
-import { PersonComponent }               from './person/person.component';
-import { OrganizationComponent }         from './organization/organization.component';
-import { DataSourceComponent }           from './data-source/data-source.component';
-import { AccessProcessComponent }        from './access-process/access-process.component';
-import { DataTypesComponent }            from './data-types/data-types.component';
-import { DataTypeComponent }             from './data-type/data-type.component';
-import { DataComponent }                 from './data/data.component';
-import { TimelineComponent }             from './timeline/timeline.component';
-import { EventsComponent }               from './events/events.component';
 import { MIGInformationComponent }       from './mig-information/mig-information.component';
 
 import { AuthenticationService }     from './authentication.service';
 import { DataService }               from './data.service';
-import { GoogleChartsLoaderService } from './googlecharts-loader.service';
 
 @NgModule
 ({
@@ -49,18 +38,8 @@ import { GoogleChartsLoaderService } from './googlecharts-loader.service';
         AppComponent,
         LoginDialogComponent,
         FamilyBookmarksComponent,
-        InformationBookmarksComponent,
         FamilyComponent,
         FamilyMemberComponent,
-        PersonComponent,
-        OrganizationComponent,
-        DataSourceComponent,
-        AccessProcessComponent,
-        DataTypesComponent,
-        DataTypeComponent,
-        DataComponent,
-        TimelineComponent,
-        EventsComponent,
         MIGInformationComponent
     ],
     imports:
@@ -92,8 +71,7 @@ import { GoogleChartsLoaderService } from './googlecharts-loader.service';
     providers:
     [
         AuthenticationService,
-        DataService,
-        GoogleChartsLoaderService
+        DataService
     ],
     bootstrap:
     [

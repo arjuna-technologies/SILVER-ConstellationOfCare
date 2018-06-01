@@ -46,7 +46,7 @@ export class FamilyComponent
 
     public doSelectNHSNumber(nhsNumber: string): void
     {
-        console.log('F=== ' + nhsNumber);
+        console.log('NHS Number: ' + nhsNumber);
         this.selectNHSNumber.emit(nhsNumber);
     }
 
