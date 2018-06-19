@@ -21,15 +21,21 @@ import { MatChipsModule }       from '@angular/material/chips';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AppComponent }                  from './app.component';
-import { LoginDialogComponent }          from './login-dialog/login-dialog.component';
-import { FamilyBookmarksComponent }      from './family-bookmarks/family-bookmarks.component';
-import { FamilyComponent }               from './family/family.component';
-import { FamilyMemberComponent }         from './family-member/family-member.component';
-import { MIGInformationComponent }       from './mig-information/mig-information.component';
+import { AppComponent }                       from './app.component';
+import { LoginDialogComponent }               from './login-dialog/login-dialog.component';
+import { FamilyBookmarksComponent }           from './family-bookmarks/family-bookmarks.component';
+import { FamilyComponent }                    from './family/family.component';
+import { FamilyMemberComponent }              from './family-member/family-member.component';
+import { MIGInformationComponent }            from './mig-information/mig-information.component';
+import { MIGHealthDomainComponent }           from './mig-healthdomain/mig-healthdomain.component';
+import { MIGHealthDomainEncountersComponent } from './mig-healthdomain-encounters/mig-healthdomain-encounters.component';
+import { MIGHealthDomainProblemsComponent }   from './mig-healthdomain-problems/mig-healthdomain-problems.component';
+import { MIGHealthDomainEventsComponent }     from './mig-healthdomain-events/mig-healthdomain-events.component';
+import { MIGAdminDomainComponent }            from './mig-admindomain/mig-admindomain.component';
+import { MIGAdminDomainPersonsComponent }     from './mig-admindomain-persons/mig-admindomain-persons.component';
 
-import { AuthenticationService }     from './authentication.service';
-import { DataService }               from './data.service';
+import { AuthenticationService } from './authentication.service';
+import { DataService }           from './data.service';
 
 @NgModule
 ({
@@ -40,7 +46,13 @@ import { DataService }               from './data.service';
         FamilyBookmarksComponent,
         FamilyComponent,
         FamilyMemberComponent,
-        MIGInformationComponent
+        MIGInformationComponent,
+        MIGHealthDomainComponent,
+        MIGHealthDomainEncountersComponent,
+        MIGHealthDomainProblemsComponent,
+        MIGHealthDomainEventsComponent,
+        MIGAdminDomainComponent,
+        MIGAdminDomainPersonsComponent
     ],
     imports:
     [

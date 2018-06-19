@@ -16,34 +16,14 @@ export class MIGInformationComponent implements DoCheck
     public information: MIGInformation;
     public loading:     boolean;
 
-    public problemDisplayedColumns = ['id', 'status', 'significance', 'expectedDuration', 'endTime'];
-    public problemDataSource       = new MatTableDataSource();
-
-    @ViewChild('problemPaginator')
-    public problemPaginator: MatPaginator;
-
-    public eventDisplayedColumns = ['id', 'patient', 'eventType', 'effectiveTime', 'availabilityTimeStamp', 'authorisingUserInRole', 'enteredByUserInRole', 'code', 'displayTerm', 'organisation', 'observation'];
-    public eventDataSource       = new MatTableDataSource();
-
-    @ViewChild('eventPaginator')
-    public eventPaginator: MatPaginator;
-
     public constructor(private dataService: DataService)
     {
         this.information = null;
         this.loading     = false;
-
-        this.problemDataSource = new MatTableDataSource();
-        this.eventDataSource   = new MatTableDataSource();
     }
 
     public ngDoCheck(): void
     {
-        if (this.problemDataSource.paginator != this.problemPaginator)
-            this.problemDataSource.paginator = this.problemPaginator;
-
-        if (this.eventDataSource.paginator != this.eventPaginator)
-            this.eventDataSource.paginator = this.eventPaginator;
     }
 
     public doLoadInformation(nhsNumber: string)
@@ -55,10 +35,12 @@ export class MIGInformationComponent implements DoCheck
     }
 
     private doLoadInformationSuccessHandler(migInformation: MIGInformation)
-    {
+    {            
         this.information = migInformation;
         this.loading     = false;
-
+/*
+        if (this.encounterDataSource.paginator)
+            this.encounterDataSource.paginator.firstPage();
         if (this.problemDataSource.paginator)
             this.problemDataSource.paginator.firstPage();
         if (this.eventDataSource.paginator)
@@ -66,6 +48,11 @@ export class MIGInformationComponent implements DoCheck
 
         if (this.information)
         {
+            if (this.information.encounters)
+                this.encounterDataSource.data = this.information.encounters;
+            else
+                this.encounterDataSource.data = null;
+
             if (this.information.problems)
                 this.problemDataSource.data = this.information.problems;
             else
@@ -78,22 +65,28 @@ export class MIGInformationComponent implements DoCheck
         }
         else
         {
-            this.problemDataSource.data = null;
-            this.eventDataSource.data   = null;
+            this.encounterDataSource.data = null;
+            this.problemDataSource.data   = null;
+            this.eventDataSource.data     = null;
         }
+*/
     }
 
     private doLoadInformationErrorHandler(error: any)
     {
         this.information = null;
         this.loading     = false;
-
+/*
+        if (this.encounterDataSource.paginator)
+            this.encounterDataSource.paginator.firstPage();
         if (this.problemDataSource.paginator)
             this.problemDataSource.paginator.firstPage();
         if (this.eventDataSource.paginator)
             this.eventDataSource.paginator.firstPage();
 
-        this.problemDataSource.data = null;
-        this.eventDataSource.data   = null;
+        this.encounterDataSource.data = null;
+        this.problemDataSource.data   = null;
+        this.eventDataSource.data     = null;
+*/
     }
 }
