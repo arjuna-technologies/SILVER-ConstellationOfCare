@@ -1,7 +1,7 @@
-import { MIGPerson } from './mig-person';
+import { MIGPerson }    from './mig-person';
 import { MIGEncounter } from './mig-encounter';
-import { MIGProblem } from './mig-problem';
-import { MIGEvent }   from './mig-event';
+import { MIGProblem }   from './mig-problem';
+import { MIGEvent }     from './mig-event';
 
 export class MIGInformation
 {
