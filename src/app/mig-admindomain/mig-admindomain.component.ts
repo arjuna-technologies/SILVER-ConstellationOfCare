@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, Input, ViewChild } from '@angular/core';
+
+import { MIGInformation } from '../mig-information';
 
 @Component
 ({
@@ -6,13 +8,16 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './mig-admindomain.component.html',
     styleUrls:   ['./mig-admindomain.component.scss']
 })
-export class MIGAdminDomainComponent implements OnInit
+export class MIGAdminDomainComponent implements DoCheck
 {
+    @Input()
+    public information: MIGInformation;
+
     public constructor()
     {
     }
 
-    public ngOnInit(): void
+    public ngDoCheck(): void
     {
     }
 }

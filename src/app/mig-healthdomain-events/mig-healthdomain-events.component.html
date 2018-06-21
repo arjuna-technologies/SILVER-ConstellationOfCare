@@ -1,55 +1,53 @@
-<mat-tab label="Events">
-    <mat-table #eventTable [dataSource]="eventDataSource">
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.id}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="patient">
-            <mat-header-cell *matHeaderCellDef> Patient </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.patient}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="eventType">
-            <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.eventType}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="effectiveTime">
-            <mat-header-cell *matHeaderCellDef> Effective Time </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.effectiveTime}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="availabilityTimeStamp">
-            <mat-header-cell *matHeaderCellDef> Availability Time Stamp </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.availabilityTimeStamp}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="authorisingUserInRole">
-            <mat-header-cell *matHeaderCellDef> Authorising User In Role </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.authorisingUserInRole}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="enteredByUserInRole">
-            <mat-header-cell *matHeaderCellDef> Entered By User In Role </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.enteredByUserInRole}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="code">
-            <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
-            <mat-cell *matCellDef="let event">
-                <div><b> Display Name </b> {{event.code.displayName}}</div>
-                <div><b> Code </b> {{event.code.code}}</div>
-                <div><b> Code System </b> {{event.code.codeSystem}}</div>
-            </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="displayTerm">
-            <mat-header-cell *matHeaderCellDef> Display Term </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.displayTerm}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="organisation">
-            <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.organisation}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="observation">
-            <mat-header-cell *matHeaderCellDef> Observation </mat-header-cell>
-            <mat-cell *matCellDef="let event"> {{event.observation}} </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="eventDisplayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: eventDisplayedColumns;"></mat-row>
-    </mat-table>
-    <mat-paginator #eventPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>
-</mat-tab>
+<mat-table #eventTable [dataSource]="eventDataSource">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="patient">
+        <mat-header-cell *matHeaderCellDef> Patient </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.patient}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="eventType">
+        <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.eventType}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="effectiveTime">
+        <mat-header-cell *matHeaderCellDef> Effective Time </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.effectiveTime}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="availabilityTimeStamp">
+        <mat-header-cell *matHeaderCellDef> Availability Time Stamp </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.availabilityTimeStamp}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="authorisingUserInRole">
+        <mat-header-cell *matHeaderCellDef> Authorising User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.authorisingUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="enteredByUserInRole">
+        <mat-header-cell *matHeaderCellDef> Entered By User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.enteredByUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
+        <mat-cell *matCellDef="let event">
+            <div><b> Display Name </b> {{event.code.displayName}}</div>
+            <div><b> Code </b> {{event.code.code}}</div>
+            <div><b> Code System </b> {{event.code.codeSystem}}</div>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="displayTerm">
+        <mat-header-cell *matHeaderCellDef> Display Term </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.displayTerm}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="organisation">
+        <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.organisation}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="observation">
+        <mat-header-cell *matHeaderCellDef> Observation </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.observation}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="eventDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: eventDisplayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #eventPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

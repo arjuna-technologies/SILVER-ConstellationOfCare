@@ -1,5 +1,5 @@
-import { Component, DoCheck, ViewChild }    from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
 import { MIGProblem } from '../mig-problem';
 
@@ -9,10 +9,13 @@ import { MIGProblem } from '../mig-problem';
     templateUrl: './mig-healthdomain-problems.component.html',
     styleUrls:   ['./mig-healthdomain-problems.component.scss']
 })
-export class MIGHealthDomainProblemsComponent implements DoCheck
+export class MIGHealthDomainProblemsComponent implements OnChanges, DoCheck
 {
     public problemDisplayedColumns = ['id', 'status', 'significance', 'expectedDuration', 'endTime'];
     public problemDataSource: MatTableDataSource<MIGProblem>;
+
+    @Input()
+    public problems: MIGProblem[];
 
     @ViewChild('problemPaginator')
     public problemPaginator: MatPaginator;
@@ -22,9 +25,23 @@ export class MIGHealthDomainProblemsComponent implements DoCheck
         this.problemDataSource = new MatTableDataSource();
     }
 
+    public ngOnChanges(): void
+    {
+        if (this.problemDataSource.paginator)
+            this.problemDataSource.paginator.firstPage();
+
+        if (this.problems)
+            this.problemDataSource.data = this.problems;
+        else
+            this.problemDataSource.data = null;
+    }
+
     public ngDoCheck(): void
     {
         if (this.problemDataSource.paginator != this.problemPaginator)
-           this.problemDataSource.paginator = this.problemPaginator;
+        {
+            this.problemDataSource.paginator = this.problemPaginator;
+            this.problemDataSource.paginator.firstPage();
+        }
     }
 }

@@ -28,14 +28,15 @@ export class MIGInformationComponent implements DoCheck
 
     public doLoadInformation(nhsNumber: string)
     {
-        this.loading = true;
+        this.loading     = true;
+        this.information = null;
         this.dataService.loadMIGInformation(nhsNumber)
             .then((migInformation: MIGInformation) => this.doLoadInformationSuccessHandler(migInformation))
             .catch((error) => this.doLoadInformationErrorHandler(error));
     }
 
     private doLoadInformationSuccessHandler(migInformation: MIGInformation)
-    {            
+    {
         this.information = migInformation;
         this.loading     = false;
 /*

@@ -1,5 +1,11 @@
 <mat-tab-group>
-    <cnstll-mig-healthdomain-encounters></cnstll-mig-healthdomain-encounters>
-    <cnstll-mig-healthdomain-problems></cnstll-mig-healthdomain-problems>
-    <cnstll-mig-healthdomain-events></cnstll-mig-healthdomain-events>
+    <mat-tab label="Encounter">
+        <cnstll-mig-healthdomain-encounters [encounters]="information.encounters"></cnstll-mig-healthdomain-encounters>
+    </mat-tab>
+    <mat-tab label="Problems">
+        <cnstll-mig-healthdomain-problems [problems]="information.problems"></cnstll-mig-healthdomain-problems>
+    </mat-tab>
+    <mat-tab label="Events">
+        <cnstll-mig-healthdomain-events [events]="information.events"></cnstll-mig-healthdomain-events>
+    </mat-tab>
 </mat-tab-group>

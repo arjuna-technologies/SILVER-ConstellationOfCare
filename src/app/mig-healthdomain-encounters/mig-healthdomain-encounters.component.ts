@@ -1,5 +1,5 @@
-import { Component, DoCheck, ViewChild }    from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource }     from '@angular/material';
 
 import { MIGEncounter } from '../mig-encounter';
 
@@ -9,10 +9,13 @@ import { MIGEncounter } from '../mig-encounter';
     templateUrl: './mig-healthdomain-encounters.component.html',
     styleUrls:   ['./mig-healthdomain-encounters.component.scss']
 })
-export class MIGHealthDomainEncountersComponent implements DoCheck
+export class MIGHealthDomainEncountersComponent implements OnChanges, DoCheck
 {
     public encounterDisplayedColumns = ['id'];
     public encounterDataSource: MatTableDataSource<MIGEncounter>;
+
+    @Input()
+    public encounters: MIGEncounter[];
 
     @ViewChild('encounterPaginator')
     public encounterPaginator: MatPaginator;
@@ -20,6 +23,14 @@ export class MIGHealthDomainEncountersComponent implements DoCheck
     public constructor()
     {
         this.encounterDataSource = new MatTableDataSource();
+    }
+
+    public ngOnChanges(): void
+    {
+        if (this.encounters)
+            this.encounterDataSource.data = this.encounters;
+        else
+            this.encounterDataSource.data = null;
     }
 
     public ngDoCheck(): void
