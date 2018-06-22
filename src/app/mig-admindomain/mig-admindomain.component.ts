@@ -1,4 +1,4 @@
-import { Component, DoCheck, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 import { MIGInformation } from '../mig-information';
 
@@ -8,16 +8,12 @@ import { MIGInformation } from '../mig-information';
     templateUrl: './mig-admindomain.component.html',
     styleUrls:   ['./mig-admindomain.component.scss']
 })
-export class MIGAdminDomainComponent implements DoCheck
+export class MIGAdminDomainComponent
 {
     @Input()
     public information: MIGInformation;
 
     public constructor()
-    {
-    }
-
-    public ngDoCheck(): void
     {
     }
 }

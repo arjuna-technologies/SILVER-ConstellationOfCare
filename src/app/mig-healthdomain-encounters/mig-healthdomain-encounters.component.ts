@@ -22,7 +22,8 @@ export class MIGHealthDomainEncountersComponent implements OnChanges, DoCheck
 
     public constructor()
     {
-        this.encounterDataSource = new MatTableDataSource();
+        this.encounterDataSource      = new MatTableDataSource();
+        this.encounterDataSource.data = null;
     }
 
     public ngOnChanges(): void
@@ -31,11 +32,17 @@ export class MIGHealthDomainEncountersComponent implements OnChanges, DoCheck
             this.encounterDataSource.data = this.encounters;
         else
             this.encounterDataSource.data = null;
+
+        if (this.encounterDataSource.paginator)
+            this.encounterDataSource.paginator.firstPage();
     }
 
     public ngDoCheck(): void
     {
         if (this.encounterDataSource.paginator != this.encounterPaginator)
+        {
             this.encounterDataSource.paginator = this.encounterPaginator;
+            this.encounterDataSource.paginator.firstPage();
+        }
     }
 }

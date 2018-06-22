@@ -22,40 +22,27 @@ export class MIGHealthDomainEventsComponent implements OnChanges, DoCheck
 
     public constructor()
     {
-        console.log('MIG_HD-Events - constructor');
-
         this.eventDataSource      = new MatTableDataSource();
-        this.eventDataSource.data = [];
+        this.eventDataSource.data = null;
     }
 
     public ngOnChanges(): void
     {
-        console.log('MIG_HD-Events - onChanges');
-
         if (this.events)
-        {
-            console.log('MIG_HD-Events - update data ' + JSON.stringify(this.events));
-
-            if (this.eventDataSource.paginator)
-                this.eventDataSource.paginator.firstPage();
-
             this.eventDataSource.data = this.events;
-        }
         else
-        {
-            console.log('MIG_HD-Events - clear data');
-            this.eventDataSource.data = [];
-        }
+            this.eventDataSource.data = null;
+
+        if (this.eventDataSource.paginator)
+            this.eventDataSource.paginator.firstPage();
     }
 
     public ngDoCheck(): void
     {
-        console.log('MIG_HD-Events - doCheck');
-
         if (this.eventDataSource.paginator != this.eventPaginator)
         {
-            console.log('MIG_HD-Events - set paginator');
             this.eventDataSource.paginator = this.eventPaginator;
+            this.eventDataSource.paginator.firstPage();
         }
     }
 }
