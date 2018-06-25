@@ -11,7 +11,7 @@ import { MIGPatient } from '../mig-patient';
 })
 export class MIGAdminDomainPatientsComponent implements OnChanges, DoCheck
 {
-    public patientDisplayedColumns = ['id', 'patientIdentifiers', 'patientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'registeredGPUserInRole', 'usualGPUserInRole', 'caseloadPatients', 'patientIdentifier', 'caseloadPatient'];
+    public patientDisplayedColumns = ['id', 'patientIdentifiers', 'patientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'registeredGPUserInRole', 'usualGPUserInRole', 'caseloadPatients'];
     public patientDataSource: MatTableDataSource<MIGPatient>;
 
     @Input()
