@@ -9,7 +9,13 @@
     </ng-container>
     <ng-container matColumnDef="userCategory">
         <mat-header-cell *matHeaderCellDef> User Category </mat-header-cell>
-        <mat-cell *matCellDef="let role"> {{role.userCategory}} </mat-cell>
+        <mat-cell *matCellDef="let role">
+            <mat-card>
+                <mat-card-subtitle>Identifier Type</mat-card-subtitle><mat-card-content>{{role.userCategory.displayName}}</mat-card-content>
+                <mat-card-subtitle>Code System</mat-card-subtitle><mat-card-content>{{role.userCategory.codeSystem}}</mat-card-content>
+                <mat-card-subtitle>Code</mat-card-subtitle><mat-card-content>{{role.userCategory.code}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
     </ng-container>
     <ng-container matColumnDef="organisation">
         <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>

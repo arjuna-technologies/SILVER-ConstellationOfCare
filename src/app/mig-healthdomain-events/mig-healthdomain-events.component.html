@@ -30,9 +30,11 @@
     <ng-container matColumnDef="code">
         <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
         <mat-cell *matCellDef="let event">
-            <div><b> Display Name </b> {{event.code.displayName}}</div>
-            <div><b> Code </b> {{event.code.code}}</div>
-            <div><b> Code System </b> {{event.code.codeSystem}}</div>
+            <mat-card>
+                <mat-card-subtitle>Display Name</mat-card-subtitle><mat-card-content>{{event.code.displayName}}</mat-card-content>
+                <mat-card-subtitle>Code</mat-card-subtitle><mat-card-content>{{event.code.code}}</mat-card-content>
+                <mat-card-subtitle>Code System</mat-card-subtitle><mat-card-content>{{event.code.codeSystem}}</mat-card-content>
+            </mat-card>
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="displayTerm">

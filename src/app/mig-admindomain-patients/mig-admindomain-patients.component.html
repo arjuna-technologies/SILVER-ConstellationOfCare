@@ -5,7 +5,12 @@
     </ng-container>
     <ng-container matColumnDef="patientIdentifiers">
         <mat-header-cell *matHeaderCellDef> Patient Identifiers </mat-header-cell>
-        <mat-cell *matCellDef="let patient"> {{patient.patientIdentifiers}} </mat-cell>
+        <mat-cell *matCellDef="let patient">
+            <mat-card *ngFor="let patientIdentifier of patient.patientIdentifiers">
+                <mat-card-subtitle>Identifier Type</mat-card-subtitle><mat-card-content>{{patientIdentifier.identifierType}}</mat-card-content>
+                <mat-card-subtitle>Value</mat-card-subtitle><mat-card-content>{{patientIdentifier.value}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
     </ng-container>
     <ng-container matColumnDef="patientPerson">
         <mat-header-cell *matHeaderCellDef> Patient Person </mat-header-cell>
@@ -29,15 +34,38 @@
     </ng-container>
     <ng-container matColumnDef="caseloadPatients">
         <mat-header-cell *matHeaderCellDef> Caseload Patients </mat-header-cell>
-        <mat-cell *matCellDef="let patient"> {{patient.caseloadPatients}} </mat-cell>
+        <mat-cell *matCellDef="let patient">
+            <mat-card *ngFor="let caseloadPatient of patient.caseloadPatients">
+                <mat-card-subtitle>Id</mat-card-subtitle><mat-card-content>{{caseloadPatient.id}}</mat-card-content>
+                <mat-card-subtitle>Organisation</mat-card-subtitle><mat-card-content>{{caseloadPatient.organisation}}</mat-card-content>
+                <mat-card-subtitle>Date Recorded</mat-card-subtitle><mat-card-content>{{caseloadPatient.dateRecorded}}</mat-card-content>
+                <mat-card-subtitle>Patient Status</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientStatus.status}} {{caseloadPatient.patientStatus.caseloadStatus}}</mat-card-content>
+                <mat-card-subtitle>Patient Type</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientType}}</mat-card-content>
+                <mat-card-subtitle>EMIS Patient Number</mat-card-subtitle><mat-card-content>{{caseloadPatient.emisPatientNumber}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
     </ng-container>
     <ng-container matColumnDef="patientIdentifier">
         <mat-header-cell *matHeaderCellDef> Patient Identifier </mat-header-cell>
-        <mat-cell *matCellDef="let patient"> {{patient.patientIdentifier}} </mat-cell>
+        <mat-cell *matCellDef="let patient">
+            <mat-card *ngFor="let patientIdentifier of patient.patientIdentifier">
+                <mat-card-subtitle>Identifier Type</mat-card-subtitle><mat-card-content>{{patientIdentifier.identifierType}}</mat-card-content>
+                <mat-card-subtitle>Value</mat-card-subtitle><mat-card-content>{{patientIdentifier.value}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
     </ng-container>
     <ng-container matColumnDef="caseloadPatient">
         <mat-header-cell *matHeaderCellDef> Caseload Patient </mat-header-cell>
-        <mat-cell *matCellDef="let patient"> {{patient.caseloadPatient}} </mat-cell>
+        <mat-cell *matCellDef="let patient">
+            <mat-card *ngFor="let caseloadPatient of patient.caseloadPatient">
+                <mat-card-subtitle>Id</mat-card-subtitle><mat-card-content>{{caseloadPatient.id}}</mat-card-content>
+                <mat-card-subtitle>Organisation</mat-card-subtitle><mat-card-content>{{caseloadPatient.organisation}}</mat-card-content>
+                <mat-card-subtitle>Date Recorded</mat-card-subtitle><mat-card-content>{{caseloadPatient.dateRecorded}}</mat-card-content>
+                <mat-card-subtitle>Patient Status</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientStatus.status}} {{caseloadPatient.patientStatus.caseloadStatus}}</mat-card-content>
+                <mat-card-subtitle>Patient Type</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientType}}</mat-card-content>
+                <mat-card-subtitle>EMIS Patient Number</mat-card-subtitle><mat-card-content>{{caseloadPatient.emisPatientNumber}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="patientDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: patientDisplayedColumns;"></mat-row>

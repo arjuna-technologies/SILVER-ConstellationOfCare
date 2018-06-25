@@ -9,7 +9,13 @@
     </ng-container>
     <ng-container matColumnDef="organisationType">
         <mat-header-cell *matHeaderCellDef> Organisation Type </mat-header-cell>
-        <mat-cell *matCellDef="let organisation"> {{organisation.organisationType}} </mat-cell>
+        <mat-cell *matCellDef="let organisation">
+            <mat-card>
+                <mat-card-subtitle>Identifier Type</mat-card-subtitle><mat-card-content>{{organisation.organisationType.displayName}}</mat-card-content>
+                <mat-card-subtitle>Code System</mat-card-subtitle><mat-card-content>{{organisation.organisationType.codeSystem}}</mat-card-content>
+                <mat-card-subtitle>Code</mat-card-subtitle><mat-card-content>{{organisation.organisationType.code}}</mat-card-content>
+            </mat-card>
+       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="nationalPracticeCode">
         <mat-header-cell *matHeaderCellDef> National Practice Code </mat-header-cell>

@@ -28,66 +28,30 @@ export class MIGInformationComponent implements DoCheck
 
     public doLoadInformation(nhsNumber: string)
     {
-        this.loading     = true;
-        this.information = null;
-        this.dataService.loadMIGInformation(nhsNumber)
-            .then((migInformation: MIGInformation) => this.doLoadInformationSuccessHandler(migInformation))
-            .catch((error) => this.doLoadInformationErrorHandler(error));
+        if (nhsNumber != null)
+        {
+             this.loading     = true;
+             this.information = null;
+             this.dataService.loadMIGInformation(nhsNumber)
+                .then((migInformation: MIGInformation) => this.doLoadInformationSuccessHandler(migInformation))
+                .catch((error) => this.doLoadInformationErrorHandler(error));
+        }
+        else
+        {
+            this.loading     = false;
+            this.information = null;
+        }
     }
 
     private doLoadInformationSuccessHandler(migInformation: MIGInformation)
     {
         this.information = migInformation;
         this.loading     = false;
-/*
-        if (this.encounterDataSource.paginator)
-            this.encounterDataSource.paginator.firstPage();
-        if (this.problemDataSource.paginator)
-            this.problemDataSource.paginator.firstPage();
-        if (this.eventDataSource.paginator)
-            this.eventDataSource.paginator.firstPage();
-
-        if (this.information)
-        {
-            if (this.information.encounters)
-                this.encounterDataSource.data = this.information.encounters;
-            else
-                this.encounterDataSource.data = null;
-
-            if (this.information.problems)
-                this.problemDataSource.data = this.information.problems;
-            else
-                this.problemDataSource.data = null;
-
-            if (this.information.events)
-                this.eventDataSource.data = this.information.events;
-            else
-                this.eventDataSource.data = null;
-        }
-        else
-        {
-            this.encounterDataSource.data = null;
-            this.problemDataSource.data   = null;
-            this.eventDataSource.data     = null;
-        }
-*/
     }
 
     private doLoadInformationErrorHandler(error: any)
     {
         this.information = null;
         this.loading     = false;
-/*
-        if (this.encounterDataSource.paginator)
-            this.encounterDataSource.paginator.firstPage();
-        if (this.problemDataSource.paginator)
-            this.problemDataSource.paginator.firstPage();
-        if (this.eventDataSource.paginator)
-            this.eventDataSource.paginator.firstPage();
-
-        this.encounterDataSource.data = null;
-        this.problemDataSource.data   = null;
-        this.eventDataSource.data     = null;
-*/
     }
 }

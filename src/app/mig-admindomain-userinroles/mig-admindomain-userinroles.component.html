@@ -29,7 +29,12 @@
     </ng-container>
     <ng-container matColumnDef="userIdentifiers">
         <mat-header-cell *matHeaderCellDef> User Identifiers </mat-header-cell>
-        <mat-cell *matCellDef="let userInRole"> {{userInRole.userIdentifiers}} </mat-cell>
+        <mat-cell *matCellDef="let userInRole">
+            <mat-card *ngFor="let userIdentifier of userInRole.userIdentifiers">
+                <mat-card-subtitle>Identifier Type</mat-card-subtitle><mat-card-content>{{userIdentifier.identifierType}}</mat-card-content>
+                <mat-card-subtitle>Value</mat-card-subtitle><mat-card-content>{{userIdentifier.value}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="userInRoleDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: userInRoleDisplayedColumns;"></mat-row>
