@@ -1,3 +1,25 @@
-<p>
-  mig-admindomain-persons works!
-</p>
+<mat-table #personTable [dataSource]="personDataSource">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let person"> {{person.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="sex">
+        <mat-header-cell *matHeaderCellDef> Sex </mat-header-cell>
+        <mat-cell *matCellDef="let person"> {{person.sex}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="forenames">
+        <mat-header-cell *matHeaderCellDef> Forenames </mat-header-cell>
+        <mat-cell *matCellDef="let person"> {{person.forenames}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="surname">
+        <mat-header-cell *matHeaderCellDef> Surname </mat-header-cell>
+        <mat-cell *matCellDef="let person"> {{person.surname}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-cell *matCellDef="let person"> {{person.title}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="personDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: personDisplayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #personPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

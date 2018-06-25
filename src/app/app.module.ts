@@ -21,22 +21,28 @@ import { MatChipsModule }       from '@angular/material/chips';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AppComponent }                       from './app.component';
-import { LoginDialogComponent }               from './login-dialog/login-dialog.component';
-import { FamilyBookmarksComponent }           from './family-bookmarks/family-bookmarks.component';
-import { FamilyComponent }                    from './family/family.component';
-import { FamilyMemberComponent }              from './family-member/family-member.component';
-import { MIGInformationComponent }            from './mig-information/mig-information.component';
-import { MIGAdminDomainComponent }            from './mig-admindomain/mig-admindomain.component';
-import { MIGAdminDomainPersonsComponent }     from './mig-admindomain-persons/mig-admindomain-persons.component';
-import { MIGAdminDomainPatientsComponent }    from './mig-admindomain-patients/mig-admindomain-patients.component';
-import { MIGHealthDomainComponent }           from './mig-healthdomain/mig-healthdomain.component';
-import { MIGHealthDomainEncountersComponent } from './mig-healthdomain-encounters/mig-healthdomain-encounters.component';
-import { MIGHealthDomainProblemsComponent }   from './mig-healthdomain-problems/mig-healthdomain-problems.component';
-import { MIGHealthDomainEventsComponent }     from './mig-healthdomain-events/mig-healthdomain-events.component';
+import { AppComponent }                         from './app.component';
+import { LoginDialogComponent }                 from './login-dialog/login-dialog.component';
+import { FamilyBookmarksComponent }             from './family-bookmarks/family-bookmarks.component';
+import { FamilyComponent }                      from './family/family.component';
+import { FamilyMemberComponent }                from './family-member/family-member.component';
+import { MIGInformationComponent }              from './mig-information/mig-information.component';
+import { MIGAdminDomainComponent }              from './mig-admindomain/mig-admindomain.component';
+import { MIGAdminDomainPersonsComponent }       from './mig-admindomain-persons/mig-admindomain-persons.component';
+import { MIGAdminDomainPatientsComponent }      from './mig-admindomain-patients/mig-admindomain-patients.component';
+import { MIGAdminDomainOrganisationsComponent } from './mig-admindomain-organisations/mig-admindomain-organisations.component';
+import { MIGAdminDomainLocationsComponent }     from './mig-admindomain-locations/mig-admindomain-locations.component';
+import { MIGAdminDomainUsersComponent }         from './mig-admindomain-users/mig-admindomain-users.component';
+import { MIGAdminDomainRolesComponent }         from './mig-admindomain-roles/mig-admindomain-roles.component';
+import { MIGAdminDomainUserInRolesComponent }   from './mig-admindomain-userinroles/mig-admindomain-userinroles.component';
+import { MIGHealthDomainComponent }             from './mig-healthdomain/mig-healthdomain.component';
+import { MIGHealthDomainEncountersComponent }   from './mig-healthdomain-encounters/mig-healthdomain-encounters.component';
+import { MIGHealthDomainProblemsComponent }     from './mig-healthdomain-problems/mig-healthdomain-problems.component';
+import { MIGHealthDomainEventsComponent }       from './mig-healthdomain-events/mig-healthdomain-events.component';
 
 import { AuthenticationService } from './authentication.service';
 import { DataService }           from './data.service';
+import { MIGInformationService } from './mig-information.service';
 
 @NgModule
 ({
@@ -50,6 +56,12 @@ import { DataService }           from './data.service';
         MIGInformationComponent,
         MIGAdminDomainComponent,
         MIGAdminDomainPersonsComponent,
+        MIGAdminDomainPatientsComponent,
+        MIGAdminDomainOrganisationsComponent,
+        MIGAdminDomainLocationsComponent,
+        MIGAdminDomainUsersComponent,
+        MIGAdminDomainRolesComponent,
+        MIGAdminDomainUserInRolesComponent,
         MIGHealthDomainComponent,
         MIGHealthDomainEncountersComponent,
         MIGHealthDomainProblemsComponent,
@@ -84,7 +96,8 @@ import { DataService }           from './data.service';
     providers:
     [
         AuthenticationService,
-        DataService
+        DataService,
+        MIGInformationService
     ],
     bootstrap:
     [

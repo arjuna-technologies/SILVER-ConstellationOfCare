@@ -1,48 +1,48 @@
 import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
-import { MIGProblem } from '../mig-problem';
+import { MIGPatient } from '../mig-patient';
 
 @Component
 ({
-    selector:    'cnstll-mig-healthdomain-problems',
-    templateUrl: './mig-healthdomain-problems.component.html',
-    styleUrls:   ['./mig-healthdomain-problems.component.scss']
+    selector:    'cnstll-mig-admindomain-patients',
+    templateUrl: './mig-admindomain-patients.component.html',
+    styleUrls:   ['./mig-admindomain-patients.component.scss']
 })
-export class MIGHealthDomainProblemsComponent implements OnChanges, DoCheck
+export class MIGAdminDomainPatientsComponent implements OnChanges, DoCheck
 {
-    public problemDisplayedColumns = ['id', 'status', 'significance', 'expectedDuration', 'endTime'];
-    public problemDataSource: MatTableDataSource<MIGProblem>;
+    public patientDisplayedColumns = ['id', 'patientIdentifiers', 'patientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'registeredGPUserInRole', 'usualGPUserInRole', 'caseloadPatients', 'patientIdentifier', 'caseloadPatient'];
+    public patientDataSource: MatTableDataSource<MIGPatient>;
 
     @Input()
-    public problems: MIGProblem[];
+    public patients: MIGPatient[];
 
-    @ViewChild('problemPaginator')
-    public problemPaginator: MatPaginator;
+    @ViewChild('patientPaginator')
+    public patientPaginator: MatPaginator;
 
     public constructor()
     {
-        this.problemDataSource      = new MatTableDataSource();
-        this.problemDataSource.data = null;
+        this.patientDataSource      = new MatTableDataSource();
+        this.patientDataSource.data = null;
     }
 
     public ngOnChanges(): void
     {
-        if (this.problems)
-            this.problemDataSource.data = this.problems;
+        if (this.patients)
+            this.patientDataSource.data = this.patients;
         else
-            this.problemDataSource.data = null;
+            this.patientDataSource.data = null;
 
-        if (this.problemDataSource.paginator)
-            this.problemDataSource.paginator.firstPage();
+        if (this.patientDataSource.paginator)
+            this.patientDataSource.paginator.firstPage();
     }
 
     public ngDoCheck(): void
     {
-        if (this.problemDataSource.paginator != this.problemPaginator)
+        if (this.patientDataSource.paginator != this.patientPaginator)
         {
-            this.problemDataSource.paginator = this.problemPaginator;
-            this.problemDataSource.paginator.firstPage();
+            this.patientDataSource.paginator = this.patientPaginator;
+            this.patientDataSource.paginator.firstPage();
         }
     }
 }

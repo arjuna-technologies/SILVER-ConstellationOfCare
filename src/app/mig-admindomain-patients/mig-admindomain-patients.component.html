@@ -1,26 +1,45 @@
-
-    <mat-table #problemTable [dataSource]="problemDataSource">
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-            <mat-cell *matCellDef="let problem"> {{problem.id}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="status">
-            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-            <mat-cell *matCellDef="let problem"> {{problem.status}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="significance">
-            <mat-header-cell *matHeaderCellDef> Significance </mat-header-cell>
-            <mat-cell *matCellDef="let problem"> {{problem.significance}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="expectedDuration">
-            <mat-header-cell *matHeaderCellDef> Expected Duration </mat-header-cell>
-            <mat-cell *matCellDef="let problem"> {{problem.expectedDuration}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="endTime">
-            <mat-header-cell *matHeaderCellDef> End Time </mat-header-cell>
-            <mat-cell *matCellDef="let problem"> {{problem.endTime}} </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="problemDisplayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: problemDisplayedColumns;"></mat-row>
-    </mat-table>
-    <mat-paginator #problemPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>
+<mat-table #patientTable [dataSource]="patientDataSource">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="patientIdentifiers">
+        <mat-header-cell *matHeaderCellDef> Patient Identifiers </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.patientIdentifiers}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="patientPerson">
+        <mat-header-cell *matHeaderCellDef> Patient Person </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.patientPerson}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="spokenLanguage">
+        <mat-header-cell *matHeaderCellDef> Spoken Language </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.spokenLanguage}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="spokenLanguageIsoCode">
+        <mat-header-cell *matHeaderCellDef> Spoken Language Iso Code </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.spokenLanguageIsoCode}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="registeredGPUserInRole">
+        <mat-header-cell *matHeaderCellDef> Registered GP User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.registeredGPUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="usualGPUserInRole">
+        <mat-header-cell *matHeaderCellDef> Usual GP User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.usualGPUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="caseloadPatients">
+        <mat-header-cell *matHeaderCellDef> Caseload Patients </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.caseloadPatients}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="patientIdentifier">
+        <mat-header-cell *matHeaderCellDef> Patient Identifier </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.patientIdentifier}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="caseloadPatient">
+        <mat-header-cell *matHeaderCellDef> Caseload Patient </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.caseloadPatient}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="patientDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: patientDisplayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #patientPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

@@ -1,0 +1,25 @@
+<mat-table #roleTable [dataSource]="roleDataSource">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let role"> {{role.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let role"> {{role.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="userCategory">
+        <mat-header-cell *matHeaderCellDef> User Category </mat-header-cell>
+        <mat-cell *matCellDef="let role"> {{role.userCategory}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="organisation">
+        <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>
+        <mat-cell *matCellDef="let role"> {{role.organisation}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="confidentialityPolicy">
+        <mat-header-cell *matHeaderCellDef> Confidentiality Policy </mat-header-cell>
+        <mat-cell *matCellDef="let role"> {{role.confidentialityPolicy}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="roleDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: roleDisplayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #rolePaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

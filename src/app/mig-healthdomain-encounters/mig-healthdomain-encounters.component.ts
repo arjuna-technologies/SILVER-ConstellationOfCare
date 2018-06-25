@@ -1,5 +1,5 @@
 import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource }     from '@angular/material';
+import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
 import { MIGEncounter } from '../mig-encounter';
 

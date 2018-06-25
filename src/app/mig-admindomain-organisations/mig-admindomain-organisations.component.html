@@ -1,0 +1,25 @@
+<mat-table #organisationTable [dataSource]="organisationDataSource">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let organisation"> {{organisation.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let organisation"> {{organisation.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="organisationType">
+        <mat-header-cell *matHeaderCellDef> Organisation Type </mat-header-cell>
+        <mat-cell *matCellDef="let organisation"> {{organisation.organisationType}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="nationalPracticeCode">
+        <mat-header-cell *matHeaderCellDef> National Practice Code </mat-header-cell>
+        <mat-cell *matCellDef="let organisation"> {{organisation.nationalPracticeCode}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mainLocation">
+        <mat-header-cell *matHeaderCellDef> Main Location </mat-header-cell>
+        <mat-cell *matCellDef="let organisation"> {{organisation.mainLocation}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="organisationDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: organisationDisplayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #organisationPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>
