@@ -89,7 +89,7 @@ export class DataService
         let migPatients: MIGPatient[] = [];
         if (body.adminDomain && body.adminDomain.patients)
             for (let patient of body.adminDomain.patients)
-                migPatients.push(new MIGPatient(patient.id, patient.patientIdentifiers, patient.patientPerson, patient.spokenLanguage, patient.spokenLanguageIsoCode, patient.registeredGPUserInRole, patient.usualGPUserInRole, patient.caseloadPatients, patient.patientIdentifier, patient.caseloadPatient));
+                migPatients.push(new MIGPatient(patient.id, patient.patientIdentifiers, patient.patientPerson, patient.spokenLanguage, patient.spokenLanguageIsoCode, patient.registeredGPUserInRole, patient.usualGPUserInRole, patient.caseloadPatients));
 
         let migOrganisations: MIGOrganisation[] = [];
         if (body.adminDomain && body.adminDomain.organisations)

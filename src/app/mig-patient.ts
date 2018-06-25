@@ -8,10 +8,8 @@ export class MIGPatient
     public registeredGPUserInRole: string;
     public usualGPUserInRole:      string;
     public caseloadPatients:       any;
-    public patientIdentifier:      string;
-    public caseloadPatient:        any;
 
-    public constructor(id: string, patientIdentifiers: any, patientPerson: string, spokenLanguage: string, spokenLanguageIsoCode: string, registeredGPUserInRole: string, usualGPUserInRole: string, caseloadPatients: any, patientIdentifier: string, caseloadPatient: any)
+    public constructor(id: string, patientIdentifiers: any, patientPerson: string, spokenLanguage: string, spokenLanguageIsoCode: string, registeredGPUserInRole: string, usualGPUserInRole: string, caseloadPatients: any)
     {
         this.id                     = id;
         this.patientIdentifiers     = patientIdentifiers;
@@ -21,7 +19,5 @@ export class MIGPatient
         this.registeredGPUserInRole = registeredGPUserInRole;
         this.usualGPUserInRole      = usualGPUserInRole;
         this.caseloadPatients       = caseloadPatients;
-        this.patientIdentifier      = patientIdentifier;
-        this.caseloadPatient        = caseloadPatient;
     }
 }
