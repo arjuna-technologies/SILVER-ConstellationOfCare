@@ -1,4 +1,4 @@
-import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 import { MIGInformation } from '../mig-information';
 
@@ -8,20 +8,14 @@ import { MIGInformation } from '../mig-information';
     templateUrl: './mig-healthdomain.component.html',
     styleUrls:   ['./mig-healthdomain.component.scss']
 })
-export class MIGHealthDomainComponent implements OnChanges, DoCheck
+export class MIGHealthDomainComponent
 {
     @Input()
     public information: MIGInformation;
+    @Input()
+    public format: string;
 
     public constructor()
-    {
-    }
-
-    public ngOnChanges(): void
-    {
-    }
-
-    public ngDoCheck(): void
     {
     }
 }

@@ -11,23 +11,33 @@ import { MIGPerson } from '../mig-person';
 })
 export class MIGAdminDomainPersonsComponent implements OnChanges, DoCheck
 {
-    public personDisplayedColumns = ['id', 'sex', 'forenames', 'surname', 'title'];
+    public personDisplayedColumns: string[];
+    public personDisplayedColumnsLinked = ['title', 'forenames', 'surname', 'sex'];
     public personDataSource: MatTableDataSource<MIGPerson>;
 
     @Input()
     public persons: MIGPerson[];
+    @Input()
+    public format: string;
 
     @ViewChild('personPaginator')
     public personPaginator: MatPaginator;
 
     public constructor()
     {
-        this.personDataSource      = new MatTableDataSource();
-        this.personDataSource.data = null;
+        this.personDisplayedColumns = ['id', 'sex', 'forenames', 'surname', 'title'];
+        this.personDataSource       = new MatTableDataSource();
+        this.personDataSource.data  = null;
     }
 
     public ngOnChanges(): void
     {
+        console.log('Format: ' + this.format);
+        if (this.format === 'raw')
+            this.personDisplayedColumns = ['id', 'sex', 'forenames', 'surname', 'title'];
+        else
+            this.personDisplayedColumns = ['title', 'forenames', 'surname', 'sex'];
+
         if (this.persons)
             this.personDataSource.data = this.persons;
         else

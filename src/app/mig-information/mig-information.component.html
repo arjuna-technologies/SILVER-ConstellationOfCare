@@ -1,5 +1,7 @@
 <mat-card *ngIf="information || loading">
-    <mat-card-title *ngIf="information">Medical Information Gateway: {{information.nhsNumber}}</mat-card-title>
+    <mat-card-title *ngIf="information">
+        Medical Information Gateway: {{information.nhsNumber}}
+    </mat-card-title>
 
     <mat-card-title *ngIf="! information">Medical Information Gateway</mat-card-title>
 
@@ -8,12 +10,18 @@
     </mat-card-content>
 
     <mat-card-content *ngIf="information && (information.status === 'Success')">
+        <span>Format: </span>
+        <mat-radio-group [(ngModel)]="format">
+            <mat-radio-button value="raw"> Raw </mat-radio-button>
+            <mat-radio-button value="linked"> Linked </mat-radio-button>
+        </mat-radio-group>
+
         <mat-tab-group>
             <mat-tab label="Admin Domain">
-                <cnstll-mig-admindomain [information]="information"></cnstll-mig-admindomain>
+                <cnstll-mig-admindomain [format]="format" [information]="information"></cnstll-mig-admindomain>
             </mat-tab>
             <mat-tab label="Health Domain">
-                <cnstll-mig-healthdomain [information]="information"></cnstll-mig-healthdomain>
+                <cnstll-mig-healthdomain [format]="format" [information]="information"></cnstll-mig-healthdomain>
             </mat-tab>
         </mat-tab-group>
     </mat-card-content>

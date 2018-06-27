@@ -12,6 +12,8 @@ export class MIGAdminDomainComponent
 {
     @Input()
     public information: MIGInformation;
+    @Input()
+    public format: string;
 
     public constructor()
     {

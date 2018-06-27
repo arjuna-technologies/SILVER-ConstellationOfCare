@@ -1,6 +1,7 @@
 import { NgModule }                from '@angular/core';
 import { BrowserModule }           from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule }             from '@angular/forms';
 import { HttpClientModule }        from '@angular/common/http';
 
 import { MatToolbarModule }     from '@angular/material/toolbar';
@@ -14,6 +15,7 @@ import { MatExpansionModule }   from '@angular/material/expansion';
 import { MatFormFieldModule }   from '@angular/material/form-field';
 import { MatInputModule }       from '@angular/material';
 import { MatButtonModule }      from '@angular/material/button';
+import { MatRadioModule }       from '@angular/material/radio';
 import { MatIconModule }        from '@angular/material/icon';
 import { MatCardModule }        from '@angular/material/card';
 import { MatListModule }        from '@angular/material/list';
@@ -40,9 +42,9 @@ import { MIGHealthDomainEncountersComponent }   from './mig-healthdomain-encount
 import { MIGHealthDomainProblemsComponent }     from './mig-healthdomain-problems/mig-healthdomain-problems.component';
 import { MIGHealthDomainEventsComponent }       from './mig-healthdomain-events/mig-healthdomain-events.component';
 
-import { AuthenticationService } from './authentication.service';
-import { DataService }           from './data.service';
-import { MIGInformationService } from './mig-information.service';
+import { AuthenticationService }      from './authentication.service';
+import { DataService }                from './data.service';
+import { MIGInformationIndexService } from './mig-information-index.service';
 
 @NgModule
 ({
@@ -71,6 +73,7 @@ import { MIGInformationService } from './mig-information.service';
     [
         BrowserModule,
         BrowserAnimationsModule,
+        FormsModule,
         HttpClientModule,
         MatToolbarModule,
         MatSidenavModule,
@@ -83,6 +86,7 @@ import { MIGInformationService } from './mig-information.service';
         MatExpansionModule,
         MatInputModule,
         MatButtonModule,
+        MatRadioModule,
         MatIconModule,
         MatCardModule,
         MatListModule,
@@ -97,7 +101,7 @@ import { MIGInformationService } from './mig-information.service';
     [
         AuthenticationService,
         DataService,
-        MIGInformationService
+        MIGInformationIndexService
     ],
     bootstrap:
     [
