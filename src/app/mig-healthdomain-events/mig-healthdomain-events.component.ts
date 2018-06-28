@@ -16,6 +16,8 @@ export class MIGHealthDomainEventsComponent implements OnChanges, DoCheck
 
     @Input()
     public events: MIGEvent[];
+    @Input()
+    public format: string;
 
     @ViewChild('eventPaginator')
     public eventPaginator: MatPaginator;

@@ -12,7 +12,6 @@ import { MIGPerson } from '../mig-person';
 export class MIGAdminDomainPersonsComponent implements OnChanges, DoCheck
 {
     public personDisplayedColumns: string[];
-    public personDisplayedColumnsLinked = ['title', 'forenames', 'surname', 'sex'];
     public personDataSource: MatTableDataSource<MIGPerson>;
 
     @Input()
@@ -32,7 +31,6 @@ export class MIGAdminDomainPersonsComponent implements OnChanges, DoCheck
 
     public ngOnChanges(): void
     {
-        console.log('Format: ' + this.format);
         if (this.format === 'raw')
             this.personDisplayedColumns = ['id', 'sex', 'forenames', 'surname', 'title'];
         else

@@ -16,6 +16,8 @@ export class MIGHealthDomainProblemsComponent implements OnChanges, DoCheck
 
     @Input()
     public problems: MIGProblem[];
+    @Input()
+    public format: string;
 
     @ViewChild('problemPaginator')
     public problemPaginator: MatPaginator;

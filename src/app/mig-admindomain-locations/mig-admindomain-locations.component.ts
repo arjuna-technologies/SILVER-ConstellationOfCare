@@ -16,6 +16,8 @@ export class MIGAdminDomainLocationsComponent implements OnChanges, DoCheck
 
     @Input()
     public locations: MIGLocation[];
+    @Input()
+    public format: string;
 
     @ViewChild('locationPaginator')
     public locationPaginator: MatPaginator;

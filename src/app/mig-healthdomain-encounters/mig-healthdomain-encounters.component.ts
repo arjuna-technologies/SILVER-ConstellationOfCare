@@ -16,6 +16,8 @@ export class MIGHealthDomainEncountersComponent implements OnChanges, DoCheck
 
     @Input()
     public encounters: MIGEncounter[];
+    @Input()
+    public format: string;
 
     @ViewChild('encounterPaginator')
     public encounterPaginator: MatPaginator;

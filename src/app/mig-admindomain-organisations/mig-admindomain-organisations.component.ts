@@ -16,6 +16,8 @@ export class MIGAdminDomainOrganisationsComponent implements OnChanges, DoCheck
 
     @Input()
     public organisations: MIGOrganisation[];
+    @Input()
+    public format: string;
 
     @ViewChild('organisationPaginator')
     public organisationPaginator: MatPaginator;

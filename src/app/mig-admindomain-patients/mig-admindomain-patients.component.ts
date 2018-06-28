@@ -11,23 +11,31 @@ import { MIGPatient } from '../mig-patient';
 })
 export class MIGAdminDomainPatientsComponent implements OnChanges, DoCheck
 {
-    public patientDisplayedColumns = ['id', 'patientIdentifiers', 'patientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'registeredGPUserInRole', 'usualGPUserInRole', 'caseloadPatients'];
+    public patientDisplayedColumns: string[];;
     public patientDataSource: MatTableDataSource<MIGPatient>;
 
     @Input()
     public patients: MIGPatient[];
+    @Input()
+    public format: string;
 
     @ViewChild('patientPaginator')
     public patientPaginator: MatPaginator;
 
     public constructor()
     {
-        this.patientDataSource      = new MatTableDataSource();
-        this.patientDataSource.data = null;
+        this.patientDisplayedColumns = ['id', 'patientIdentifiers', 'patientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'registeredGPUserInRole', 'usualGPUserInRole', 'caseloadPatients'];
+        this.patientDataSource       = new MatTableDataSource();
+        this.patientDataSource.data  = null;
     }
 
     public ngOnChanges(): void
     {
+        if (this.format === 'raw')
+            this.patientDisplayedColumns = ['id', 'patientIdentifiers', 'patientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'registeredGPUserInRole', 'usualGPUserInRole', 'caseloadPatients'];
+        else
+            this.patientDisplayedColumns = ['patientIdentifiers', 'patientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'registeredGPUserInRole', 'usualGPUserInRole', 'caseloadPatients'];
+
         if (this.patients)
             this.patientDataSource.data = this.patients;
         else

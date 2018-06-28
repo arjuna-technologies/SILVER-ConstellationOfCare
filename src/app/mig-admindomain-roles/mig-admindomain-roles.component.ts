@@ -16,6 +16,8 @@ export class MIGAdminDomainRolesComponent implements OnChanges, DoCheck
 
     @Input()
     public roles: MIGRole[];
+    @Input()
+    public format: string;
 
     @ViewChild('rolePaginator')
     public rolePaginator: MatPaginator;

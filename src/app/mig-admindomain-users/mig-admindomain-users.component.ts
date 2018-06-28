@@ -16,6 +16,8 @@ export class MIGAdminDomainUsersComponent implements OnChanges, DoCheck
 
     @Input()
     public users: MIGUser[];
+    @Input()
+    public format: string;
 
     @ViewChild('userPaginator')
     public userPaginator: MatPaginator;
