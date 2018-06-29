@@ -1,7 +1,8 @@
 import { Component, ViewChild }             from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
-import { DataService } from '../data.service';
+import { DataService }                from '../data.service';
+import { MIGInformationIndexService } from '../mig-information-index.service';
 
 import { MIGInformation } from '../mig-information';
 
@@ -17,7 +18,7 @@ export class MIGInformationComponent
     public format:      string;
     public loading:     boolean;
 
-    public constructor(private dataService: DataService)
+    public constructor(private dataService: DataService, private migInformationIndexService: MIGInformationIndexService)
     {
         this.information = null;
         this.format      = "raw";
@@ -45,11 +46,15 @@ export class MIGInformationComponent
     {
         this.information = migInformation;
         this.loading     = false;
+
+        this.migInformationIndexService.createIndexes(migInformation);
     }
 
     private doLoadInformationErrorHandler(error: any)
     {
         this.information = null;
         this.loading     = false;
+
+        this.migInformationIndexService.createIndexes(null);
     }
 }

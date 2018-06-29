@@ -1,6 +1,8 @@
 import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
+import { MIGInformationIndexService } from '../mig-information-index.service';
+
 import { MIGPerson } from '../mig-person';
 
 @Component
@@ -22,7 +24,7 @@ export class MIGAdminDomainPersonsComponent implements OnChanges, DoCheck
     @ViewChild('personPaginator')
     public personPaginator: MatPaginator;
 
-    public constructor()
+    public constructor(private migInformationIndexService: MIGInformationIndexService)
     {
         this.personDisplayedColumns = ['id', 'sex', 'forenames', 'surname', 'title'];
         this.personDataSource       = new MatTableDataSource();
