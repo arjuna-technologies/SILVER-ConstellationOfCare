@@ -94,4 +94,44 @@ export class MIGInformationIndexService
                 this.eventMap.set(event.id, event);
         }
     }
+
+    public basicPersonMapping(personId: string): string
+    {
+        let person: MIGPerson = this.personMap.get(personId);
+
+        if (person)
+            return person.title + ' ' + person.forenames + ' ' + person.surname;
+        else
+            return '';
+    }
+
+    public basicUserMapping(userId: string): string
+    {
+        let user: MIGUser = this.userMap.get(userId);
+
+        if (user)
+            return this.basicPersonMapping(user.userPerson);
+        else
+            return '';
+    }
+
+    public basicRoleMapping(roleId: string): string
+    {
+        let role: MIGRole = this.roleMap.get(roleId);
+
+        if (role)
+            return role.name;
+        else
+            return '';
+    }
+
+    public basicUserInRoleMapping(userInRoleId: string): string
+    {
+        let userInRole: MIGUserInRole = this.userInRoleMap.get(userInRoleId);
+
+        if (userInRole)
+            return this.basicUserMapping(userInRole.user) + ' - ' + this.basicRoleMapping(userInRole.role);
+        else
+            return '';
+    }
 }

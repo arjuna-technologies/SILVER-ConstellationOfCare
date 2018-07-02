@@ -62,41 +62,21 @@ export class MIGAdminDomainPatientsComponent implements OnChanges, DoCheck
 
     public personMapping(personId: string): string
     {
-        let person: MIGPerson = this.migInformationIndexService.personMap.get(personId);
-
-        if (person)
-            return person.title + ' ' + person.forenames + ' ' + person.surname;
-        else
-            return '';
+        return this.migInformationIndexService.basicPersonMapping(personId);
     }
 
     public userMapping(userId: string): string
     {
-        let user: MIGUser = this.migInformationIndexService.userMap.get(userId);
-
-        if (user)
-            return this.personMapping(user.userPerson);
-        else
-            return '';
+        return this.migInformationIndexService.basicUserMapping(userId);
     }
 
     public roleMapping(roleId: string): string
     {
-        let role: MIGRole = this.migInformationIndexService.roleMap.get(roleId);
-
-        if (role)
-            return role.name;
-        else
-            return '';
+        return this.migInformationIndexService.basicRoleMapping(roleId);
     }
 
     public userInRoleMapping(userInRoleId: string): string
     {
-        let userInRole: MIGUserInRole = this.migInformationIndexService.userInRoleMap.get(userInRoleId);
-
-        if (userInRole)
-            return this.userMapping(userInRole.user) + ' - ' + this.roleMapping(userInRole.role);
-        else
-            return '';
+        return this.migInformationIndexService.basicUserInRoleMapping(userInRoleId);
     }
 }
