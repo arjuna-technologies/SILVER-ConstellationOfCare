@@ -4,6 +4,10 @@
             <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
             <mat-cell *matCellDef="let problem"> {{problem.id}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="mappedId">
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let problem"> {{idMapping(problem.id)}} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="status">
             <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
             <mat-cell *matCellDef="let problem"> {{problem.status}} </mat-cell>

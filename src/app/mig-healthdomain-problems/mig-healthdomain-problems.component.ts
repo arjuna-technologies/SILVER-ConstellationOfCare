@@ -1,6 +1,8 @@
 import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
+import { MIGInformationIndexService } from '../mig-information-index.service';
+
 import { MIGProblem } from '../mig-problem';
 
 @Component
@@ -22,14 +24,20 @@ export class MIGHealthDomainProblemsComponent implements OnChanges, DoCheck
     @ViewChild('problemPaginator')
     public problemPaginator: MatPaginator;
 
-    public constructor()
+    public constructor(private migInformationIndexService: MIGInformationIndexService)
     {
-        this.problemDataSource      = new MatTableDataSource();
-        this.problemDataSource.data = null;
+        this.problemDisplayedColumns = ['id', 'status', 'significance', 'expectedDuration', 'endTime'];
+        this.problemDataSource       = new MatTableDataSource();
+        this.problemDataSource.data  = null;
     }
 
     public ngOnChanges(): void
     {
+        if (this.format === 'raw')
+            this.problemDisplayedColumns = ['id', 'status', 'significance', 'expectedDuration', 'endTime'];
+        else
+            this.problemDisplayedColumns = ['mappedId', 'status', 'significance', 'expectedDuration', 'endTime'];
+
         if (this.problems)
             this.problemDataSource.data = this.problems;
         else
@@ -46,5 +54,10 @@ export class MIGHealthDomainProblemsComponent implements OnChanges, DoCheck
             this.problemDataSource.paginator = this.problemPaginator;
             this.problemDataSource.paginator.firstPage();
         }
+    }
+
+    public idMapping(id: string): string
+    {
+        return this.migInformationIndexService.basicEventMapping(id);
     }
 }

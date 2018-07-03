@@ -7,6 +7,10 @@
         <mat-header-cell *matHeaderCellDef> Patient </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{event.patient}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="mappedPatient">
+        <mat-header-cell *matHeaderCellDef> Patient </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{patientMapping(event.patient)}} </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="eventType">
         <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{event.eventType}} </mat-cell>
@@ -23,9 +27,17 @@
         <mat-header-cell *matHeaderCellDef> Authorising User In Role </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{event.authorisingUserInRole}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="mappedAuthorisingUserInRole">
+        <mat-header-cell *matHeaderCellDef> Authorising User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{userInRoleMapping(event.authorisingUserInRole)}} </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="enteredByUserInRole">
         <mat-header-cell *matHeaderCellDef> Entered By User In Role </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{event.enteredByUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedEnteredByUserInRole">
+        <mat-header-cell *matHeaderCellDef> Entered By User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{userInRoleMapping(event.enteredByUserInRole)}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="code">
         <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
@@ -44,6 +56,10 @@
     <ng-container matColumnDef="organisation">
         <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{event.organisation}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedOrganisation">
+        <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{organisationMapping(event.organisation)}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="observation">
         <mat-header-cell *matHeaderCellDef> Observation </mat-header-cell>

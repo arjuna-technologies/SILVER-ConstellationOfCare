@@ -21,7 +21,7 @@ export class MIGInformationComponent
     public constructor(private dataService: DataService, private migInformationIndexService: MIGInformationIndexService)
     {
         this.information = null;
-        this.format      = "raw";
+        this.format      = 'friendlier';
         this.loading     = false;
     }
 

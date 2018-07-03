@@ -12,8 +12,9 @@
     <mat-card-content *ngIf="information && (information.status === 'Success')">
         <span>Format: </span>
         <mat-radio-group [(ngModel)]="format">
-            <mat-radio-button value="raw"> Raw </mat-radio-button>
             <mat-radio-button value="friendlier"> Friendlier </mat-radio-button>
+            <span>&nbsp;</span>
+            <mat-radio-button value="raw"> Raw </mat-radio-button>
         </mat-radio-group>
 
         <mat-tab-group>

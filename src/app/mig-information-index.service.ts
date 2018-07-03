@@ -169,4 +169,34 @@ export class MIGInformationIndexService
         else
             return '';
     }
+
+    public basicEncounterMapping(encounterId: string): string
+    {
+        let encounter: MIGEncounter = this.encounterMap.get(encounterId);
+
+        if (encounter)
+            return encounter.id;
+        else
+            return '';
+    }
+
+    public basicProblemMapping(problemId: string): string
+    {
+        let problem: MIGProblem = this.problemMap.get(problemId);
+
+        if (problem)
+            return problem.id;
+        else
+            return '';
+    }
+
+    public basicEventMapping(eventId: string): string
+    {
+        let event: MIGEvent = this.eventMap.get(eventId);
+
+        if (event)
+            return event.displayTerm;
+        else
+            return '';
+    }
 }
