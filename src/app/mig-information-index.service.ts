@@ -130,7 +130,12 @@ export class MIGInformationIndexService
         let location: MIGLocation = this.locationMap.get(locationId);
 
         if (location)
-            return location.name;
+        {
+            if (location.address && location.address.postCode)
+                return location.name + ', ' + location.address.postCode;
+            else
+                return location.name;
+        }
         else
             return '';
     }

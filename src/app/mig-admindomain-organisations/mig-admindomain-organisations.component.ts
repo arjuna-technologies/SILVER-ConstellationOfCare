@@ -1,6 +1,8 @@
 import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
+import { MIGInformationIndexService } from '../mig-information-index.service';
+
 import { MIGOrganisation } from '../mig-organisation';
 
 @Component
@@ -11,7 +13,7 @@ import { MIGOrganisation } from '../mig-organisation';
 })
 export class MIGAdminDomainOrganisationsComponent implements OnChanges, DoCheck
 {
-    public organisationDisplayedColumns = ['id', 'name', 'organisationType', 'nationalPracticeCode', 'mainLocation'];
+    public organisationDisplayedColumns: string[];
     public organisationDataSource: MatTableDataSource<MIGOrganisation>;
 
     @Input()
@@ -22,14 +24,20 @@ export class MIGAdminDomainOrganisationsComponent implements OnChanges, DoCheck
     @ViewChild('organisationPaginator')
     public organisationPaginator: MatPaginator;
 
-    public constructor()
+    public constructor(private migInformationIndexService: MIGInformationIndexService)
     {
-        this.organisationDataSource      = new MatTableDataSource();
-        this.organisationDataSource.data = null;
+        this.organisationDisplayedColumns = ['id', 'name', 'organisationType', 'nationalPracticeCode', 'mainLocation'];
+        this.organisationDataSource       = new MatTableDataSource();
+        this.organisationDataSource.data  = null;
     }
 
     public ngOnChanges(): void
     {
+        if (this.format === 'raw')
+            this.organisationDisplayedColumns = ['id', 'name', 'organisationType', 'nationalPracticeCode', 'mainLocation'];
+        else
+            this.organisationDisplayedColumns = ['name', 'organisationType', 'nationalPracticeCode', 'mappedMainLocation'];
+
         if (this.organisations)
             this.organisationDataSource.data = this.organisations;
         else
@@ -46,5 +54,10 @@ export class MIGAdminDomainOrganisationsComponent implements OnChanges, DoCheck
             this.organisationDataSource.paginator = this.organisationPaginator;
             this.organisationDataSource.paginator.firstPage();
         }
+    }
+
+    public locationMapping(locationId: string): string
+    {
+        return this.migInformationIndexService.basicLocationMapping(locationId);
     }
 }

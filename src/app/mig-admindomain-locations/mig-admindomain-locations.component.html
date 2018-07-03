@@ -10,7 +10,7 @@
     <ng-container matColumnDef="address">
         <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
         <mat-cell *matCellDef="let location">
-            <mat-card>
+            <mat-card *ngIf="location.address">
                 <mat-card-subtitle>Id</mat-card-subtitle><mat-card-content>{{location.address.id}}</mat-card-content>
                 <mat-card-subtitle>Post Code</mat-card-subtitle><mat-card-content>{{location.address.postCode}}</mat-card-content>
                 <mat-card-subtitle>House Name/Flat</mat-card-subtitle><mat-card-content>{{location.address.houseNameFlat}}</mat-card-content>
@@ -18,6 +18,19 @@
                 <mat-card-subtitle>Village</mat-card-subtitle><mat-card-content>{{location.address.village}}</mat-card-content>
                 <mat-card-subtitle>Town</mat-card-subtitle><mat-card-content>{{location.address.town}}</mat-card-content>
                 <mat-card-subtitle>County</mat-card-subtitle><mat-card-content>{{location.address.county}}</mat-card-content>
+            </mat-card>
+       </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedAddress">
+        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+        <mat-cell *matCellDef="let location">
+            <mat-card *ngIf="location.address">
+                <mat-card-subtitle>House Name/Flat</mat-card-subtitle><mat-card-content>{{location.address.houseNameFlat}}</mat-card-content>
+                <mat-card-subtitle>Street</mat-card-subtitle><mat-card-content>{{location.address.street}}</mat-card-content>
+                <mat-card-subtitle>Village</mat-card-subtitle><mat-card-content>{{location.address.village}}</mat-card-content>
+                <mat-card-subtitle>Town</mat-card-subtitle><mat-card-content>{{location.address.town}}</mat-card-content>
+                <mat-card-subtitle>County</mat-card-subtitle><mat-card-content>{{location.address.county}}</mat-card-content>
+                <mat-card-subtitle>Post Code</mat-card-subtitle><mat-card-content>{{location.address.postCode}}</mat-card-content>
             </mat-card>
        </mat-cell>
     </ng-container>

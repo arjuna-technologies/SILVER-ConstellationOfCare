@@ -1,6 +1,8 @@
 import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
+import { MIGInformationIndexService } from '../mig-information-index.service';
+
 import { MIGUser } from '../mig-user';
 
 @Component
@@ -11,7 +13,7 @@ import { MIGUser } from '../mig-user';
 })
 export class MIGAdminDomainUsersComponent implements OnChanges, DoCheck
 {
-    public userDisplayedColumns = ['id', 'userPerson', 'mnemonic'];
+    public userDisplayedColumns: string[];
     public userDataSource: MatTableDataSource<MIGUser>;
 
     @Input()
@@ -22,14 +24,20 @@ export class MIGAdminDomainUsersComponent implements OnChanges, DoCheck
     @ViewChild('userPaginator')
     public userPaginator: MatPaginator;
 
-    public constructor()
+    public constructor(private migInformationIndexService: MIGInformationIndexService)
     {
-        this.userDataSource      = new MatTableDataSource();
-        this.userDataSource.data = null;
+        this.userDisplayedColumns = ['id', 'userPerson', 'mnemonic'];
+        this.userDataSource       = new MatTableDataSource();
+        this.userDataSource.data  = null;
     }
 
     public ngOnChanges(): void
     {
+        if (this.format === 'raw')
+            this.userDisplayedColumns = ['id', 'userPerson', 'mnemonic'];
+        else
+            this.userDisplayedColumns = ['mappedUserPerson', 'mnemonic'];
+
         if (this.users)
             this.userDataSource.data = this.users;
         else
@@ -46,5 +54,10 @@ export class MIGAdminDomainUsersComponent implements OnChanges, DoCheck
             this.userDataSource.paginator = this.userPaginator;
             this.userDataSource.paginator.firstPage();
         }
+    }
+
+    public userMapping(userId: string): string
+    {
+        return this.migInformationIndexService.basicUserMapping(userId);
     }
 }

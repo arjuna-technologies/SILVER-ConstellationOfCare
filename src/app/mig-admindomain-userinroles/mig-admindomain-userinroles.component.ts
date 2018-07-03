@@ -1,6 +1,8 @@
 import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
+import { MIGInformationIndexService } from '../mig-information-index.service';
+
 import { MIGUserInRole } from '../mig-userinrole';
 
 @Component
@@ -11,7 +13,7 @@ import { MIGUserInRole } from '../mig-userinrole';
 })
 export class MIGAdminDomainUserInRolesComponent implements OnChanges, DoCheck
 {
-    public userInRoleDisplayedColumns = ['id', 'user', 'role', 'contractualRelationship', 'contractStart', 'contractEnd', 'filingConfidentialityPolicy', 'userIdentifiers'];
+    public userInRoleDisplayedColumns: string[];
     public userInRoleDataSource: MatTableDataSource<MIGUserInRole>;
 
     @Input()
@@ -22,14 +24,20 @@ export class MIGAdminDomainUserInRolesComponent implements OnChanges, DoCheck
     @ViewChild('userInRolePaginator')
     public userInRolePaginator: MatPaginator;
 
-    public constructor()
+    public constructor(private migInformationIndexService: MIGInformationIndexService)
     {
-        this.userInRoleDataSource      = new MatTableDataSource();
-        this.userInRoleDataSource.data = null;
+        this.userInRoleDisplayedColumns = ['id', 'user', 'role', 'contractualRelationship', 'contractStart', 'contractEnd', 'filingConfidentialityPolicy', 'userIdentifiers'];
+        this.userInRoleDataSource       = new MatTableDataSource();
+        this.userInRoleDataSource.data  = null;
     }
 
     public ngOnChanges(): void
     {
+        if (this.format === 'raw')
+            this.userInRoleDisplayedColumns = ['id', 'user', 'role', 'contractualRelationship', 'contractStart', 'contractEnd', 'filingConfidentialityPolicy', 'userIdentifiers'];
+        else
+            this.userInRoleDisplayedColumns = ['mappedUser', 'mappedRole', 'contractualRelationship', 'contractStart', 'contractEnd', 'filingConfidentialityPolicy', 'userIdentifiers'];
+
         if (this.userInRoles)
             this.userInRoleDataSource.data = this.userInRoles;
         else
@@ -46,5 +54,15 @@ export class MIGAdminDomainUserInRolesComponent implements OnChanges, DoCheck
             this.userInRoleDataSource.paginator = this.userInRolePaginator;
             this.userInRoleDataSource.paginator.firstPage();
         }
+    }
+
+    public userMapping(userId: string): string
+    {
+        return this.migInformationIndexService.basicUserMapping(userId);
+    }
+
+    public roleMapping(roleId: string): string
+    {
+        return this.migInformationIndexService.basicRoleMapping(roleId);
     }
 }

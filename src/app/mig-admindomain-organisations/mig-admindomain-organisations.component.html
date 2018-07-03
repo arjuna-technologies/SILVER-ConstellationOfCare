@@ -25,6 +25,10 @@
         <mat-header-cell *matHeaderCellDef> Main Location </mat-header-cell>
         <mat-cell *matCellDef="let organisation"> {{organisation.mainLocation}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="mappedMainLocation">
+        <mat-header-cell *matHeaderCellDef> Main Location </mat-header-cell>
+        <mat-cell *matCellDef="let organisation"> {{locationMapping(organisation.mainLocation)}} </mat-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="organisationDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: organisationDisplayedColumns;"></mat-row>
 </mat-table>

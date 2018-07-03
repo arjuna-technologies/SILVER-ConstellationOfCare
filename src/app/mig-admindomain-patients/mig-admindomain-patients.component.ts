@@ -4,10 +4,6 @@ import { MatPaginator, MatTableDataSource }                from '@angular/materi
 import { MIGInformationIndexService } from '../mig-information-index.service';
 
 import { MIGPatient }    from '../mig-patient';
-import { MIGPerson }     from '../mig-person';
-import { MIGUser }       from '../mig-user';
-import { MIGRole }       from '../mig-role';
-import { MIGUserInRole } from '../mig-userinrole';
 
 @Component
 ({

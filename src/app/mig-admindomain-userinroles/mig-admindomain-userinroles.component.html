@@ -7,9 +7,17 @@
         <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
         <mat-cell *matCellDef="let userInRole"> {{userInRole.user}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="mappedUser">
+        <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userMapping(userInRole.user)}} </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="role">
         <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
         <mat-cell *matCellDef="let userInRole"> {{userInRole.role}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedRole">
+        <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{roleMapping(userInRole.role)}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="contractualRelationship">
         <mat-header-cell *matHeaderCellDef> Contractual Relationship </mat-header-cell>

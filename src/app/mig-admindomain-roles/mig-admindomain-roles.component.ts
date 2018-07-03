@@ -1,6 +1,8 @@
 import { Component, OnChanges, DoCheck, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource }                from '@angular/material';
 
+import { MIGInformationIndexService } from '../mig-information-index.service';
+
 import { MIGRole } from '../mig-role';
 
 @Component
@@ -11,7 +13,7 @@ import { MIGRole } from '../mig-role';
 })
 export class MIGAdminDomainRolesComponent implements OnChanges, DoCheck
 {
-    public roleDisplayedColumns = ['id', 'name', 'userCategory', 'organisation', 'confidentialityPolicy'];
+    public roleDisplayedColumns: string[];
     public roleDataSource: MatTableDataSource<MIGRole>;
 
     @Input()
@@ -22,14 +24,20 @@ export class MIGAdminDomainRolesComponent implements OnChanges, DoCheck
     @ViewChild('rolePaginator')
     public rolePaginator: MatPaginator;
 
-    public constructor()
+    public constructor(private migInformationIndexService: MIGInformationIndexService)
     {
-        this.roleDataSource      = new MatTableDataSource();
-        this.roleDataSource.data = null;
+        this.roleDisplayedColumns = ['id', 'name', 'userCategory', 'organisation', 'confidentialityPolicy'];
+        this.roleDataSource       = new MatTableDataSource();
+        this.roleDataSource.data  = null;
     }
 
     public ngOnChanges(): void
     {
+        if (this.format === 'raw')
+            this.roleDisplayedColumns = ['id', 'name', 'userCategory', 'organisation', 'confidentialityPolicy'];
+        else
+            this.roleDisplayedColumns = ['name', 'userCategory', 'mappedOrganisation', 'confidentialityPolicy'];
+
         if (this.roles)
             this.roleDataSource.data = this.roles;
         else
@@ -46,5 +54,10 @@ export class MIGAdminDomainRolesComponent implements OnChanges, DoCheck
             this.roleDataSource.paginator = this.rolePaginator;
             this.roleDataSource.paginator.firstPage();
         }
+    }
+
+    public organisationMapping(organisationId: string): string
+    {
+        return this.migInformationIndexService.basicOrganisationMapping(organisationId);
     }
 }

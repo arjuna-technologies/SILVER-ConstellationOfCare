@@ -11,7 +11,7 @@ import { MIGLocation } from '../mig-location';
 })
 export class MIGAdminDomainLocationsComponent implements OnChanges, DoCheck
 {
-    public locationDisplayedColumns = ['id', 'name', 'address'];
+    public locationDisplayedColumns: string[];
     public locationDataSource: MatTableDataSource<MIGLocation>;
 
     @Input()
@@ -24,12 +24,18 @@ export class MIGAdminDomainLocationsComponent implements OnChanges, DoCheck
 
     public constructor()
     {
-        this.locationDataSource      = new MatTableDataSource();
-        this.locationDataSource.data = null;
+        this.locationDisplayedColumns = ['id', 'name', 'address'];
+        this.locationDataSource       = new MatTableDataSource();
+        this.locationDataSource.data  = null;
     }
 
     public ngOnChanges(): void
     {
+        if (this.format === 'raw')
+            this.locationDisplayedColumns = ['id', 'name', 'address'];
+        else
+            this.locationDisplayedColumns = ['name', 'mappedAddress'];
+
         if (this.locations)
             this.locationDataSource.data = this.locations;
         else

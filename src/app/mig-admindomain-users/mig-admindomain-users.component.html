@@ -7,6 +7,10 @@
         <mat-header-cell *matHeaderCellDef> User Person </mat-header-cell>
         <mat-cell *matCellDef="let user"> {{user.userPerson}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="mappedUserPerson">
+        <mat-header-cell *matHeaderCellDef> User Person </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{userMapping(user.userPerson)}} </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="mnemonic">
         <mat-header-cell *matHeaderCellDef> Mnemonic </mat-header-cell>
         <mat-cell *matCellDef="let user"> {{user.mnemonic}} </mat-cell>

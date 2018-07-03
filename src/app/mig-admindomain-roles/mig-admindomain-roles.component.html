@@ -21,6 +21,10 @@
         <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>
         <mat-cell *matCellDef="let role"> {{role.organisation}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="mappedOrganisation">
+        <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>
+        <mat-cell *matCellDef="let role"> {{organisationMapping(role.organisation)}} </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="confidentialityPolicy">
         <mat-header-cell *matHeaderCellDef> Confidentiality Policy </mat-header-cell>
         <mat-cell *matCellDef="let role"> {{role.confidentialityPolicy}} </mat-cell>
