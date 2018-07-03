@@ -105,6 +105,36 @@ export class MIGInformationIndexService
             return '';
     }
 
+    public basicPatientMapping(patientId: string): string
+    {
+        let patient: MIGPatient = this.patientMap.get(patientId);
+
+        if (patient)
+            return this.basicPersonMapping(patient.patientPerson);
+        else
+            return '';
+    }
+
+    public basicOrganisationMapping(organisationId: string): string
+    {
+        let organisation: MIGOrganisation = this.organisationMap.get(organisationId);
+
+        if (organisation)
+            return organisation.name;
+        else
+            return '';
+    }
+
+    public basicLocationMapping(locationId: string): string
+    {
+        let location: MIGLocation = this.locationMap.get(locationId);
+
+        if (location)
+            return location.name;
+        else
+            return '';
+    }
+
     public basicUserMapping(userId: string): string
     {
         let user: MIGUser = this.userMap.get(userId);
