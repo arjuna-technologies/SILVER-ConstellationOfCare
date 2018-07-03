@@ -57,6 +57,18 @@
             </mat-card>
         </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="mappedCaseloadPatients">
+        <mat-header-cell *matHeaderCellDef> Caseload Patients </mat-header-cell>
+        <mat-cell *matCellDef="let patient">
+            <mat-card *ngFor="let caseloadPatient of patient.caseloadPatients">
+                <mat-card-subtitle>Organisation</mat-card-subtitle><mat-card-content>{{organisationMapping(caseloadPatient.organisation)}}</mat-card-content>
+                <mat-card-subtitle>Date Recorded</mat-card-subtitle><mat-card-content>{{caseloadPatient.dateRecorded}}</mat-card-content>
+                <mat-card-subtitle>Patient Status</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientStatus.status}} {{caseloadPatient.patientStatus.caseloadStatus}}</mat-card-content>
+                <mat-card-subtitle>Patient Type</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientType}}</mat-card-content>
+                <mat-card-subtitle>EMIS Patient Number</mat-card-subtitle><mat-card-content>{{caseloadPatient.emisPatientNumber}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="patientDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: patientDisplayedColumns;"></mat-row>
 </mat-table>

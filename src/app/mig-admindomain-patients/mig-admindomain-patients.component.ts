@@ -40,7 +40,7 @@ export class MIGAdminDomainPatientsComponent implements OnChanges, DoCheck
         if (this.format === 'raw')
             this.patientDisplayedColumns = ['id', 'patientIdentifiers', 'patientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'registeredGPUserInRole', 'usualGPUserInRole', 'caseloadPatients'];
         else
-            this.patientDisplayedColumns = ['patientIdentifiers', 'mappedPatientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'mappedRegisteredGPUserInRole', 'mappedUsualGPUserInRole', 'caseloadPatients'];
+            this.patientDisplayedColumns = ['patientIdentifiers', 'mappedPatientPerson', 'spokenLanguage', 'spokenLanguageIsoCode', 'mappedRegisteredGPUserInRole', 'mappedUsualGPUserInRole', 'mappedCaseloadPatients'];
 
         if (this.patients)
             this.patientDataSource.data = this.patients;
@@ -63,6 +63,11 @@ export class MIGAdminDomainPatientsComponent implements OnChanges, DoCheck
     public personMapping(personId: string): string
     {
         return this.migInformationIndexService.basicPersonMapping(personId);
+    }
+
+    public organisationMapping(organisationId: string): string
+    {
+        return this.migInformationIndexService.basicOrganisationMapping(organisationId);
     }
 
     public userMapping(userId: string): string
