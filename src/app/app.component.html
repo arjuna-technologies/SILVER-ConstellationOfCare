@@ -21,7 +21,7 @@
 
 <mat-drawer-container style="height: 100%">
     <mat-drawer #familiesdrawer position="start" mode="side">
-        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="family.doShowFamily($event)"></cnstll-family-bookmarks>
+        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="miginformation.doLoadInformation(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
     </mat-drawer>
 
     <cnstll-family #family (selectNHSNumber)="miginformation.doLoadInformation($event)"></cnstll-family>
