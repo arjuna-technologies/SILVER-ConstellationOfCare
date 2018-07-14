@@ -1,7 +1,7 @@
 import { Component, ViewChild }             from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
-import { DataService }                from '../data.service';
+import { MIGDataService }             from '../mig-data.service';
 import { MIGInformationIndexService } from '../mig-information-index.service';
 
 import { MIGInformation } from '../mig-information';
@@ -18,7 +18,7 @@ export class MIGInformationComponent
     public format:      string;
     public loading:     boolean;
 
-    public constructor(private dataService: DataService, private migInformationIndexService: MIGInformationIndexService)
+    public constructor(private migDataService: MIGDataService, private migInformationIndexService: MIGInformationIndexService)
     {
         this.information = null;
         this.format      = 'friendlier';
@@ -31,7 +31,7 @@ export class MIGInformationComponent
         {
             this.loading     = true;
             this.information = null;
-            this.dataService.loadMIGInformation(nhsNumber)
+            this.migDataService.loadMIGInformation(nhsNumber)
                 .then((migInformation: MIGInformation) => this.doLoadInformationSuccessHandler(migInformation))
                 .catch((error) => this.doLoadInformationErrorHandler(error));
         }

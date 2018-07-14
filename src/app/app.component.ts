@@ -3,8 +3,8 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material';
 
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { FamilyComponent } from './family/family.component';
-import { MIGInformationComponent } from './mig-information/mig-information.component';
+import { FamilyComponent } from './family/family/family.component';
+import { MIGInformationComponent } from './mig/mig-information/mig-information.component';
 
 @Component
 ({

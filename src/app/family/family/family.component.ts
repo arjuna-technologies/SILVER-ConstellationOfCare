@@ -3,8 +3,6 @@ import { Component , Output, EventEmitter } from '@angular/core';
 import { Family       } from '../family';
 import { FamilyMember } from '../family-member';
 
-import { DataService } from '../data.service';
-
 @Component
 ({
     selector:    'cnstll-family',
@@ -20,7 +18,7 @@ export class FamilyComponent
     @Output()
     public selectNHSNumber: EventEmitter<string>;
 
-    public constructor(private dataService: DataService)
+    public constructor()
     {
         this.family     = null;
         this.familyName = '';
