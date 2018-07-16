@@ -15,9 +15,11 @@
             <mat-radio-button value="friendlier"> Friendlier </mat-radio-button>
             <span>&nbsp;</span>
             <mat-radio-button value="raw"> Raw </mat-radio-button>
+            <span>&nbsp;</span>
+            <mat-radio-button value="report"> Report </mat-radio-button>
         </mat-radio-group>
 
-        <mat-tab-group>
+        <mat-tab-group *ngIf="format == 'raw' || format == 'friendlier'">
             <mat-tab label="Admin Domain">
                 <cnstll-mig-admindomain [format]="format" [information]="information"></cnstll-mig-admindomain>
             </mat-tab>
@@ -25,6 +27,17 @@
                 <cnstll-mig-healthdomain [format]="format" [information]="information"></cnstll-mig-healthdomain>
             </mat-tab>
         </mat-tab-group>
+
+      <mat-tab-group *ngIf="format == 'report'">
+        <mat-tab label="Constellation of Care">
+          <cnstll-constellation [information]="information"></cnstll-constellation>
+        </mat-tab>
+        <mat-tab label="Patient Overview">
+          <cnstll-patient-overview [information]="information"></cnstll-patient-overview>
+        </mat-tab>
+      </mat-tab-group>
+
+
     </mat-card-content>
 
     <mat-card-content *ngIf="information && (information.status === 'No Consent')">

@@ -46,6 +46,8 @@ import { AuthenticationService }      from './authentication.service';
 import { FamilyDataService }          from './family/family-data.service';
 import { MIGDataService }             from './mig/mig-data.service';
 import { MIGInformationIndexService } from './mig/mig-information-index.service';
+import { ConstellationComponent } from './report/constellation/constellation.component';
+import { PatientOverviewComponent } from './report/patient-overview/patient-overview.component';
 
 @NgModule
 ({
@@ -68,7 +70,9 @@ import { MIGInformationIndexService } from './mig/mig-information-index.service'
         MIGHealthDomainComponent,
         MIGHealthDomainEncountersComponent,
         MIGHealthDomainProblemsComponent,
-        MIGHealthDomainEventsComponent
+        MIGHealthDomainEventsComponent,
+        ConstellationComponent,
+        PatientOverviewComponent
     ],
     imports:
     [
