@@ -1,0 +1,75 @@
+<mat-table #patientTable [dataSource]="patientDataSource">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="patientIdentifiers">
+        <mat-header-cell *matHeaderCellDef> Patient Identifiers </mat-header-cell>
+        <mat-cell *matCellDef="let patient">
+            <mat-card *ngFor="let patientIdentifier of patient.patientIdentifiers">
+                <mat-card-subtitle>Identifier Type</mat-card-subtitle><mat-card-content>{{patientIdentifier.identifierType}}</mat-card-content>
+                <mat-card-subtitle>Value</mat-card-subtitle><mat-card-content>{{patientIdentifier.value}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="patientPerson">
+        <mat-header-cell *matHeaderCellDef> Patient Person </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.patientPerson}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedPatientPerson">
+        <mat-header-cell *matHeaderCellDef> Patient Person </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{personMapping(patient.patientPerson)}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="spokenLanguage">
+        <mat-header-cell *matHeaderCellDef> Spoken Language </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.spokenLanguage}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="spokenLanguageIsoCode">
+        <mat-header-cell *matHeaderCellDef> Spoken Language Iso Code </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.spokenLanguageIsoCode}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="registeredGPUserInRole">
+        <mat-header-cell *matHeaderCellDef> Registered GP User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.registeredGPUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedRegisteredGPUserInRole">
+        <mat-header-cell *matHeaderCellDef> Registered GP User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{userInRoleMapping(patient.registeredGPUserInRole)}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="usualGPUserInRole">
+        <mat-header-cell *matHeaderCellDef> Usual GP User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{patient.usualGPUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedUsualGPUserInRole">
+        <mat-header-cell *matHeaderCellDef> Usual GP User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let patient"> {{userInRoleMapping(patient.usualGPUserInRole)}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="caseloadPatients">
+        <mat-header-cell *matHeaderCellDef> Caseload Patients </mat-header-cell>
+        <mat-cell *matCellDef="let patient">
+            <mat-card *ngFor="let caseloadPatient of patient.caseloadPatients">
+                <mat-card-subtitle>Id</mat-card-subtitle><mat-card-content>{{caseloadPatient.id}}</mat-card-content>
+                <mat-card-subtitle>Organisation</mat-card-subtitle><mat-card-content>{{caseloadPatient.organisation}}</mat-card-content>
+                <mat-card-subtitle>Date Recorded</mat-card-subtitle><mat-card-content>{{caseloadPatient.dateRecorded}}</mat-card-content>
+                <mat-card-subtitle>Patient Status</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientStatus.status}} {{caseloadPatient.patientStatus.caseloadStatus}}</mat-card-content>
+                <mat-card-subtitle>Patient Type</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientType}}</mat-card-content>
+                <mat-card-subtitle>EMIS Patient Number</mat-card-subtitle><mat-card-content>{{caseloadPatient.emisPatientNumber}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedCaseloadPatients">
+        <mat-header-cell *matHeaderCellDef> Caseload Patients </mat-header-cell>
+        <mat-cell *matCellDef="let patient">
+            <mat-card *ngFor="let caseloadPatient of patient.caseloadPatients">
+                <mat-card-subtitle>Organisation</mat-card-subtitle><mat-card-content>{{organisationMapping(caseloadPatient.organisation)}}</mat-card-content>
+                <mat-card-subtitle>Date Recorded</mat-card-subtitle><mat-card-content>{{caseloadPatient.dateRecorded}}</mat-card-content>
+                <mat-card-subtitle>Patient Status</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientStatus.status}} {{caseloadPatient.patientStatus.caseloadStatus}}</mat-card-content>
+                <mat-card-subtitle>Patient Type</mat-card-subtitle><mat-card-content>{{caseloadPatient.patientType}}</mat-card-content>
+                <mat-card-subtitle>EMIS Patient Number</mat-card-subtitle><mat-card-content>{{caseloadPatient.emisPatientNumber}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="patientDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: patientDisplayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #patientPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

@@ -1,0 +1,50 @@
+<mat-table #userInRoleTable [dataSource]="userInRoleDataSource">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userInRole.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="user">
+        <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userInRole.user}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedUser">
+        <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userMapping(userInRole.user)}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userInRole.role}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="mappedRole">
+        <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{roleMapping(userInRole.role)}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="contractualRelationship">
+        <mat-header-cell *matHeaderCellDef> Contractual Relationship </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userInRole.contractualRelationship}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="contractStart">
+        <mat-header-cell *matHeaderCellDef> Contract Start </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userInRole.contractStart}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="contractEnd">
+        <mat-header-cell *matHeaderCellDef> Contract End </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userInRole.contractEnd}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="filingConfidentialityPolicy">
+        <mat-header-cell *matHeaderCellDef> Filing Confidentiality Policy </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole"> {{userInRole.filingConfidentialityPolicy}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="userIdentifiers">
+        <mat-header-cell *matHeaderCellDef> User Identifiers </mat-header-cell>
+        <mat-cell *matCellDef="let userInRole">
+            <mat-card *ngFor="let userIdentifier of userInRole.userIdentifiers">
+                <mat-card-subtitle>Identifier Type</mat-card-subtitle><mat-card-content>{{userIdentifier.identifierType}}</mat-card-content>
+                <mat-card-subtitle>Value</mat-card-subtitle><mat-card-content>{{userIdentifier.value}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="userInRoleDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: userInRoleDisplayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #userInRolePaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

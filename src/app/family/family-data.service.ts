@@ -4,12 +4,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Family }        from './family';
 import { FamilyMember }  from './family-member';
 
-import { MIGInformation } from './mig-information';
-import { MIGProblem }     from './mig-problem';
-import { MIGEvent }       from './mig-event';
-
 @Injectable()
-export class DataService
+export class FamilyDataService
 {
     private families:      Family[];
     private familyMembers: FamilyMember[];
@@ -55,39 +51,5 @@ export class DataService
                 family = current;
 
         return new Promise(resolve => setTimeout(() => resolve(family), 1000));
-    }
-
-    public loadMIGInformation(nhsNumber: string): Promise<MIGInformation>
-    {
-        return this.httpClient.get("http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=" + nhsNumber)
-                   .toPromise()
-                   .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
-                   .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
-    }
-
-    private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation
-    {
-        console.log('Body = ' + JSON.stringify(body));
-
-        let status: string = body.status;
-
-        let migProblems: MIGProblem[] = [];
-        if (body.healthDomain && body.healthDomain.problems)
-            for (let problem of body.healthDomain.problems)
-                migProblems.push(new MIGProblem(problem.id, problem.status, problem.significance, problem.expectedDuration, problem.endTime));
-
-        let migEvents: MIGEvent[] = [];
-        if (body.healthDomain && body.healthDomain.events)
-            for (let event of body.healthDomain.events)
-                migEvents.push(new MIGEvent(event.id, event.patient, event.eventType, event.effectiveTime, event.availabilityTimeStamp, event.authorisingUserInRole, event.enteredByUserInRole, event.code, event.displayTerm, event.organisation, event.observation));
-
-        return new MIGInformation(nhsNumber, status, [], migProblems, migEvents);
-    }
-
-    private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation
-    {
-        console.log('MIG-Information Error Handler: ' + JSON.stringify(error));
-
-        return new MIGInformation(nhsNumber, 'Failed', [], [], []);
     }
 }

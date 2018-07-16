@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material';
 
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { FamilyComponent } from './family/family/family.component';
+import { MIGInformationComponent } from './mig/mig-information/mig-information.component';
 
 @Component
 ({
@@ -15,6 +18,13 @@ export class AppComponent
     public org:          string;
     public group:        string;
     public showSideBar:  boolean;
+
+    @ViewChild('familiesdrawer')
+    public familiesDrawer: MatDrawer;
+    @ViewChild('family')
+    public family: FamilyComponent;
+    @ViewChild('miginformation')
+    public migInformation: MIGInformationComponent;
 
     public constructor(private dialog: MatDialog)
     {
@@ -36,6 +46,10 @@ export class AppComponent
             this.username = '';
             this.org      = '';
             this.group    = '';
+
+            this.familiesDrawer.close();
+            this.family.doShowFamily(null);
+            this.migInformation.doLoadInformation(null);
         }
     }
 

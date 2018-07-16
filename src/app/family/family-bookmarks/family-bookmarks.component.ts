@@ -3,7 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Family }       from '../family';
 import { FamilyMember } from '../family-member';
 
-import { DataService } from '../data.service';
+import { FamilyDataService } from '../family-data.service';
 
 @Component
 ({
@@ -23,7 +23,7 @@ export class FamilyBookmarksComponent implements OnInit
     @Output()
     public familySelect: EventEmitter<Family>;
 
-    public constructor(private dataService: DataService)
+    public constructor(private familyDataService: FamilyDataService)
     {
         this.families    = null;
         this.familyNames = [];
@@ -59,7 +59,7 @@ export class FamilyBookmarksComponent implements OnInit
     {
         this.loading = true;
 
-        this.dataService.loadFamilies()
+        this.familyDataService.loadFamilies()
             .then(families => this.loadFamiliesSuccess(families))
             .catch(error => this.loadFamiliesFailed(error));
     }
@@ -87,7 +87,7 @@ export class FamilyBookmarksComponent implements OnInit
     {
         this.loading = true;
 
-        this.dataService.loadFamily(familyId)
+        this.familyDataService.loadFamily(familyId)
             .then(family => this.loadFamilySuccess(family))
             .catch(error => this.loadFamilyFailed(error));
     }
