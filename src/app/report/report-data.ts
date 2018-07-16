@@ -10,5 +10,3 @@ export class ReportData {
     this.role                        = role;
   }
 }
-
-}

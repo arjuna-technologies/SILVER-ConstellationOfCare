@@ -3,6 +3,8 @@ import {MIGInformation} from '../../mig/mig-information';
 import {MatPaginator, MatTableDataSource}     from '@angular/material';
 import {ReportData} from '../report-data';
 import {MIGInformationIndexService} from '../../mig/mig-information-index.service';
+import {MIGRole} from '../../mig/mig-role';
+import {MIGOrganisation} from '../../mig/mig-organisation';
 
 @Component({
   selector: 'cnstll-constellation',
@@ -54,4 +56,23 @@ export class ConstellationComponent implements OnChanges, DoCheck {
     }
   }
 
+  public userMapping(userId: string): string
+  {
+    return this.migInformationIndexService.basicUserMapping(userId);
+  }
+
+  public roleMapping(roleId: string): string
+  {
+    if (roleId)
+    {
+      const role: MIGRole = this.migInformationIndexService.roleMap.get(roleId);
+
+      if (role && role.organisation)
+        return this.migInformationIndexService.basicOrganisationMapping(role.organisation);
+      else
+        return '';
+    }
+    else
+      return '';
+  }
 }
