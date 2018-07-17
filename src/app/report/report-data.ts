@@ -1,12 +1,11 @@
 export class ReportData {
-  public id:                          string;
-  public user:                        string;
-  public role:                        string;
+  public personName: string;
+  public roleName: string;
+  public orgName: string;
 
-  public constructor(id: string, user: string, role: string)
-  {
-    this.id                          = id;
-    this.user                        = user;
-    this.role                        = role;
+  public constructor(personName: string, roleName: string, orgName: string) {
+    this.personName = personName;
+    this.roleName = roleName;
+    this.orgName = orgName;
   }
 }

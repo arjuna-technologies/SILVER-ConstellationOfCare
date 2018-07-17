@@ -24,9 +24,7 @@ export class ConstellationComponent implements OnChanges, DoCheck {
   public constellationDisplayedColumns: string[];
 
   constructor(private migInformationIndexService: MIGInformationIndexService) {
-
-    //for each value in user column, call this.migInformationIndexService.basicUserInRoleMapping(userInRoleId);
-    this.constellationDisplayedColumns = ['id', 'user', 'role'];
+    this.constellationDisplayedColumns = ['personName', 'roleName', 'orgName'];
     this.constellationDataSource = new MatTableDataSource();
     this.constellationDataSource.data = null;
   }
@@ -35,7 +33,10 @@ export class ConstellationComponent implements OnChanges, DoCheck {
     let data = [];
     if (this.information) {
       for (let userInRole of this.information.userInRoles) {
-        let dataRow = new ReportData(userInRole.id, userInRole.user, userInRole.role);
+        let professionalName = this.userMapping(userInRole.id);
+        let roleName = this.roleMapping(userInRole.role);
+        let organisationName = this.roleOrgMapping(userInRole.role);
+          let dataRow = new ReportData(professionalName,roleName,organisationName);
         data.push(dataRow);
       }
       this.constellationDataSource.data = data;
@@ -62,6 +63,11 @@ export class ConstellationComponent implements OnChanges, DoCheck {
   }
 
   public roleMapping(roleId: string): string
+  {
+    return this.migInformationIndexService.basicRoleMapping(roleId);
+  }
+
+  public roleOrgMapping(roleId: string): string
   {
     if (roleId)
     {

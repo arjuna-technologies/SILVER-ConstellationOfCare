@@ -3,17 +3,17 @@
 </p>
 
 <mat-table #constellationTable [dataSource]="constellationDataSource">
-  <ng-container matColumnDef="id">
-    <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-    <mat-cell *matCellDef="let reportDataRow"> {{reportDataRow.id}} </mat-cell>
+  <ng-container matColumnDef="personName">
+    <mat-header-cell *matHeaderCellDef> Professional </mat-header-cell>
+    <mat-cell *matCellDef="let reportDataRow"> {{reportDataRow.personName}} </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="user">
-    <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
-    <mat-cell *matCellDef="let reportDataRow"> {{userMapping(reportDataRow.user)}} </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="role">
+  <ng-container matColumnDef="roleName">
     <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
-    <mat-cell *matCellDef="let reportDataRow"> {{roleMapping(reportDataRow.role)}} </mat-cell>
+    <mat-cell *matCellDef="let reportDataRow"> {{reportDataRow.roleName}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="orgName">
+    <mat-header-cell *matHeaderCellDef> Organisation </mat-header-cell>
+    <mat-cell *matCellDef="let reportDataRow"> {{reportDataRow.orgName}} </mat-cell>
   </ng-container>
   <mat-header-row *matHeaderRowDef="constellationDisplayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: constellationDisplayedColumns;"></mat-row>
