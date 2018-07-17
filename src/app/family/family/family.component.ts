@@ -11,18 +11,20 @@ import { FamilyMember } from '../family-member';
 })
 export class FamilyComponent
 {
-    public family:     Family;
-    public familyName: string;
-    public loading:    boolean;
+    public family:         Family;
+    public familyName:     string;
+    public panelOpenState: boolean;
+    public loading:        boolean;
 
     @Output()
     public selectNHSNumber: EventEmitter<string>;
 
     public constructor()
     {
-        this.family     = null;
-        this.familyName = '';
-        this.loading    = false;
+        this.family         = null;
+        this.familyName     = '';
+        this.panelOpenState = true;
+        this.loading        = false;
 
         this.selectNHSNumber = new EventEmitter<string>();
     }
@@ -39,12 +41,14 @@ export class FamilyComponent
             this.familyName = this.generateFamilyName(family.familyMembers);
         else
             this.familyName = '';
+        this.panelOpenState = false;
         this.loading = false;
     }
 
     public doSelectNHSNumber(nhsNumber: string): void
     {
         console.log('NHS Number: ' + nhsNumber);
+        this.panelOpenState = false;
         this.selectNHSNumber.emit(nhsNumber);
     }
 
