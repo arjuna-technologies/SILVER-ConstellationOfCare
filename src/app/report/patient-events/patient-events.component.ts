@@ -1,6 +1,6 @@
 import { GoogleChartsLoaderService } from '../../googlecharts-loader.service';
 
-import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, AfterViewInit } from '@angular/core';
 
 import { MIGEvent } from '../../mig/mig-event';
 
@@ -12,9 +12,9 @@ declare var google: any;
     templateUrl: './patient-events.component.html',
     styleUrls:   ['./patient-events.component.scss']
 })
-export class PatientEventsComponent implements AfterViewInit
+export class PatientEventsComponent implements AfterViewInit, OnChanges
 {
-    @ViewChild('timeline')
+    @ViewChild('eventsTimeline')
     private timeline;
 
     @Input('events')
@@ -23,6 +23,7 @@ export class PatientEventsComponent implements AfterViewInit
     private chart;
     private dataTable;
     private options;
+    private safeToDraw = false;
 
     public constructor(private googleChartsLoaderService: GoogleChartsLoaderService)
     {
@@ -31,34 +32,43 @@ export class PatientEventsComponent implements AfterViewInit
     public ngAfterViewInit(): void
     {
         this.googleChartsLoaderService.load()
-            .then(() => { this.setupEvents(); this.drawChart() });
+            .then(() => { this.setupEvents(); this.safeToDraw=true; this.drawChart() });
+    }
+
+    private populateDataTable(): void {
+      if (this.dataTable) {
+        //this.dataTable.clear();
+        for (let event of this.events) {
+          let id = event.id;
+          let name = event.displayTerm;
+          let startDate = new Date(event.effectiveTime);
+          let endDate = new Date(event.effectiveTime);
+          this.dataTable.addRow([id,name, startDate, endDate]);
+        }
+      }
+    }
+
+    public ngOnChanges(): void {
+      this.populateDataTable();
+      if (this.safeToDraw) {
+        this.drawChart();
+      }
     }
 
     private setupEvents(): void
     {
-        this.dataTable = new google.visualization.DataTable();
-
-        this.dataTable.addColumn({ type: 'string', id: 'Event Name' });
-        this.dataTable.addColumn({ type: 'date', id: 'Start' });
-        this.dataTable.addColumn({ type: 'date', id: 'End' });
-        this.dataTable.addRows(
-            [
-                [ 'Illness 1', new Date(2012, 3, 13), new Date(2014, 3, 14) ],
-                [ 'Illness 2', new Date(2012, 4, 13), new Date(2014, 3, 14) ],
-                [ 'Illness 3', new Date(2012, 3, 1), new Date(2014, 3, 14) ],
-                [ 'Illness 4', new Date(2012, 4, 16), new Date(2014, 3, 14) ],
-                [ 'Illness 5', new Date(2012, 5, 13), new Date(2014, 3, 14) ],
-                [ 'Illness 6', new Date(2012, 2, 1), new Date(2014, 3, 14) ]
-            ]
-        );
-
-        this.options =
-        {
-        };
-
-        this.chart = new google.visualization.Timeline(this.timeline.nativeElement);
-
-        google.visualization.events.addListener(this.chart, 'select', () => this.selectHandler());
+      this.chart = new google.visualization.Timeline(this.timeline.nativeElement);
+      this.options = {
+        timeline: {showRowLabels: false},
+        width: 900
+      };
+      this.dataTable = new google.visualization.DataTable();
+      this.dataTable.addColumn({ type: 'string', id: 'id' });
+      this.dataTable.addColumn({ type: 'string', id: 'Event Name' });
+      this.dataTable.addColumn({ type: 'date', id: 'Start' });
+      this.dataTable.addColumn({ type: 'date', id: 'End' });
+      this.populateDataTable();
+      google.visualization.events.addListener(this.chart, 'select', () => this.selectHandler());
     }
 
     private drawChart(): void
