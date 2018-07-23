@@ -5,6 +5,7 @@ import { FormsModule }             from '@angular/forms';
 import { HttpClientModule }        from '@angular/common/http';
 
 import { MatToolbarModule }     from '@angular/material/toolbar';
+import { MatCheckboxModule }    from '@angular/material/checkbox';
 import { MatSidenavModule }     from '@angular/material/sidenav';
 import { MatDialogModule }      from '@angular/material/dialog';
 import { MatTabsModule }        from '@angular/material/tabs';
@@ -83,6 +84,7 @@ import { MIGInformationIndexService } from './mig/mig-information-index.service'
         MatToolbarModule,
         MatSidenavModule,
         MatDialogModule,
+        MatCheckboxModule,
         MatTabsModule,
         MatTableModule,
         MatPaginatorModule,

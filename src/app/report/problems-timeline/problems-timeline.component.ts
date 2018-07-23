@@ -4,6 +4,7 @@ import { Component, Input, ViewChild, OnChanges, AfterViewInit } from '@angular/
 
 import { MIGEvent } from '../../mig/mig-event';
 import {MIGInformationIndexService} from '../../mig/mig-information-index.service';
+import {MatCheckbox} from "@angular/material";
 
 declare var google: any;
 
@@ -21,6 +22,8 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
     @Input('events')
     private events: MIGEvent[];
 
+    public includeInactive: boolean;
+
     private chart;
     private dataTable;
     private options;
@@ -28,33 +31,50 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
 
     public constructor(private googleChartsLoaderService: GoogleChartsLoaderService,private migInformationIndexService: MIGInformationIndexService)
     {
+      this.includeInactive = true;
     }
 
     public ngAfterViewInit(): void
     {
         this.googleChartsLoaderService.load()
-            .then(() => { this.setupEvents(); this.safeToDraw=true; this.drawChart() });
+            .then(() => { this.setupEvents(); this.safeToDraw=true; this.populateDataTable(); this.drawChart() });
+    }
+
+    public doChange(): void
+    {
+      this.populateDataTable();
+      if (this.safeToDraw) {
+        this.drawChart();
+      }
     }
 
     private populateDataTable(): void {
       if (this.dataTable) {
         let colors = [];
-        //this.dataTable.clear();
-        for (let event of this.events) {
-          let problem = this.migInformationIndexService.problemMap.get(event.id);
-          if (problem) {
-            if (problem.endTime > event.effectiveTime) {
-              let id = event.id;
-              let name = event.displayTerm;
-              let startDate = new Date(event.effectiveTime);
-              let endDate = new Date(problem.endTime);
-              let color = '#AAAAAA';
-              console.dir(problem);
-              if (problem.significance == 'S') {
-                color = '#990000';
+        if (this.safeToDraw) {
+          this.dataTable = new google.visualization.DataTable();
+          this.dataTable.addColumn({ type: 'string', id: 'id' });
+          this.dataTable.addColumn({ type: 'string', id: 'Event Name' });
+          this.dataTable.addColumn({ type: 'date', id: 'Start' });
+          this.dataTable.addColumn({ type: 'date', id: 'End' });
+          for (let event of this.events) {
+            let problem = this.migInformationIndexService.problemMap.get(event.id);
+            if (problem) {
+              if (problem.status == 'A' || (this.includeInactive && problem.status == 'I')) {
+                let id = event.id;
+                let name = event.displayTerm;
+                let startDate = new Date(event.effectiveTime);
+                let endDate = new Date();
+                if (problem.endTime) {
+                  endDate = new Date(problem.endTime);
+                }
+                let color = '#AAAAAA';
+                if (problem.significance == 'S') {
+                  color = '#990000';
+                }
+                colors.push(color);
+                this.dataTable.addRow([id, name, startDate, endDate]);
               }
-              colors.push(color);
-              this.dataTable.addRow([id, name, startDate, endDate]);
             }
           }
         }
