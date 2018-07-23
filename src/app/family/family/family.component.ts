@@ -1,4 +1,6 @@
-import { Component , Output, EventEmitter } from '@angular/core';
+import { Component , Output, ViewChild, EventEmitter } from '@angular/core';
+
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 import { Family       } from '../family';
 import { FamilyMember } from '../family-member';
@@ -13,7 +15,11 @@ export class FamilyComponent
 {
     public family:     Family;
     public familyName: string;
+    public memberName: string;
     public loading:    boolean;
+
+    @ViewChild('expansionpanel')
+    public expansionPanel: MatExpansionPanel;
 
     @Output()
     public selectNHSNumber: EventEmitter<string>;
@@ -22,6 +28,7 @@ export class FamilyComponent
     {
         this.family     = null;
         this.familyName = '';
+        this.memberName = '';
         this.loading    = false;
 
         this.selectNHSNumber = new EventEmitter<string>();
@@ -39,13 +46,22 @@ export class FamilyComponent
             this.familyName = this.generateFamilyName(family.familyMembers);
         else
             this.familyName = '';
+        this.memberName = '';
         this.loading = false;
+
+        if (this.expansionPanel)
+            this.expansionPanel.open();
     }
 
     public doSelectNHSNumber(nhsNumber: string): void
     {
         console.log('NHS Number: ' + nhsNumber);
+        if (nhsNumber)
+            this.memberName = this.generateMemberName(nhsNumber);
+        else
+            this.memberName = '';
         this.selectNHSNumber.emit(nhsNumber);
+        this.expansionPanel.close();
     }
 
     private generateFamilyName(familyMembers: FamilyMember[]): string
@@ -74,6 +90,23 @@ export class FamilyComponent
                     concatSurnames = concatSurnames.concat('/', surnames[surnameIndex]);
 
             return concatSurnames;
+        }
+        else
+            return '';
+    }
+
+    private generateMemberName(nhsNumber: string): string
+    {
+        if (nhsNumber)
+        {
+            let memberName: string = '';
+
+            if (this.family && this.family.familyMembers)
+                for (let familyMember of this.family.familyMembers)
+                    if (familyMember.nhsNumber == nhsNumber)
+                        memberName = familyMember.firstName + ' ' + familyMember.surname;
+
+            return memberName;
         }
         else
             return '';

@@ -1,12 +1,16 @@
 <mat-card *ngIf="family || loading">
-    <mat-card-title><mat-icon>group</mat-icon> Family - {{familyName}} </mat-card-title>
     <mat-card-content>
-        <mat-list *ngIf="family.familyMembers">
-            <mat-list-item *ngFor="let familyMember of family.familyMembers; last as last">
-                <cnstll-family-member [familyMember]="familyMember" (selectNHSNumber)="doSelectNHSNumber($event)"></cnstll-family-member>
-                <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
-            </mat-list-item>
-        </mat-list>
+        <mat-expansion-panel #expansionpanel [expanded]="true">
+            <mat-expansion-panel-header><mat-icon>group</mat-icon><span> Family - {{familyName}} </span><span *ngIf="memberName">, Member - {{memberName}} </span></mat-expansion-panel-header>
+
+            <mat-list *ngIf="family.familyMembers">
+                <mat-list-item *ngFor="let familyMember of family.familyMembers; last as last">
+                    <cnstll-family-member [familyMember]="familyMember" (selectNHSNumber)="doSelectNHSNumber($event)"></cnstll-family-member>
+                    <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
+                </mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+
         <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
     </mat-card-content>
 </mat-card>
