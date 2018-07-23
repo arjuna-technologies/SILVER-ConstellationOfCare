@@ -42,14 +42,12 @@ import { MIGHealthDomainEncountersComponent }   from './mig/mig-healthdomain-enc
 import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-problems/mig-healthdomain-problems.component';
 import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
 import { ConstellationComponent }               from './report/constellation/constellation.component';
-import { PatientOverviewComponent }             from './report/patient-overview/patient-overview.component';
-import { PatientEventsComponent }               from './report/patient-events/patient-events.component';
+import { ProblemsTimelineComponent }               from './report/problems-timeline/problems-timeline.component';
 
 import { AuthenticationService }      from './authentication.service';
 import { FamilyDataService }          from './family/family-data.service';
 import { MIGDataService }             from './mig/mig-data.service';
 import { MIGInformationIndexService } from './mig/mig-information-index.service';
-import { PatientProblemsComponent } from './report/patient-problems/patient-problems.component';
 
 @NgModule
 ({
@@ -74,9 +72,7 @@ import { PatientProblemsComponent } from './report/patient-problems/patient-prob
         MIGHealthDomainProblemsComponent,
         MIGHealthDomainEventsComponent,
         ConstellationComponent,
-        PatientOverviewComponent,
-        PatientEventsComponent,
-        PatientProblemsComponent
+        ProblemsTimelineComponent
     ],
     imports:
     [

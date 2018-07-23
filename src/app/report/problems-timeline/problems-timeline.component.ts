@@ -9,11 +9,11 @@ declare var google: any;
 
 @Component
 ({
-    selector:    'cnstll-patient-events',
-    templateUrl: './patient-events.component.html',
-    styleUrls:   ['./patient-events.component.scss']
+    selector:    'cnstll-problems-timeline',
+    templateUrl: 'problems-timeline.component.html',
+    styleUrls:   ['problems-timeline.component.scss']
 })
-export class PatientEventsComponent implements AfterViewInit, OnChanges
+export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
 {
     @ViewChild('eventsTimeline')
     private timeline;
@@ -66,12 +66,13 @@ export class PatientEventsComponent implements AfterViewInit, OnChanges
       this.chart = new google.visualization.Timeline(this.timeline.nativeElement);
       this.options = {
         timeline: {showRowLabels: false},
+        title: "Timeline of Recent Health Problems",
         width: 1200,
         height: 2000,
         hAxis: {
           title: 'Year',
-          minValue: new Date(1988,0,1);
-          maxValue: new Date(2022,0,1);
+          minValue: new Date(1988,0,1),
+          maxValue: new Date(2022,0,1)
         }
       };
       this.dataTable = new google.visualization.DataTable();
