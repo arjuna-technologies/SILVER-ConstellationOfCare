@@ -38,6 +38,7 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
 
     private populateDataTable(): void {
       if (this.dataTable) {
+        let colors = [];
         //this.dataTable.clear();
         for (let event of this.events) {
           let problem = this.migInformationIndexService.problemMap.get(event.id);
@@ -47,10 +48,19 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
               let name = event.displayTerm;
               let startDate = new Date(event.effectiveTime);
               let endDate = new Date(problem.endTime);
+              let color = '#AAAAAA';
+              console.dir(problem);
+              if (problem.significance == 'S') {
+                color = '#990000';
+              }
+              colors.push(color);
               this.dataTable.addRow([id, name, startDate, endDate]);
             }
           }
         }
+
+        // Reenable this to use colours for significance (red = severe, grey = minor)
+        // this.options.colors = colors;
       }
     }
 
