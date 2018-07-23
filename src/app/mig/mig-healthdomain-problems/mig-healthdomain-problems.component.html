@@ -12,9 +12,17 @@
             <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
             <mat-cell *matCellDef="let problem"> {{problem.status}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="mappedStatus">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-cell *matCellDef="let problem"> {{statusMapped(problem.status)}} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="significance">
             <mat-header-cell *matHeaderCellDef> Significance </mat-header-cell>
             <mat-cell *matCellDef="let problem"> {{problem.significance}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="mappedSignificance">
+            <mat-header-cell *matHeaderCellDef> Significance </mat-header-cell>
+            <mat-cell *matCellDef="let problem"> {{significanceMapped(problem.significance)}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="expectedDuration">
             <mat-header-cell *matHeaderCellDef> Expected Duration </mat-header-cell>

@@ -36,7 +36,7 @@ export class MIGHealthDomainProblemsComponent implements OnChanges, DoCheck
         if (this.format === 'raw')
             this.problemDisplayedColumns = ['id', 'status', 'significance', 'expectedDuration', 'endTime'];
         else
-            this.problemDisplayedColumns = ['mappedId', 'status', 'significance', 'expectedDuration', 'endTime'];
+            this.problemDisplayedColumns = ['mappedId', 'mappedStatus', 'mappedSignificance', 'expectedDuration', 'endTime'];
 
         if (this.problems)
             this.problemDataSource.data = this.problems;
@@ -59,5 +59,25 @@ export class MIGHealthDomainProblemsComponent implements OnChanges, DoCheck
     public idMapping(id: string): string
     {
         return this.migInformationIndexService.basicEventMapping(id);
+    }
+
+    public statusMapped(status: string): string
+    {
+        if (status == 'A')
+            return 'Active';
+        else if (status == 'I')
+            return 'Inactive';
+        else
+            return 'Unknown';
+    }
+
+    public significanceMapped(significance: string): string
+    {
+        if (significance == 'S')
+            return 'Significant';
+        else if (significance == 'M')
+            return 'Minor';
+        else
+            return 'Unknown';
     }
 }
