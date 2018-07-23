@@ -3,6 +3,7 @@ import { GoogleChartsLoaderService } from '../../googlecharts-loader.service';
 import { Component, Input, ViewChild, OnChanges, AfterViewInit } from '@angular/core';
 
 import { MIGEvent } from '../../mig/mig-event';
+import {MIGInformationIndexService} from '../../mig/mig-information-index.service';
 
 declare var google: any;
 
@@ -25,7 +26,7 @@ export class PatientEventsComponent implements AfterViewInit, OnChanges
     private options;
     private safeToDraw = false;
 
-    public constructor(private googleChartsLoaderService: GoogleChartsLoaderService)
+    public constructor(private googleChartsLoaderService: GoogleChartsLoaderService,private migInformationIndexService: MIGInformationIndexService)
     {
     }
 
@@ -39,11 +40,16 @@ export class PatientEventsComponent implements AfterViewInit, OnChanges
       if (this.dataTable) {
         //this.dataTable.clear();
         for (let event of this.events) {
-          let id = event.id;
-          let name = event.displayTerm;
-          let startDate = new Date(event.effectiveTime);
-          let endDate = new Date(event.effectiveTime);
-          this.dataTable.addRow([id,name, startDate, endDate]);
+          let problem = this.migInformationIndexService.problemMap.get(event.id);
+          if (problem) {
+            if (problem.endTime > event.effectiveTime) {
+              let id = event.id;
+              let name = event.displayTerm;
+              let startDate = new Date(event.effectiveTime);
+              let endDate = new Date(problem.endTime);
+              this.dataTable.addRow([id, name, startDate, endDate]);
+            }
+          }
         }
       }
     }
@@ -60,7 +66,13 @@ export class PatientEventsComponent implements AfterViewInit, OnChanges
       this.chart = new google.visualization.Timeline(this.timeline.nativeElement);
       this.options = {
         timeline: {showRowLabels: false},
-        width: 900
+        width: 1200,
+        height: 2000,
+        hAxis: {
+          title: 'Year',
+          minValue: new Date(1988,0,1);
+          maxValue: new Date(2022,0,1);
+        }
       };
       this.dataTable = new google.visualization.DataTable();
       this.dataTable.addColumn({ type: 'string', id: 'id' });
