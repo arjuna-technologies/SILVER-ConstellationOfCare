@@ -5,3 +5,10 @@
        <div #eventsTimeline></div>
     </div>
 </div>
+
+<mat-card *ngIf="event">
+    <mat-card-title> Event </mat-card-title>
+    <mat-card-content>
+        <span>Display Name: {{event.displayTerm}}</span>
+    </mat-card-content>
+</mat-card>

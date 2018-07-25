@@ -22,6 +22,8 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
     @Input('events')
     private events: MIGEvent[];
 
+    public event: MIGEvent;
+
     public includeInactive: boolean;
 
     private chart;
@@ -31,6 +33,7 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
 
     public constructor(private googleChartsLoaderService: GoogleChartsLoaderService,private migInformationIndexService: MIGInformationIndexService)
     {
+      this.event           = null;
       this.includeInactive = true;
     }
 
@@ -98,7 +101,7 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
         timeline: {showRowLabels: false},
         title: "Timeline of Recent Health Problems",
         width: 1200,
-        height: 2000,
+        height: 400,
         hAxis: {
           title: 'Year',
           minValue: new Date(1988,0,1),
@@ -121,5 +124,17 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
 
     private selectHandler(): void
     {
+        const selections: any[] = this.chart.getSelection();
+
+        this.event = null;
+        for (let selection of selections)
+        {
+            if ((selection.row !== undefined) && (selection.row !== null))
+            {
+                const eventId = this.dataTable.getValue(selection.row, 0);
+
+                this.event = this.migInformationIndexService.eventMap.get(eventId);
+            }
+        }
     }
 }
