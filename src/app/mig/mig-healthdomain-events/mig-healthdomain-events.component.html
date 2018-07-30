@@ -42,7 +42,7 @@
     <ng-container matColumnDef="code">
         <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
         <mat-cell *matCellDef="let event">
-            <mat-card>
+            <mat-card *ngIf="event.code">
                 <mat-card-subtitle>Display Name</mat-card-subtitle><mat-card-content>{{event.code.displayName}}</mat-card-content>
                 <mat-card-subtitle>Code</mat-card-subtitle><mat-card-content>{{event.code.code}}</mat-card-content>
                 <mat-card-subtitle>Code System</mat-card-subtitle><mat-card-content>{{event.code.codeSystem}}</mat-card-content>
