@@ -18,16 +18,38 @@ import { MIGEvent }     from './mig-event';
 @Injectable()
 export class MIGDataService
 {
+    public static readonly ALLGPDATA_REQUEST_NAME     = 'allgpdata';
+    public static readonly SUMMARY_REQUEST_NAME       = 'summary';
+    public static readonly PROBLEM_REQUEST_NAME       = 'problem';
+    public static readonly DIAGNOSIS_REQUEST_NAME     = 'diagnosis';
+    public static readonly MEDICATION_REQUEST_NAME    = 'medication';
+    public static readonly RISKSWARNING_REQUEST_NAME  = 'riskswarning';
+    public static readonly PROCEDURE_REQUEST_NAME     = 'procedure';
+    public static readonly INVESTIGATION_REQUEST_NAME = 'investigation';
+    public static readonly EXAMINATION_REQUEST_NAME   = 'examination';
+    public static readonly EVENT_REQUEST_NAME         = 'event';
+    public static readonly PATIENTDETAIL_REQUEST_NAME = 'patientdetail';
+
     constructor(private httpClient: HttpClient)
     {
     }
 
-    public loadMIGInformation(nhsNumber: string): Promise<MIGInformation>
+    public loadMIGInformation(nhsNumber: string, requestType?: string): Promise<MIGInformation>
     {
-        return this.httpClient.get("http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=" + nhsNumber)
-                   .toPromise()
-                   .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
-                   .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
+        if (requestType)
+        {
+            return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber + '&request_type=' + requestType)
+                       .toPromise()
+                       .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
+                       .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
+        }
+        else
+        {
+            return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber)
+                       .toPromise()
+                       .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
+                       .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
+        }
     }
 
     private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation
