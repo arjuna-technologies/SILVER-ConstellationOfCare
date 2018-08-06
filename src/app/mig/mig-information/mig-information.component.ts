@@ -31,7 +31,7 @@ export class MIGInformationComponent
         {
             this.loading     = true;
             this.information = null;
-            this.migDataService.loadMIGInformation(nhsNumber)
+            this.migDataService.loadMIGInformation(nhsNumber, MIGDataService.ALLGPDATA_REQUEST_NAME)
                 .then((migInformation: MIGInformation) => this.doLoadInformationSuccessHandler(migInformation))
                 .catch((error) => this.doLoadInformationErrorHandler(error));
         }
