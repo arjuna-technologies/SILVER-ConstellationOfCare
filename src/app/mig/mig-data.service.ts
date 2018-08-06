@@ -36,6 +36,8 @@ export class MIGDataService
 
     public loadMIGInformation(nhsNumber: string, requestType?: string): Promise<MIGInformation>
     {
+        console.log('NHS Number = ' + nhsNumber + ', Request Type = ' + requestType);
+
         if (requestType)
         {
             return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber + '&request_type=' + requestType)

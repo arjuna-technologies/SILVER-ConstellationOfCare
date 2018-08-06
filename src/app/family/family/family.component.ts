@@ -55,7 +55,6 @@ export class FamilyComponent
 
     public doSelectNHSNumber(nhsNumber: string): void
     {
-        console.log('NHS Number: ' + nhsNumber);
         if (nhsNumber)
             this.memberName = this.generateMemberName(nhsNumber);
         else

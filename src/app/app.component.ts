@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
-import { MatDialog } from '@angular/material';
+import { MatDrawer }            from '@angular/material/sidenav';
+import { MatDialog }            from '@angular/material';
 
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { FamilyComponent } from './family/family/family.component';
+import { LoginDialogComponent }    from './login-dialog/login-dialog.component';
+import { FamilyComponent }         from './family/family/family.component';
 import { MIGInformationComponent } from './mig/mig-information/mig-information.component';
+
+import { MIGDataService } from './mig/mig-data.service';
 
 @Component
 ({
@@ -26,12 +28,31 @@ export class AppComponent
     @ViewChild('miginformation')
     public migInformation: MIGInformationComponent;
 
+    public requestTypes:    any[];
+    public requestTypeCode: string;
+
     public constructor(private dialog: MatDialog)
     {
         this.username    = '';
         this.org         = '';
         this.group       = '';
         this.showSideBar = false;
+
+        this.requestTypeCode = MIGDataService.ALLGPDATA_REQUEST_NAME;
+        this.requestTypes    =
+        [
+            { code: MIGDataService.ALLGPDATA_REQUEST_NAME, label: 'All' },
+            { code: MIGDataService.SUMMARY_REQUEST_NAME, label: 'Summarys' },
+            { code: MIGDataService.PROBLEM_REQUEST_NAME, label: 'Problems' },
+            { code: MIGDataService.DIAGNOSIS_REQUEST_NAME, label: 'Diagnoses' },
+            { code: MIGDataService.MEDICATION_REQUEST_NAME, label: 'Medications' },
+            { code: MIGDataService.RISKSWARNING_REQUEST_NAME, label: 'Risk Warnings' },
+            { code: MIGDataService.PROCEDURE_REQUEST_NAME, label: 'Procedures' },
+            { code: MIGDataService.INVESTIGATION_REQUEST_NAME, label: 'Investigations' },
+            { code: MIGDataService.EXAMINATION_REQUEST_NAME, label: 'Examinations' },
+            { code: MIGDataService.EVENT_REQUEST_NAME, label: 'Events' },
+            { code: MIGDataService.PATIENTDETAIL_REQUEST_NAME, label: 'Patient Details' }
+        ];
     }
 
     public doOpenLoginDialog(): void
@@ -49,7 +70,7 @@ export class AppComponent
 
             this.familiesDrawer.close();
             this.family.doShowFamily(null);
-            this.migInformation.doLoadInformation(null);
+            this.migInformation.doLoadInformation(null, this.requestTypeCode);
         }
     }
 

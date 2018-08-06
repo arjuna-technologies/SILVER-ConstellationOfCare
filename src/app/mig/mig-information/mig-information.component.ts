@@ -15,23 +15,26 @@ import { MIGInformation } from '../mig-information';
 export class MIGInformationComponent
 {
     public information: MIGInformation;
+    public requestType: string;
     public format:      string;
     public loading:     boolean;
 
     public constructor(private migDataService: MIGDataService, private migInformationIndexService: MIGInformationIndexService)
     {
         this.information = null;
+        this.requestType = null;
         this.format      = 'friendlier';
         this.loading     = false;
     }
 
-    public doLoadInformation(nhsNumber: string)
+    public doLoadInformation(nhsNumber: string, requestType: string)
     {
         if (nhsNumber != null)
         {
             this.loading     = true;
             this.information = null;
-            this.migDataService.loadMIGInformation(nhsNumber)
+            this.requestType = requestType;
+            this.migDataService.loadMIGInformation(nhsNumber, requestType)
                 .then((migInformation: MIGInformation) => this.doLoadInformationSuccessHandler(migInformation))
                 .catch((error) => this.doLoadInformationErrorHandler(error));
         }
@@ -39,6 +42,7 @@ export class MIGInformationComponent
         {
             this.loading     = false;
             this.information = null;
+            this.requestType = null;
         }
     }
 

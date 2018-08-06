@@ -1,7 +1,8 @@
 <mat-card *ngIf="family || loading">
     <mat-card-content>
+        <mat-card-title><mat-icon>group</mat-icon> Family - {{familyName}} </mat-card-title>
         <mat-expansion-panel #expansionpanel [expanded]="true">
-            <mat-expansion-panel-header><mat-icon>group</mat-icon><span> Family - {{familyName}} </span><span *ngIf="memberName">, Member - {{memberName}} </span></mat-expansion-panel-header>
+            <mat-expansion-panel-header *ngIf="memberName"> Member - {{memberName}} </mat-expansion-panel-header>
 
             <mat-list *ngIf="family.familyMembers">
                 <mat-list-item *ngFor="let familyMember of family.familyMembers; last as last">
