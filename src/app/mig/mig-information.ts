@@ -9,6 +9,7 @@ import { MIGUserInRole }   from './mig-userinrole';
 import { MIGEncounter } from './mig-encounter';
 import { MIGProblem }   from './mig-problem';
 import { MIGEvent }     from './mig-event';
+import { MIGDocument }  from './mig-document';
 
 export class MIGInformation
 {
@@ -26,10 +27,11 @@ export class MIGInformation
 
     // Health Domain
     public encounters: MIGEncounter[];
-    public problems:   MIGProblem[]
+    public problems:   MIGProblem[];
     public events:     MIGEvent[];
+    public documents:  MIGDocument[];
 
-    public constructor(nhsNumber: string, status: string, persons: MIGPerson[], patients: MIGPatient[], organisations: MIGOrganisation[], locations: MIGLocation[], users: MIGUser[], roles: MIGRole[], userInRoles: MIGUserInRole[], encounters: MIGEncounter[], problems: MIGProblem[], events: MIGEvent[])
+    public constructor(nhsNumber: string, status: string, persons: MIGPerson[], patients: MIGPatient[], organisations: MIGOrganisation[], locations: MIGLocation[], users: MIGUser[], roles: MIGRole[], userInRoles: MIGUserInRole[], encounters: MIGEncounter[], problems: MIGProblem[], events: MIGEvent[], documents: MIGDocument[])
     {
         this.nhsNumber = nhsNumber;
         this.status    = status;
@@ -45,5 +47,6 @@ export class MIGInformation
         this.encounters = encounters;
         this.problems   = problems;
         this.events     = events;
+        this.documents  = documents;
     }
 }

@@ -14,6 +14,7 @@ import { MIGUserInRole }   from './mig-userinrole';
 import { MIGEncounter } from './mig-encounter';
 import { MIGProblem }   from './mig-problem';
 import { MIGEvent }     from './mig-event';
+import { MIGDocument }  from './mig-document';
 
 @Injectable()
 export class MIGDataService
@@ -110,13 +111,18 @@ export class MIGDataService
             for (let event of body.healthDomain.events)
                 migEvents.push(new MIGEvent(event.id, event.patient, event.eventType, event.effectiveTime, event.availabilityTimeStamp, event.authorisingUserInRole, event.enteredByUserInRole, event.code, event.displayTerm, event.organisation, event.observation));
 
-        return new MIGInformation(nhsNumber, status, migPersons, migPatients, migOrganisations, migLocations, migUsers, migRoles, migUserInRoles, migEncounters, migProblems, migEvents);
+        let migDocuments: MIGDocument[] = [];
+        if (body.healthDomain && body.healthDomain.documents)
+            for (let document of body.healthDomain.documents)
+                migDocuments.push(new MIGDocument(document.id));
+
+        return new MIGInformation(nhsNumber, status, migPersons, migPatients, migOrganisations, migLocations, migUsers, migRoles, migUserInRoles, migEncounters, migProblems, migEvents, migDocuments);
     }
 
     private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation
     {
         console.log('MIG-Information Error Handler: ' + JSON.stringify(error));
 
-        return new MIGInformation(nhsNumber, 'Failed', [], [], [], [], [], [], [], [], [], []);
+        return new MIGInformation(nhsNumber, 'Failed', [], [], [], [], [], [], [], [], [], [], []);
     }
 }

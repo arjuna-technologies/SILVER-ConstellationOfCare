@@ -1,0 +1,8 @@
+<mat-table #documentTable [dataSource]="documentDataSource">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let document"> {{document.id}} </mat-cell>
+    </ng-container>
+    <mat-row *matRowDef="let row; columns: documentDisplayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #documentPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>
