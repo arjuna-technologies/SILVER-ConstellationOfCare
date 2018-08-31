@@ -11,7 +11,7 @@ import { MIGEncounter } from '../mig-encounter';
 })
 export class MIGHealthDomainEncountersComponent implements OnChanges, DoCheck
 {
-    public encounterDisplayedColumns = ['id'];
+    public encounterDisplayedColumns = [ 'id', 'patient', 'effectiveTime', 'duration', 'authorisingUserInRole', 'enteredByUserInRole', 'organisations', 'location', 'components' ];
     public encounterDataSource: MatTableDataSource<MIGEncounter>;
 
     @Input()

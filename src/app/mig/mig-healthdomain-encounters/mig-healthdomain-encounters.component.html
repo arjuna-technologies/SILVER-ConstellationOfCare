@@ -3,6 +3,39 @@
         <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
         <mat-cell *matCellDef="let encounter"> {{encounter.id}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="patient">
+        <mat-header-cell *matHeaderCellDef> Patient </mat-header-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.patient}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="effectiveTime">
+        <mat-header-cell *matHeaderCellDef> Effective Time </mat-header-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.effectiveTime}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="duration">
+        <mat-header-cell *matHeaderCellDef> Duration </mat-header-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.duration}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="authorisingUserInRole">
+        <mat-header-cell *matHeaderCellDef> Authorising User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.authorisingUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="enteredByUserInRole">
+        <mat-header-cell *matHeaderCellDef> Entered By User In Role </mat-header-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.enteredByUserInRole}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="organisations">
+        <mat-header-cell *matHeaderCellDef> Organisations </mat-header-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.organisations}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.location}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="components">
+        <mat-header-cell *matHeaderCellDef> Components </mat-header-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.components}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="encounterDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: encounterDisplayedColumns;"></mat-row>
 </mat-table>
 <mat-paginator #encounterPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

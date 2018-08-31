@@ -37,8 +37,6 @@ export class MIGDataService
 
     public loadMIGInformation(nhsNumber: string, requestType?: string): Promise<MIGInformation>
     {
-        console.log('NHS Number = ' + nhsNumber + ', Request Type = ' + requestType);
-
         if (requestType)
         {
             return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber + '&request_type=' + requestType)
@@ -57,8 +55,6 @@ export class MIGDataService
 
     private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation
     {
-        console.log('Body = ' + JSON.stringify(body));
-
         let status: string = body.status;
 
         let migPersons: MIGPerson[] = [];
@@ -99,7 +95,7 @@ export class MIGDataService
         let migEncounters: MIGEncounter[] = [];
         if (body.healthDomain && body.healthDomain.encounters)
             for (let encounter of body.healthDomain.encounters)
-                migEncounters.push(new MIGEncounter(encounter.id));
+                migEncounters.push(new MIGEncounter(encounter.id, encounter.patient, encounter.ffectiveTime, encounter.duration, encounter.authorisingUserInRole, encounter.enteredByUserInRole, encounter.organisations, encounter.location, encounter.components));
 
         let migProblems: MIGProblem[] = [];
         if (body.healthDomain && body.healthDomain.problems)
@@ -114,15 +110,13 @@ export class MIGDataService
         let migDocuments: MIGDocument[] = [];
         if (body.healthDomain && body.healthDomain.documents)
             for (let document of body.healthDomain.documents)
-                migDocuments.push(new MIGDocument(document.id));
+                migDocuments.push(new MIGDocument(document.id, document.name, document.description, document.observations, document.code));
 
         return new MIGInformation(nhsNumber, status, migPersons, migPatients, migOrganisations, migLocations, migUsers, migRoles, migUserInRoles, migEncounters, migProblems, migEvents, migDocuments);
     }
 
     private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation
     {
-        console.log('MIG-Information Error Handler: ' + JSON.stringify(error));
-
         return new MIGInformation(nhsNumber, 'Failed', [], [], [], [], [], [], [], [], [], [], []);
     }
 }

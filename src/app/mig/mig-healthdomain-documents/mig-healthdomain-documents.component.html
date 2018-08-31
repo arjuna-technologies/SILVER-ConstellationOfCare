@@ -3,6 +3,30 @@
         <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
         <mat-cell *matCellDef="let document"> {{document.id}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let document"> {{document.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+        <mat-cell *matCellDef="let document"> {{document.description}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="observations">
+        <mat-header-cell *matHeaderCellDef> Observations </mat-header-cell>
+        <mat-cell *matCellDef="let document"> {{document.observations}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
+        <mat-cell *matCellDef="let document">
+            <mat-card *ngIf="document.code">
+                <mat-card-subtitle>Code</mat-card-subtitle><mat-card-content>{{document.code.code}}</mat-card-content>
+                <mat-card-subtitle>Code System</mat-card-subtitle><mat-card-content>{{document.code.codeSystem}}</mat-card-content>
+                <mat-card-subtitle>Display Name</mat-card-subtitle><mat-card-content>{{document.code.displayName}}</mat-card-content>
+                <mat-card-subtitle>Translation</mat-card-subtitle><mat-card-content>{{document.code.translation}}</mat-card-content>
+            </mat-card>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="documentDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: documentDisplayedColumns;"></mat-row>
 </mat-table>
 <mat-paginator #documentPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

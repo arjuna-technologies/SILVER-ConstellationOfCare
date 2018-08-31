@@ -11,7 +11,7 @@ import { MIGDocument } from '../mig-document';
 })
 export class MIGHealthDomainDocumentsComponent implements OnChanges, DoCheck
 {
-    public documentDisplayedColumns = ['id'];
+    public documentDisplayedColumns = [ 'id', 'name', 'description', 'observations', 'code' ];
     public documentDataSource: MatTableDataSource<MIGDocument>;
 
     @Input()
