@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Patient Search</h2>
+<mat-dialog-content>
+    <mat-card>
+        <mat-card-content>
+            <mat-form-field>
+                <input #givenname matInput placeholder="Given name" type="text" value="">
+            </mat-form-field>
+            <mat-form-field>
+                <input #familyname matInput placeholder="Family name" type="text" value="">
+            </mat-form-field>
+            <br>
+            <span> Gender: </span>
+            <mat-radio-group>
+                <mat-radio-button value="1">Male</mat-radio-button>
+                <mat-radio-button value="2">Female</mat-radio-button>
+                <mat-radio-button value="3" checked="true">Unknown</mat-radio-button>
+            </mat-radio-group>
+            <br>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Birth">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <p *ngIf="message">{{message}}</p>
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="doPatientTrace(givenname.value, familyname.value)">
+        <mat-icon>search</mat-icon>
+        <span>Search</span>
+    </button>
+    <button mat-button mat-dialog-close>
+        <mat-icon>clear</mat-icon>
+        <span>Cancel</span>
+    </button>
+</mat-dialog-actions>

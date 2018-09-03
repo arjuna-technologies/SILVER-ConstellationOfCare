@@ -21,6 +21,8 @@ import { MatIconModule }        from '@angular/material/icon';
 import { MatCardModule }        from '@angular/material/card';
 import { MatListModule }        from '@angular/material/list';
 import { MatChipsModule }       from '@angular/material/chips';
+import { MatDatepickerModule }  from '@angular/material/datepicker';
+import { MatNativeDateModule }  from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -43,13 +45,14 @@ import { MIGHealthDomainEncountersComponent }   from './mig/mig-healthdomain-enc
 import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-problems/mig-healthdomain-problems.component';
 import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
 import { MIGHealthDomainDocumentsComponent }    from './mig/mig-healthdomain-documents/mig-healthdomain-documents.component';
+import { MIGPatientTraceDialogComponent }       from './mig/mig-patienttrace-dialog/mig-patienttrace-dialog.component';
 import { ConstellationComponent }               from './report/constellation/constellation.component';
 import { ProblemsTimelineComponent }            from './report/problems-timeline/problems-timeline.component';
 
-import { AuthenticationService }      from './authentication.service';
-import { FamilyDataService }          from './family/family-data.service';
-import { MIGDataService }             from './mig/mig-data.service';
-import { MIGInformationIndexService } from './mig/mig-information-index.service';
+import { AuthenticationService }       from './authentication.service';
+import { FamilyDataService }           from './family/family-data.service';
+import { MIGDataService }              from './mig/mig-data.service';
+import { MIGInformationIndexService }  from './mig/mig-information-index.service';
 
 @NgModule
 ({
@@ -74,6 +77,7 @@ import { MIGInformationIndexService } from './mig/mig-information-index.service'
         MIGHealthDomainProblemsComponent,
         MIGHealthDomainEventsComponent,
         MIGHealthDomainDocumentsComponent,
+        MIGPatientTraceDialogComponent,
         ConstellationComponent,
         ProblemsTimelineComponent
     ],
@@ -100,11 +104,14 @@ import { MIGInformationIndexService } from './mig/mig-information-index.service'
         MatCardModule,
         MatListModule,
         MatChipsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         FlexLayoutModule
     ],
     entryComponents:
     [
-        LoginDialogComponent
+        LoginDialogComponent,
+        MIGPatientTraceDialogComponent
     ],
     providers:
     [

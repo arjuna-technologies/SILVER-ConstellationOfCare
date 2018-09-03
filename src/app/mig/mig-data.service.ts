@@ -1,7 +1,8 @@
 import { Injectable }               from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
-import { MIGInformation } from './mig-information';
+import { MIGInformation }  from './mig-information';
+import { MIGPatientTrace } from './mig-patienttrace';
 
 import { MIGPerson }       from './mig-person';
 import { MIGPatient }      from './mig-patient';
@@ -51,6 +52,14 @@ export class MIGDataService
                        .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
                        .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
         }
+    }
+
+    public loadMIGPatientTrace(givenname: string, familyname: string, gender: string, birthday: string, birthmonth: string, birthyear: string): Promise<MIGPatientTrace>
+    {
+        return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?givenname=' + givenname + '&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
+                   .toPromise()
+                   .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
+                   .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));
     }
 
     private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation
@@ -118,5 +127,15 @@ export class MIGDataService
     private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation
     {
         return new MIGInformation(nhsNumber, 'Failed', [], [], [], [], [], [], [], [], [], [], []);
+    }
+
+    private loadMIGPatientTraceSuccessHandler(body: any): MIGPatientTrace
+    {
+        return new MIGPatientTrace('Success');
+    }
+
+    private loadMIGPatientTraceErrorHandler(error: any): MIGPatientTrace
+    {
+        return new MIGPatientTrace('Failed');
     }
 }

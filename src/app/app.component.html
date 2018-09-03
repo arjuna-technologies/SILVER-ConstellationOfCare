@@ -20,6 +20,10 @@
             <mat-icon>view_list</mat-icon>
             <span>Request Types: {{requestTypeCode}}</span>
         </button>
+        <button mat-button *ngIf="username" (click)="doPatientSearch()">
+            <mat-icon>search</mat-icon>
+            <span>Patient Search</span>
+        </button>
     </mat-toolbar-row>
 </mat-toolbar>
 
@@ -37,7 +41,7 @@
                 </button>
             </mat-card-title>
             <mat-card-content>
-                <mat-radio-group fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1em" (change)="miginformation.doLoadInformation(null, 
+                <mat-radio-group fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1em" (change)="miginformation.doLoadInformation(null,
 requestTypeCode)" [(ngModel)]="requestTypeCode">
                     <mat-radio-button fxFlex *ngFor="let requestType of requestTypes" [value]="requestType.code">{{requestType.label}}</mat-radio-button>
                 </mat-radio-group>

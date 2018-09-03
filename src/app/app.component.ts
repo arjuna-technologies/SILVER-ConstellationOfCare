@@ -2,9 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { MatDrawer }            from '@angular/material/sidenav';
 import { MatDialog }            from '@angular/material';
 
-import { LoginDialogComponent }    from './login-dialog/login-dialog.component';
-import { FamilyComponent }         from './family/family/family.component';
-import { MIGInformationComponent } from './mig/mig-information/mig-information.component';
+import { LoginDialogComponent }           from './login-dialog/login-dialog.component';
+import { MIGPatientTraceDialogComponent } from './mig/mig-patienttrace-dialog/mig-patienttrace-dialog.component';
+import { FamilyComponent }                from './family/family/family.component';
+import { MIGInformationComponent }        from './mig/mig-information/mig-information.component';
 
 import { MIGDataService } from './mig/mig-data.service';
 
@@ -72,6 +73,12 @@ export class AppComponent
             this.family.doShowFamily(null);
             this.migInformation.doLoadInformation(null, this.requestTypeCode);
         }
+    }
+
+    public doPatientSearch(): void
+    {
+        console.log('PatientSearch');
+        const loginDialogRef = this.dialog.open(MIGPatientTraceDialogComponent);
     }
 
     private processAfterClose(username: string): void
