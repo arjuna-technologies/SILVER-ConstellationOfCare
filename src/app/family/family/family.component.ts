@@ -17,12 +17,6 @@ export class FamilyComponent {
   public memberName: string;
   public loading: boolean;
 
-  @ViewChild('expansionpanel')
-  public expansionPanel: MatExpansionPanel;
-
-  @Output()
-  public closeSelect: EventEmitter<void>;
-
   @Output()
   public selectFamilyMember: EventEmitter<FamilyMember>;
 
@@ -31,7 +25,6 @@ export class FamilyComponent {
     this.familyName = '';
     this.memberName = '';
     this.loading = false;
-    this.closeSelect = new EventEmitter<void>();
     this.selectFamilyMember = new EventEmitter<FamilyMember>();
   }
 
@@ -47,9 +40,6 @@ export class FamilyComponent {
       this.familyName = '';
     this.memberName = '';
     this.loading = false;
-
-    if (this.expansionPanel)
-      this.expansionPanel.open();
   }
 
   public doSelectFamilyMember(familyMember: FamilyMember): void {
@@ -60,7 +50,5 @@ export class FamilyComponent {
     else
       this.memberName = '';
     this.selectFamilyMember.emit(familyMember);
-    this.expansionPanel.close();
-    this.closeSelect.emit();
   }
 }

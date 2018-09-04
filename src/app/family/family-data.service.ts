@@ -39,7 +39,7 @@ export class FamilyDataService
 
     public loadFamilies(): Promise<Family[]>
     {
-        return new Promise(resolve => setTimeout(() => resolve(this.families), 4000));
+        return new Promise(resolve => setTimeout(() => resolve(this.families), 100));
     }
 
     public loadFamily(familyId: string): Promise<Family>
@@ -50,6 +50,6 @@ export class FamilyDataService
             if (familyId === current.id)
                 family = current;
 
-        return new Promise(resolve => setTimeout(() => resolve(family), 1000));
+        return new Promise(resolve => setTimeout(() => resolve(family), 100));
     }
 }

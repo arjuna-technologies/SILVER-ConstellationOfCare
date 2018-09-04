@@ -1,18 +1,14 @@
-<mat-expansion-panel *ngIf="family || loading" #expansionpanel [expanded]="true">
-  <mat-expansion-panel-header>
-    <mat-icon>person</mat-icon>
-    <span *ngIf="memberName">{{memberName}}</span>
-    <span *ngIf="!memberName">&lt;select person&gt;</span>
-  </mat-expansion-panel-header>
-
-  <mat-list *ngIf="family.familyMembers">
+<button mat-button *ngIf="family || loading" [matMenuTriggerFor]="personMenu">
+  <mat-icon>person</mat-icon>
+  <span *ngIf="memberName" title="Click to change person">{{memberName}}</span>
+  <span *ngIf="!memberName">&lt;select person&gt;</span>
+</button>
+<mat-menu #personMenu="matMenu">
+  <mat-list *ngIf="family">
     <mat-list-item *ngFor="let familyMember of family.familyMembers; index as last">
       <cnstll-family-member [familyMember]="familyMember"
                             (selectFamilyMember)="doSelectFamilyMember($event)"></cnstll-family-member>
       <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
     </mat-list-item>
   </mat-list>
-</mat-expansion-panel>
-
-<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-
+</mat-menu>

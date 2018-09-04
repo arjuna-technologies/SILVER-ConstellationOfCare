@@ -16,6 +16,7 @@ import { MatExpansionModule }   from '@angular/material/expansion';
 import { MatFormFieldModule }   from '@angular/material/form-field';
 import { MatInputModule }       from '@angular/material';
 import { MatButtonModule }      from '@angular/material/button';
+import { MatMenuModule }       from '@angular/material/menu';
 import { MatRadioModule }       from '@angular/material/radio';
 import { MatIconModule }        from '@angular/material/icon';
 import { MatCardModule }        from '@angular/material/card';
@@ -94,6 +95,7 @@ import { MIGInformationIndexService } from './mig/mig-information-index.service'
         MatInputModule,
         MatButtonModule,
         MatRadioModule,
+        MatMenuModule,
         MatIconModule,
         MatCardModule,
         MatListModule,

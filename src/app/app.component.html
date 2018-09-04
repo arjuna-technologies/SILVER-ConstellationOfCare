@@ -2,25 +2,22 @@
   <mat-toolbar-row>
     <span>SILVER Health Data Interface</span>
     <span class="toolbar-spacer"></span>
-    <button mat-button *ngIf="username" (click)="familiesdrawer.toggle()">
-      <mat-icon>group</mat-icon>
-      <span>Families</span>
-    </button>
+    <div *ngIf="username">
+      <button mat-button>
+        <cnstll-family-bookmarks (familySelect)="miginformation.doLoadInformation(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
+      </button>
+      <button mat-button>
+        <cnstll-family #family (selectFamilyMember)="miginformation.doLoadInformation($event)"></cnstll-family>
+      </button>
+    </div>
     <button mat-button (click)="doOpenLoginDialog()">
-      <mat-icon>person</mat-icon>
-      <span *ngIf="username"> {{username}} </span>
+      <mat-icon>home</mat-icon>
+      <span *ngIf="username" title="Click to change user"> {{username}} </span>
       <span *ngIf="! username"> Login </span>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-drawer-container style="height: 100%">
-  <mat-drawer #familiesdrawer position="start" mode="push">
-    <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()"
-                             (familySelect)="miginformation.doLoadInformation(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
-    <cnstll-family #family (closeSelect)="familiesdrawer.close()"
-                   (selectFamilyMember)="miginformation.doLoadInformation($event)"></cnstll-family>
-  </mat-drawer>
-
   <cnstll-mig-information #miginformation></cnstll-mig-information>
 </mat-drawer-container>

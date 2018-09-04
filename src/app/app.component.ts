@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
+import { MatMenu } from '@angular/material';
 import { MatDialog } from '@angular/material';
 
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
@@ -17,10 +17,7 @@ export class AppComponent
     public username:     string;
     public org:          string;
     public group:        string;
-    public showSideBar:  boolean;
 
-    @ViewChild('familiesdrawer')
-    public familiesDrawer: MatDrawer;
     @ViewChild('family')
     public family: FamilyComponent;
     @ViewChild('miginformation')
@@ -31,7 +28,7 @@ export class AppComponent
         this.username    = '';
         this.org         = '';
         this.group       = '';
-        this.showSideBar = false;
+        this.doOpenLoginDialog();
     }
 
     public doOpenLoginDialog(): void
@@ -47,7 +44,6 @@ export class AppComponent
             this.org      = '';
             this.group    = '';
 
-            this.familiesDrawer.close();
             this.family.doShowFamily(null);
             this.migInformation.doLoadInformation(null);
         }
@@ -60,15 +56,12 @@ export class AppComponent
             this.username = username;
             this.org      = 'Newcastle City Council';
             this.group    = 'Family Early Help';
-            this.showSideBar = true;
-            this.familiesDrawer.toggle();
         }
         else
         {
             this.username = '';
             this.org      = '';
             this.group    = '';
-            this.showSideBar = false;
         }
     }
 }

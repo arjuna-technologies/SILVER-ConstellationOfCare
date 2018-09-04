@@ -19,11 +19,6 @@ export class FamilyBookmarksComponent implements OnInit {
   public family: Family;
   public loading: boolean;
 
-  @ViewChild('expansionpanel')
-  public expansionPanel: MatExpansionPanel;
-
-  @Output()
-  public closeSelect: EventEmitter<void>;
   @Output()
   public familySelect: EventEmitter<Family>;
 
@@ -32,8 +27,6 @@ export class FamilyBookmarksComponent implements OnInit {
     this.familyNames = [];
     this.family = null;
     this.loading = true;
-
-    this.closeSelect = new EventEmitter<void>();
     this.familySelect = new EventEmitter<Family>();
   }
 
@@ -77,7 +70,7 @@ export class FamilyBookmarksComponent implements OnInit {
 
   private loadFamily(familyId: string): void {
     this.loading = true;
-    this.expansionPanel.close();
+
     this.familyDataService.loadFamily(familyId)
       .then(family => this.loadFamilySuccess(family))
       .catch(error => this.loadFamilyFailed(error));

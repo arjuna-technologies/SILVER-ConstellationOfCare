@@ -1,7 +1,6 @@
 <div>
-  <button mat-button (click)="doSelectNHSNumber()">
+  <button mat-menu-item (click)="doSelectNHSNumber()">
     <mat-icon>person</mat-icon>
     <span> {{familyMember.getFullName()}}</span>
   </button>
-  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 </div>
