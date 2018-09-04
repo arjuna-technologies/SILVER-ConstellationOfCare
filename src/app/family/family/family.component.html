@@ -5,10 +5,10 @@
 </button>
 <mat-menu #personMenu="matMenu">
   <mat-list *ngIf="family">
-    <mat-list-item *ngFor="let familyMember of family.familyMembers; index as last">
+    <mat-list-item *ngFor="let familyMember of family.familyMembers; index as index; last as last">
       <cnstll-family-member [familyMember]="familyMember"
                             (selectFamilyMember)="doSelectFamilyMember($event)"></cnstll-family-member>
-      <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
+      <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
     </mat-list-item>
   </mat-list>
 </mat-menu>

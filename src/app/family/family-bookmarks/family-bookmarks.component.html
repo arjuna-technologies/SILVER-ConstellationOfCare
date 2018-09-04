@@ -1,11 +1,11 @@
 <button mat-button [matMenuTriggerFor]="familyMenu">
   <mat-icon>group</mat-icon>
-  <span *ngIf="family" title="Click to change family">&nbsp;{{family.getFamilyName()}} Family</span>
-  <span *ngIf="!family">&nbsp;&nbsp;&nbsp;&lt;select a family&gt;&nbsp;&nbsp;&nbsp;</span>
+  <span *ngIf="family" title="Click to change family">{{family.getFamilyName()}} Family</span>
+  <span *ngIf="!family">&nbsp;&nbsp;&lt;select a family&gt;</span>
 </button>
 <mat-menu #familyMenu="matMenu">
   <mat-list *ngIf="families">
-    <mat-list-item *ngFor="let family of families; index as index">
+    <mat-list-item *ngFor="let family of families; index as index; last as last">
       <button mat-menu-item (click)="doFamilySelect(family.id)">{{familyNames[index]}}</button>
       <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
     </mat-list-item>

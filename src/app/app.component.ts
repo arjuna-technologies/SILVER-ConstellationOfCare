@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatMenu } from '@angular/material';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
@@ -10,7 +9,8 @@ import { MIGInformationComponent } from './mig/mig-information/mig-information.c
 ({
     selector:    'cnstll-root',
     templateUrl: './app.component.html',
-    styleUrls:   ['./app.component.scss']
+    styleUrls:   ['./app.component.scss'],
+    encapsulation : ViewEncapsulation.None
 })
 export class AppComponent
 {

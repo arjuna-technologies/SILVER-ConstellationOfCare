@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnChanges, SimpleChanges, EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnChanges, ViewEncapsulation, SimpleChanges, EventEmitter} from '@angular/core';
 
 import {FamilyMember} from '../family-member';
 
@@ -6,7 +6,8 @@ import {FamilyMember} from '../family-member';
 ({
   selector: 'cnstll-family-member',
   templateUrl: './family-member.component.html',
-  styleUrls: ['./family-member.component.scss']
+  styleUrls: ['./family-member.component.scss'],
+  encapsulation : ViewEncapsulation.None
 })
 export class FamilyMemberComponent implements OnChanges {
   @Input()

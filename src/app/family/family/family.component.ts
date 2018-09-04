@@ -1,6 +1,4 @@
-import {Component, Output, ViewChild, EventEmitter} from '@angular/core';
-
-import {MatExpansionPanel} from '@angular/material/expansion';
+import {Component, Output, ViewEncapsulation, EventEmitter} from '@angular/core';
 
 import {Family} from '../family';
 import {FamilyMember} from '../family-member';
@@ -9,8 +7,10 @@ import {FamilyMember} from '../family-member';
 ({
   selector: 'cnstll-family',
   templateUrl: './family.component.html',
-  styleUrls: ['./family.component.scss']
+  styleUrls: ['./family.component.scss'],
+  encapsulation : ViewEncapsulation.None
 })
+
 export class FamilyComponent {
   public family: Family;
   public familyName: string;

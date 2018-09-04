@@ -1,6 +1,4 @@
-import {Component, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
-
-import {MatExpansionPanel} from '@angular/material/expansion';
+import {Component, OnInit, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
 
 import {Family}       from '../family';
 import {FamilyMember} from '../family-member';
@@ -11,7 +9,8 @@ import {FamilyDataService} from '../family-data.service';
 ({
   selector: 'cnstll-family-bookmarks',
   templateUrl: './family-bookmarks.component.html',
-  styleUrls: ['./family-bookmarks.component.scss']
+  styleUrls: ['./family-bookmarks.component.scss'],
+  encapsulation : ViewEncapsulation.None
 })
 export class FamilyBookmarksComponent implements OnInit {
   public families: Family[];
