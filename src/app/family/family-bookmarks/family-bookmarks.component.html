@@ -1,12 +1,15 @@
-<mat-card>
-    <mat-card-title>
-        <mat-icon>group</mat-icon> Families
-        <button mat-icon-button (click)="doClose()">
-            <mat-icon>close</mat-icon>
-        </button>
-    </mat-card-title>
-    <mat-card-content>
-        <mat-list-item *ngFor="let family of families; index as index"><button mat-button (click)="doFamilySelect(family.id)">{{familyNames[index]}}</button></mat-list-item>
-        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-    </mat-card-content>
-</mat-card>
+<mat-expansion-panel #expansionpanel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-icon>group</mat-icon>
+    <span *ngIf="family">&nbsp;{{family.getFamilyName()}}</span>
+    <span *ngIf="!family">&nbsp;&nbsp;&nbsp;&lt;select a family&gt;&nbsp;&nbsp;&nbsp;</span>
+  </mat-expansion-panel-header>
+
+  <mat-list>
+    <mat-list-item *ngFor="let family of families; index as index">
+      <button mat-button (click)="doFamilySelect(family.id)">{{familyNames[index]}}</button>
+      <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+    </mat-list-item>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  </mat-list>
+</mat-expansion-panel>

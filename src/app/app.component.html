@@ -1,32 +1,34 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <span>SILVER Constellation of Care</span>
-        <span class="toolbar-spacer"></span>
-        <button mat-button *ngIf="group"><mat-icon>group</mat-icon> {{group}} </button>
-        <button mat-button *ngIf="org"><mat-icon>domain</mat-icon> {{org}} </button>
-        <button mat-button (click)="doOpenLoginDialog()">
-            <mat-icon>person</mat-icon>
-            <span *ngIf="username"> {{username}} </span>
-            <span *ngIf="! username"> Login </span>
-        </button>
-    </mat-toolbar-row>
-
-    <mat-toolbar-row *ngIf="username">
-        <button mat-button (click)="familiesdrawer.toggle()">
-            <mat-icon>group</mat-icon>
-            <span>Families</span>
-        </button>
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+    <span>SILVER Health Data Interface</span>
+    <span class="toolbar-spacer"></span>
+    <button mat-button (click)="familiesdrawer.toggle()">
+      <mat-icon>group</mat-icon>
+      <span>Families</span>
+    </button>
+    <button mat-button *ngIf="group">
+      <mat-icon>group</mat-icon>
+      {{group}}
+    </button>
+    <button mat-button *ngIf="org">
+      <mat-icon>domain</mat-icon>
+      {{org}}
+    </button>
+    <button mat-button (click)="doOpenLoginDialog()">
+      <mat-icon>person</mat-icon>
+      <span *ngIf="username"> {{username}} </span>
+      <span *ngIf="! username"> Login </span>
+    </button>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-drawer-container style="height: 100%">
-    <mat-drawer #familiesdrawer position="start" mode="side">
-        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="miginformation.doLoadInformation(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
-    </mat-drawer>
+  <mat-drawer #familiesdrawer position="start" mode="push">
+    <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()"
+                             (familySelect)="miginformation.doLoadInformation(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
+    <cnstll-family #family (closeSelect)="familiesdrawer.close()"
+                   (selectFamilyMember)="miginformation.doLoadInformation($event)"></cnstll-family>
+  </mat-drawer>
 
-    <cnstll-family #family (selectNHSNumber)="miginformation.doLoadInformation($event)"></cnstll-family>
-
-    <mat-divider [inset]="true"></mat-divider>
-
-    <cnstll-mig-information #miginformation></cnstll-mig-information>
+  <cnstll-mig-information #miginformation></cnstll-mig-information>
 </mat-drawer-container>
