@@ -7,8 +7,7 @@ import {FamilyMember} from '../family-member';
 ({
   selector: 'cnstll-family',
   templateUrl: './family.component.html',
-  styleUrls: ['./family.component.scss'],
-  encapsulation : ViewEncapsulation.None
+  styleUrls: ['./family.component.scss']
 })
 
 export class FamilyComponent {

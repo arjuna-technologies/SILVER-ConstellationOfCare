@@ -9,8 +9,7 @@ import { MIGInformationComponent } from './mig/mig-information/mig-information.c
 ({
     selector:    'cnstll-root',
     templateUrl: './app.component.html',
-    styleUrls:   ['./app.component.scss'],
-    encapsulation : ViewEncapsulation.None
+    styleUrls:   ['./app.component.scss']
 })
 export class AppComponent
 {

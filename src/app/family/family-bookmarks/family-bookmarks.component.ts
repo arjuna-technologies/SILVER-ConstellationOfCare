@@ -9,8 +9,7 @@ import {FamilyDataService} from '../family-data.service';
 ({
   selector: 'cnstll-family-bookmarks',
   templateUrl: './family-bookmarks.component.html',
-  styleUrls: ['./family-bookmarks.component.scss'],
-  encapsulation : ViewEncapsulation.None
+  styleUrls: ['./family-bookmarks.component.scss']
 })
 export class FamilyBookmarksComponent implements OnInit {
   public families: Family[];

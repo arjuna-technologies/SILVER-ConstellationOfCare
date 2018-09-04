@@ -3,12 +3,12 @@
         flex:           1 1 auto;
 }
 
-.main-page .mat-menu,
-.main-page .mat-menu-item,
-.main-page .mat-menu-item-content,
-.main-page .mat-list,
-.main-page .mat-list-item,
-.main-page .mat-list-item-content
+.mat-menu,
+.mat-menu-item,
+.mat-menu-item-content,
+.mat-list,
+.mat-list-item,
+.mat-list-item-content
 {
-  padding:0px !important;
+  padding:0;
 }
