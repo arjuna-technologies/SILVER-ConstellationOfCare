@@ -18,8 +18,9 @@ export class FamilyDataService
         const familyMember01: FamilyMember = new FamilyMember('p01', 'Bill', 'Jones', '12/01/71', 'male', '6424561811');
         const familyMember02: FamilyMember = new FamilyMember('p02', 'Clare', 'Smith', '13/03/95', 'female', '9051292074');
         const familyMember03: FamilyMember = new FamilyMember('p03', 'David', 'Jones', '07/07/97', 'male', '5700200716');
+        const familyMember04: FamilyMember = new FamilyMember('p02', 'Stuart', 'Smith', '13/03/90', 'male', '9467335646');
 
-        const family0: Family = new Family('f00', [ familyMember00, familyMember01, familyMember02, familyMember03 ]);
+        const family0: Family = new Family('f00', [ familyMember00, familyMember01, familyMember02, familyMember03, familyMember04 ]);
 
         const familyMember10: FamilyMember = new FamilyMember('p04', 'Amy', 'Brown', '20/12/70', 'female', '8225676149');
         const familyMember11: FamilyMember = new FamilyMember('p05', 'Bill', 'Lee', '12/01/71', 'male', '9620344472');

@@ -1,5 +1,5 @@
 <div>
     <mat-icon>person</mat-icon><span> {{familyMember.firstName}} {{familyMember.surname}} {{familyMember.dateOfBirth}} {{familyMember.gender}}</span>
-    <button mat-button (click)="doSelectNHSNumber()"><mat-icon>info</mat-icon><span> MIG </span></button>
-    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <button mat-button (click)="doSelectMIG()"><mat-icon>info</mat-icon><span> MIG </span></button>
+    <button mat-button (click)="doSelectESPFHIR()"><mat-icon>info</mat-icon><span> eSP/FHIR </span></button>
 </div>

@@ -6,7 +6,7 @@
 
             <mat-list *ngIf="family.familyMembers">
                 <mat-list-item *ngFor="let familyMember of family.familyMembers; last as last">
-                    <cnstll-family-member [familyMember]="familyMember" (selectNHSNumber)="doSelectNHSNumber($event)"></cnstll-family-member>
+                    <cnstll-family-member [familyMember]="familyMember" (selectMIG)="doSelectMIG($event)" (selectESPFHIR)="doSelectESPFHIR($event)"></cnstll-family-member>
                     <mat-divider [inset]="true" *ngIf="! last"></mat-divider>
                 </mat-list-item>
             </mat-list>

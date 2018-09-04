@@ -37,7 +37,7 @@
                 </button>
             </mat-card-title>
             <mat-card-content>
-                <mat-radio-group fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1em" (change)="miginformation.doLoadInformation(null, 
+                <mat-radio-group fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1em" (change)="miginformation.doLoadInformation(null,
 requestTypeCode)" [(ngModel)]="requestTypeCode">
                     <mat-radio-button fxFlex *ngFor="let requestType of requestTypes" [value]="requestType.code">{{requestType.label}}</mat-radio-button>
                 </mat-radio-group>
@@ -45,9 +45,11 @@ requestTypeCode)" [(ngModel)]="requestTypeCode">
         </mat-card>
     </mat-drawer>
 
-    <cnstll-family #family (selectNHSNumber)="miginformation.doLoadInformation($event, requestTypeCode)"></cnstll-family>
+    <cnstll-family #family (selectMIG)="miginformation.doLoadInformation($event, requestTypeCode)" (selectESPFHIR)="espfhirinformation.doLoadInformation($event)"></cnstll-family>
 
     <mat-divider [inset]="true"></mat-divider>
 
     <cnstll-mig-information #miginformation></cnstll-mig-information>
+
+    <cnstll-espfhir-information #espfhirinformation></cnstll-espfhir-information>
 </mat-drawer-container>

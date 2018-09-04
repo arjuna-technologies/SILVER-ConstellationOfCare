@@ -43,6 +43,7 @@ import { MIGHealthDomainEncountersComponent }   from './mig/mig-healthdomain-enc
 import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-problems/mig-healthdomain-problems.component';
 import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
 import { MIGHealthDomainDocumentsComponent }    from './mig/mig-healthdomain-documents/mig-healthdomain-documents.component';
+import { ESPFHIRInformationComponent }          from './espfhir/espfhir-information/espfhir-information.component';
 import { ConstellationComponent }               from './report/constellation/constellation.component';
 import { ProblemsTimelineComponent }            from './report/problems-timeline/problems-timeline.component';
 
@@ -50,6 +51,7 @@ import { AuthenticationService }      from './authentication.service';
 import { FamilyDataService }          from './family/family-data.service';
 import { MIGDataService }             from './mig/mig-data.service';
 import { MIGInformationIndexService } from './mig/mig-information-index.service';
+import { ESPFHIRDataService }         from './espfhir/espfhir-data.service';
 
 @NgModule
 ({
@@ -74,6 +76,7 @@ import { MIGInformationIndexService } from './mig/mig-information-index.service'
         MIGHealthDomainProblemsComponent,
         MIGHealthDomainEventsComponent,
         MIGHealthDomainDocumentsComponent,
+        ESPFHIRInformationComponent,
         ConstellationComponent,
         ProblemsTimelineComponent
     ],
@@ -111,7 +114,8 @@ import { MIGInformationIndexService } from './mig/mig-information-index.service'
         AuthenticationService,
         FamilyDataService,
         MIGDataService,
-        MIGInformationIndexService
+        MIGInformationIndexService,
+        ESPFHIRDataService
     ],
     bootstrap:
     [

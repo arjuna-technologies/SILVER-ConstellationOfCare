@@ -22,7 +22,9 @@ export class FamilyComponent
     public expansionPanel: MatExpansionPanel;
 
     @Output()
-    public selectNHSNumber: EventEmitter<string>;
+    public selectMIG: EventEmitter<string>;
+    @Output()
+    public selectESPFHIR: EventEmitter<string>;
 
     public constructor()
     {
@@ -31,7 +33,8 @@ export class FamilyComponent
         this.memberName = '';
         this.loading    = false;
 
-        this.selectNHSNumber = new EventEmitter<string>();
+        this.selectMIG      = new EventEmitter<string>();
+        this.selectESPFHIR = new EventEmitter<string>();
     }
 
     public doShowLoading(): void
@@ -53,13 +56,23 @@ export class FamilyComponent
             this.expansionPanel.open();
     }
 
-    public doSelectNHSNumber(nhsNumber: string): void
+    public doSelectMIG(nhsNumber: string): void
     {
         if (nhsNumber)
             this.memberName = this.generateMemberName(nhsNumber);
         else
             this.memberName = '';
-        this.selectNHSNumber.emit(nhsNumber);
+        this.selectMIG.emit(nhsNumber);
+        this.expansionPanel.close();
+    }
+
+    public doSelectESPFHIR(nhsNumber: string): void
+    {
+        if (nhsNumber)
+            this.memberName = this.generateMemberName(nhsNumber);
+        else
+            this.memberName = '';
+        this.selectESPFHIR.emit(nhsNumber);
         this.expansionPanel.close();
     }
 
