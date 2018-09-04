@@ -3,12 +3,8 @@
     <span>SILVER Health Data Interface</span>
     <span class="toolbar-spacer"></span>
     <div *ngIf="username">
-      <button mat-button>
-        <cnstll-family-bookmarks (familySelect)="miginformation.doLoadInformation(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
-      </button>
-      <button mat-button>
-        <cnstll-family #family (selectFamilyMember)="miginformation.doLoadInformation($event)"></cnstll-family>
-      </button>
+      <cnstll-family-bookmarks (familySelect)="miginformation.doLoadInformation(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
+      <cnstll-family #family (selectFamilyMember)="miginformation.doLoadInformation($event)"></cnstll-family>
     </div>
     <button mat-button (click)="doOpenLoginDialog()">
       <mat-icon>home</mat-icon>
