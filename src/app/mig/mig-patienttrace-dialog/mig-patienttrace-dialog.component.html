@@ -3,23 +3,28 @@
     <mat-card>
         <mat-card-content>
             <mat-form-field>
-                <input #givenname matInput placeholder="Given name" type="text" value="">
+                <input #givenname matInput placeholder="Given name" type="text" [(ngModel)]="givenName" value="">
             </mat-form-field>
+            <span>&nbsp;</span>
             <mat-form-field>
-                <input #familyname matInput placeholder="Family name" type="text" value="">
+                <input #familyname matInput placeholder="Family name" type="text" [(ngModel)]="familyName" value="">
             </mat-form-field>
             <br>
             <span> Gender: </span>
-            <mat-radio-group>
-                <mat-radio-button value="1">Male</mat-radio-button>
-                <mat-radio-button value="2">Female</mat-radio-button>
-                <mat-radio-button value="3" checked="true">Unknown</mat-radio-button>
+            <mat-radio-group [(ngModel)]="gender">
+                <mat-radio-button value="Male">Male</mat-radio-button>
+                <span>&nbsp;</span>
+                <mat-radio-button value="Female">Female</mat-radio-button>
+                <span>&nbsp;</span>
+                <mat-radio-button value="Unknown" checked="true">Unknown</mat-radio-button>
+                <span>&nbsp;</span>
+                <mat-radio-button value="Indeterminate">Indeterminate</mat-radio-button>
             </mat-radio-group>
             <br>
             <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Birth">
+                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]="dateOfBirth">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker #picker startView="multi-year"></mat-datepicker>
             </mat-form-field>
             <p *ngIf="message">{{message}}</p>
             <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
@@ -27,7 +32,7 @@
     </mat-card>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button (click)="doPatientTrace(givenname.value, familyname.value)">
+    <button mat-button (click)="doPatientTrace()">
         <mat-icon>search</mat-icon>
         <span>Search</span>
     </button>

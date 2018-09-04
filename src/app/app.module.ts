@@ -23,6 +23,7 @@ import { MatListModule }        from '@angular/material/list';
 import { MatChipsModule }       from '@angular/material/chips';
 import { MatDatepickerModule }  from '@angular/material/datepicker';
 import { MatNativeDateModule }  from '@angular/material';
+import { MAT_DATE_LOCALE }      from '@angular/material/core';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -118,7 +119,8 @@ import { MIGInformationIndexService }  from './mig/mig-information-index.service
         AuthenticationService,
         FamilyDataService,
         MIGDataService,
-        MIGInformationIndexService
+        MIGInformationIndexService,
+        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
     ],
     bootstrap:
     [

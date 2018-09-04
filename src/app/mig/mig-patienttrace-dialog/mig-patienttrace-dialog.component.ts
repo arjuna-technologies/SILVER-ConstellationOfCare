@@ -1,5 +1,5 @@
-import { Component }    from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component }               from '@angular/core';
+import { MatDialogRef }            from '@angular/material';
 
 import { MIGDataService } from '../mig-data.service';
 
@@ -14,32 +14,45 @@ export class MIGPatientTraceDialogComponent
     public message: string;
     public loading: boolean;
 
+    public givenName:   string;
+    public familyName:  string;
+    public gender:      string;
+    public dateOfBirth: Date;
+
     public constructor(public dialogRef: MatDialogRef<MIGPatientTraceDialogComponent>, private migDataService: MIGDataService)
     {
         this.message = null;
         this.loading = false;
+
+        this.givenName   = '';
+        this.familyName  = '';
+        this.gender      = 'Unknown';
+        this.dateOfBirth = new Date();
     }
 
-    public doLogin(givenname: string, familyname: string): void
+    public doPatientTrace(): void
     {
         this.loading = true;
 
-        this.migDataService.loadMIGPatientTrace(givenname, familyname, null, null, null, null)
-            .then(patientTrace => this.authenticationSuccess(patientTrace))
-            .catch(error => this.authenticationFailed(error));
+        this.migDataService.loadMIGPatientTrace(this.givenName, this.familyName, this.gender, String(this.dateOfBirth.getDate()), String(this.dateOfBirth.getMonth() + 1), String(this.dateOfBirth.getFullYear()))
+                           .then(patientTrace => this.migPatientTraceSuccess(patientTrace))
+                           .catch(error => this.migPatientTraceFailed(error));
     }
 
-    private authenticationSuccess(patientTrace: any): void
+    private migPatientTraceSuccess(patientTrace: any): void
     {
         this.loading = false;
 
+        console.log();
+
         if (patientTrace !== null)
-            this.dialogRef.close();
+        {
+        }
         else
             this.message = 'Search failed.';
     }
 
-    private authenticationFailed(error: any): void
+    private migPatientTraceFailed(error: any): void
     {
         this.loading  = false;
 

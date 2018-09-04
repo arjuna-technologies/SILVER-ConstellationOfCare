@@ -36,6 +36,14 @@ export class MIGDataService
     {
     }
 
+    public loadMIGPatientTrace(givenname: string, familyname: string, gender: string, birthday: string, birthmonth: string, birthyear: string): Promise<MIGPatientTrace>
+    {
+        return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?givenname=' + givenname + '&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
+                   .toPromise()
+                   .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
+                   .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));
+    }
+
     public loadMIGInformation(nhsNumber: string, requestType?: string): Promise<MIGInformation>
     {
         if (requestType)
@@ -54,12 +62,18 @@ export class MIGDataService
         }
     }
 
-    public loadMIGPatientTrace(givenname: string, familyname: string, gender: string, birthday: string, birthmonth: string, birthyear: string): Promise<MIGPatientTrace>
+    private loadMIGPatientTraceSuccessHandler(body: any): MIGPatientTrace
     {
-        return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?givenname=' + givenname + '&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
-                   .toPromise()
-                   .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
-                   .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));
+        console.log('PatientTrace Responce Body: ' + JSON.stringify(body));
+
+        let status: string = body.status;
+
+        return new MIGPatientTrace(status);
+    }
+
+    private loadMIGPatientTraceErrorHandler(error: any): MIGPatientTrace
+    {
+       return new MIGPatientTrace('Failed');
     }
 
     private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation
@@ -127,15 +141,5 @@ export class MIGDataService
     private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation
     {
         return new MIGInformation(nhsNumber, 'Failed', [], [], [], [], [], [], [], [], [], [], []);
-    }
-
-    private loadMIGPatientTraceSuccessHandler(body: any): MIGPatientTrace
-    {
-        return new MIGPatientTrace('Success');
-    }
-
-    private loadMIGPatientTraceErrorHandler(error: any): MIGPatientTrace
-    {
-        return new MIGPatientTrace('Failed');
     }
 }
