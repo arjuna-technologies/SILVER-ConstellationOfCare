@@ -60,12 +60,15 @@ export class AppComponent
             this.username = username;
             this.org      = 'Newcastle City Council';
             this.group    = 'Family Early Help';
+            this.showSideBar = true;
+            this.familiesDrawer.toggle();
         }
         else
         {
             this.username = '';
             this.org      = '';
             this.group    = '';
+            this.showSideBar = false;
         }
     }
 }
