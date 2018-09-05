@@ -45,11 +45,13 @@ requestTypeCode)" [(ngModel)]="requestTypeCode">
         </mat-card>
     </mat-drawer>
 
-    <cnstll-family #family (selectMIG)="miginformation.doLoadInformation($event, requestTypeCode)" (selectESPFHIR)="espfhirinformation.doLoadInformation($event)"></cnstll-family>
+    <cnstll-family #family (selectMIG)="miginformation.doLoadInformation($event, requestTypeCode); espfhirresolution.doLoadResolution(null)" (selectESPFHIR)="miginformation.doLoadInformation(null, requestTypeCode); espfhirresolution.doLoadResolution($event)"></cnstll-family>
 
     <mat-divider [inset]="true"></mat-divider>
 
     <cnstll-mig-information #miginformation></cnstll-mig-information>
+
+    <cnstll-espfhir-resolution #espfhirresolution (loadedIdentifier)="espfhirinformation.doLoadInformation($event)"></cnstll-espfhir-resolution>
 
     <cnstll-espfhir-information #espfhirinformation></cnstll-espfhir-information>
 </mat-drawer-container>

@@ -44,6 +44,8 @@ import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-pro
 import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
 import { MIGHealthDomainDocumentsComponent }    from './mig/mig-healthdomain-documents/mig-healthdomain-documents.component';
 import { ESPFHIRInformationComponent }          from './espfhir/espfhir-information/espfhir-information.component';
+import { ESPFHIRResolutionComponent }           from './espfhir/espfhir-resolution/espfhir-resolution.component';
+import { ESPFHIREntryComponent }                from './espfhir/espfhir-entry/espfhir-entry.component';
 import { ConstellationComponent }               from './report/constellation/constellation.component';
 import { ProblemsTimelineComponent }            from './report/problems-timeline/problems-timeline.component';
 
@@ -77,6 +79,8 @@ import { ESPFHIRDataService }         from './espfhir/espfhir-data.service';
         MIGHealthDomainEventsComponent,
         MIGHealthDomainDocumentsComponent,
         ESPFHIRInformationComponent,
+        ESPFHIRResolutionComponent,
+        ESPFHIREntryComponent,
         ConstellationComponent,
         ProblemsTimelineComponent
     ],

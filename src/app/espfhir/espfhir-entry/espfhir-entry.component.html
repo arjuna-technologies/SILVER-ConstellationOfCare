@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-content>
+        <span *ngFor="let name of entry.names"><b>Name</b> {{name.text}}</span>
+    </mat-card-content>
+
+    <mat-card-content>
+        <span *ngFor="let identifier of entry.identifiers"><b>Identifier</b> {{identifier.label}} {{identifier.value}}</span>
+    </mat-card-content>
+
+    <mat-card-content>
+        <span *ngFor="let address of entry.addresses"><b>Address</b> {{address.text}}</span>
+    </mat-card-content>
+
+    <mat-card-content>
+        <span *ngFor="let telecom of entry.telecoms"><b>Telecom</b> {{telecom.use}} {{telecom.system}} {{telecom.value}}</span>
+    </mat-card-content>
+
+    <mat-card-content>
+        <span><b>Date of Birth</b> {{entry.birthDate}}</span>
+    </mat-card-content>
+</mat-card>

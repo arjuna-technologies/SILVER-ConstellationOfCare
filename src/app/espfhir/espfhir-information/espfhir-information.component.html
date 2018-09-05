@@ -1,16 +1,8 @@
 <mat-card *ngIf="information || loading">
-    <mat-card-title *ngIf="information">
-        Black Pear eSP Gateway: {{information.nhsNumber}}
-    </mat-card-title>
-
-    <mat-card-title *ngIf="! information">Black Pear eSP Gateway</mat-card-title>
+    <mat-card-title>eSP Information</mat-card-title>
 
     <mat-card-content *ngIf="loading">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </mat-card-content>
-
-    <mat-card-content *ngIf="information && (information.status === 'Success')">
-        <h3>Success.</h3>
     </mat-card-content>
 
     <mat-card-content *ngIf="information && (information.status === 'No Consent')">
@@ -19,5 +11,9 @@
 
     <mat-card-content *ngIf="information && (information.status === 'Failed')">
         <h3>The request for information has failed.</h3>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="information && (information.status === 'Success')">
+        <span>{{information.text}}</span>
     </mat-card-content>
 </mat-card>

@@ -1,5 +1,4 @@
-import { Component, ViewChild }             from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Component } from '@angular/core';
 
 import { ESPFHIRDataService } from '../espfhir-data.service';
 
@@ -22,14 +21,14 @@ export class ESPFHIRInformationComponent
         this.loading     = false;
     }
 
-    public doLoadInformation(nhsNumber: string)
+    public doLoadInformation(identifier: string): void
     {
-        console.log('doLoadInformation: ' + nhsNumber);
-        if (nhsNumber != null)
+        console.log('doLoadInformation: ' + identifier);
+        if (identifier != null)
         {
             this.loading     = true;
             this.information = null;
-            this.espfhirDataService.loadESPFHIRResolverPatient(nhsNumber)
+            this.espfhirDataService.loadESPFHIRPatientInformation(identifier)
                 .then((espfhirInformation: ESPFHIRInformation) => this.doLoadInformationSuccessHandler(espfhirInformation))
                 .catch((error) => this.doLoadInformationErrorHandler(error));
         }

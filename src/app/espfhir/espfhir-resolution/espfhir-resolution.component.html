@@ -1,0 +1,23 @@
+<mat-card *ngIf="resolution || loading">
+    <mat-card-title>eSP Resolution</mat-card-title>
+
+    <mat-card-content *ngIf="loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="resolution && (resolution.status === 'No Consent')">
+        <h3>No Consent has been given.</h3>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="resolution && (resolution.status === 'Failed')">
+        <h3>The request for resolution has failed.</h3>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="resolution && (resolution.status === 'Empty')">
+        <h3>The responce was empty.</h3>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="resolution && (resolution.status === 'Success')">
+        <cnstll-espfhir-entry *ngFor="let entry of resolution.entries" [entry]="entry"></cnstll-espfhir-entry>
+    </mat-card-content>
+</mat-card>
