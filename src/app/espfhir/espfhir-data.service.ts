@@ -57,7 +57,10 @@ export class ESPFHIRDataService
     {
 //        console.log('loadESPFHIRPatientInformationSuccessHandler - body: ' + JSON.stringify(body));
 
-        return new ESPFHIRInformation(patientId, 'Success', JSON.stringify(body));
+        if (body.resourceType)
+            return new ESPFHIRInformation(patientId, 'Success', JSON.stringify(body));
+        else
+            return new ESPFHIRInformation(patientId, 'Failed', '');
     }
 
     private loadESPFHIRPatientInformationErrorHandler(patientId: string, error: any): ESPFHIRInformation

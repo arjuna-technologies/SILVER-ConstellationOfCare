@@ -25,7 +25,7 @@
 
 <mat-drawer-container style="height: 100%">
     <mat-drawer #familiesdrawer position="start" mode="side">
-        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="miginformation.doLoadInformation(null, requestTypeCode); family.doShowFamily($event)"></cnstll-family-bookmarks>
+        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="miginformation.doLoadInformation(null, requestTypeCode); espfhirresolution.doLoadResolution(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
     </mat-drawer>
 
     <mat-drawer #requesttypesdrawer position="end" mode="side">
@@ -38,7 +38,7 @@
             </mat-card-title>
             <mat-card-content>
                 <mat-radio-group fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1em" (change)="miginformation.doLoadInformation(null,
-requestTypeCode)" [(ngModel)]="requestTypeCode">
+requestTypeCode); espfhirresolution.doLoadResolution(null)" [(ngModel)]="requestTypeCode">
                     <mat-radio-button fxFlex *ngFor="let requestType of requestTypes" [value]="requestType.code">{{requestType.label}}</mat-radio-button>
                 </mat-radio-group>
             </mat-card-content>

@@ -2,9 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { MatDrawer }            from '@angular/material/sidenav';
 import { MatDialog }            from '@angular/material';
 
-import { LoginDialogComponent }    from './login-dialog/login-dialog.component';
-import { FamilyComponent }         from './family/family/family.component';
-import { MIGInformationComponent } from './mig/mig-information/mig-information.component';
+import { LoginDialogComponent }        from './login-dialog/login-dialog.component';
+import { FamilyComponent }             from './family/family/family.component';
+import { MIGInformationComponent }     from './mig/mig-information/mig-information.component';
+import { ESPFHIRResolutionComponent }  from './espfhir/espfhir-resolution/espfhir-resolution.component';
+import { ESPFHIRInformationComponent } from './espfhir/espfhir-information/espfhir-information.component';
 
 import { MIGDataService } from './mig/mig-data.service';
 
@@ -27,6 +29,10 @@ export class AppComponent
     public family: FamilyComponent;
     @ViewChild('miginformation')
     public migInformation: MIGInformationComponent;
+    @ViewChild('espfhirresolution')
+    public espfhirResolution: ESPFHIRResolutionComponent;
+    @ViewChild('espfhirinformation')
+    public espfhirInformation: ESPFHIRInformationComponent;
 
     public requestTypes:    any[];
     public requestTypeCode: string;
@@ -71,6 +77,8 @@ export class AppComponent
             this.familiesDrawer.close();
             this.family.doShowFamily(null);
             this.migInformation.doLoadInformation(null, this.requestTypeCode);
+            this.espfhirResolution.doLoadResolution(null);
+            this.espfhirInformation.doLoadInformation(null);
         }
     }
 
