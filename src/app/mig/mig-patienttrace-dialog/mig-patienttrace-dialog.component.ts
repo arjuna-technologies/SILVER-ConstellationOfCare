@@ -1,6 +1,8 @@
 import { Component }               from '@angular/core';
 import { MatDialogRef }            from '@angular/material';
 
+import { MIGPatientTrace } from '../mig-patienttrace';
+
 import { MIGDataService } from '../mig-data.service';
 
 @Component
@@ -19,6 +21,8 @@ export class MIGPatientTraceDialogComponent
     public gender:      string;
     public dateOfBirth: Date;
 
+    public patientTrace: MIGPatientTrace;
+
     public constructor(public dialogRef: MatDialogRef<MIGPatientTraceDialogComponent>, private migDataService: MIGDataService)
     {
         this.message = null;
@@ -28,6 +32,8 @@ export class MIGPatientTraceDialogComponent
         this.familyName  = '';
         this.gender      = 'Unknown';
         this.dateOfBirth = new Date();
+
+        this.patientTrace = null;
     }
 
     public doPatientTrace(): void
@@ -39,23 +45,20 @@ export class MIGPatientTraceDialogComponent
                            .catch(error => this.migPatientTraceFailed(error));
     }
 
-    private migPatientTraceSuccess(patientTrace: any): void
+    private migPatientTraceSuccess(patientTrace: MIGPatientTrace): void
     {
         this.loading = false;
 
-        console.log();
-
         if (patientTrace !== null)
-        {
-        }
+            this.patientTrace = patientTrace;
         else
-            this.message = 'Search failed.';
+            this.message = patientTrace.status;
     }
 
-    private migPatientTraceFailed(error: any): void
+    private migPatientTraceFailed(error: MIGPatientTrace): void
     {
         this.loading  = false;
 
-        this.message = error;
+        this.message = error.status;
     }
 }
