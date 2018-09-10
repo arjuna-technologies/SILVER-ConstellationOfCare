@@ -11,6 +11,7 @@ import { MIGLocation }     from './mig-location';
 import { MIGUser }         from './mig-user';
 import { MIGRole }         from './mig-role';
 import { MIGUserInRole }   from './mig-userinrole';
+import { MIGPatientMatch } from './mig-patientmatch';
 
 import { MIGEncounter } from './mig-encounter';
 import { MIGProblem }   from './mig-problem';
@@ -66,14 +67,26 @@ export class MIGDataService
     {
         console.log('PatientTrace Responce Body: ' + JSON.stringify(body));
 
-        let status: string = body.status;
+        let status:           string            = 'Failed';
+        let migPatientMatchs: MIGPatientMatch[] = null;
 
-        return new MIGPatientTrace(status);
+        if (body && body.status)
+        {
+            status           = body.status;
+            migPatientMatchs = [];
+
+            if (body.patientMatchs)
+                for (let patientMatch of body.patientMatchs)
+                    if (patientMatch.patient && patientMatch.patient.primaryIdentifier)
+                        migPatientMatchs.push(new MIGPatientMatch(patientMatch.patient.primaryIdentifier));
+        }
+
+        return new MIGPatientTrace(status, migPatientMatchs);
     }
 
     private loadMIGPatientTraceErrorHandler(error: any): MIGPatientTrace
     {
-       return new MIGPatientTrace('Failed');
+       return new MIGPatientTrace('Failed', null);
     }
 
     private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation

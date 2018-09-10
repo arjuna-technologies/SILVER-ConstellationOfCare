@@ -29,8 +29,9 @@
             <p *ngIf="message">{{message}}</p>
             <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
         </mat-card-content>
-        <mat-card-content *ngIf ="patientTrace">
+        <mat-card-content *ngIf="patientTrace">
             <span>Status: {{patientTrace.status}}</span>
+            <p *ngFor="let patientMatch of patientTrace.patientMatchs">NHS Number {{patientMatch.primaryIdentifier}}</p>
         </mat-card-content>
     </mat-card>
 </mat-dialog-content>
