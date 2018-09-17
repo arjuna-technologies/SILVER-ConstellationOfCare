@@ -97,7 +97,7 @@ export class ProblemsTimelineComponent implements AfterViewInit, OnChanges
       this.options = {
         timeline: {showRowLabels: false},
         title: "Timeline of Recent Health Problems",
-        width: 1200,
+        width: 1000,
         height: 2000,
         hAxis: {
           title: 'Year',

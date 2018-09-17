@@ -24,7 +24,7 @@ export class ConstellationComponent implements OnChanges, DoCheck {
   public constellationDisplayedColumns: string[];
 
   constructor(private migInformationIndexService: MIGInformationIndexService) {
-    this.constellationDisplayedColumns = ['personName', 'roleName', 'orgName'];
+    this.constellationDisplayedColumns = ['data'];
     this.constellationDataSource = new MatTableDataSource();
     this.constellationDataSource.data = null;
   }
