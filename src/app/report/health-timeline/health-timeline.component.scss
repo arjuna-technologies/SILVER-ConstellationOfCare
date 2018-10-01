@@ -1,0 +1,21 @@
+#coloredDiv {
+  width:16px;
+  height:16px;
+  display:inline-block;
+}
+
+#legend, #legend #name {
+  display:inline-block;
+}
+
+#legend div {
+  margin-left: 5px;
+  margin-right:5px;
+}
+
+#chart-top-row {
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -9,7 +9,7 @@
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </mat-card-content>
       <mat-card-content *ngIf="information && (information.status === 'Success')">
-        <cnstll-problems-timeline [events]="information.events"></cnstll-problems-timeline>
+        <cnstll-health-timeline [events]="information.events"></cnstll-health-timeline>
       </mat-card-content>
 
       <mat-card-content *ngIf="information && (information.status === 'No Consent')">
