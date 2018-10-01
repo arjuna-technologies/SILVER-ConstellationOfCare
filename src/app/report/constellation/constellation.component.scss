@@ -1,0 +1,13 @@
+mat-cell.selected {
+  background-color: gold;
+}
+
+mat-cell span {
+  margin-left:3px;
+  margin-right:3px;
+}
+
+mat-cell span.role::before,
+mat-cell span.organisation::before {
+  content: " / ";
+}

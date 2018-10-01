@@ -33,10 +33,11 @@ export class ConstellationComponent implements OnChanges, DoCheck {
     let data = [];
     if (this.information) {
       for (let userInRole of this.information.userInRoles) {
+        let id = userInRole.id;
         let professionalName = this.userMapping(userInRole.id);
         let roleName = this.roleMapping(userInRole.role);
         let organisationName = this.roleOrgMapping(userInRole.role);
-          let dataRow = new ReportData(professionalName,roleName,organisationName);
+          let dataRow = new ReportData(id,professionalName,roleName,organisationName);
         data.push(dataRow);
       }
       this.constellationDataSource.data = data;

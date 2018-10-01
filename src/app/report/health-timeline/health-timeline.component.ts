@@ -53,6 +53,12 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
         document.getElementsByClassName('timeline-label')[index].setAttribute('font-weight','normal');
       });
     }
+    var people = document.querySelectorAll("mat-cell.selected");
+    if (people && people.length>0) {
+      people.forEach(function(person,index){
+        person.classList.remove("selected");
+      });
+    }
   }
 
   public ngOnChanges(): void {
@@ -66,7 +72,11 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     document.getElementsByClassName('timeline-label')[i].setAttribute('font-weight','bold');
     let color = (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style["fill"];
     document.getElementById('coloredDiv').style.backgroundColor=color;
-    document.getElementById('name').innerText=datum.label;
+    let userId = datum.user;
+    let match = document.querySelector(`mat-cell[data-id="${userId}"`);
+    let name = match.getElementsByClassName('name')[0].textContent;
+    (<HTMLElement>match).classList.add("selected");
+    document.getElementById('name').innerHTML=`${datum.label} [acc. ${name}]`;
   }
 
 
@@ -84,7 +94,7 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     this.chart.rowSeparators("#CCCCCC");
     this.chart.tickFormat({
       format: function (d) {
-        return d3.timeFormat("%Y")(d)
+        return d3.timeFormat("'%y")(d)
       },
       tickTime: d3.timeYears,
       tickInterval:d3.timeYear.every(1),
@@ -96,9 +106,11 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     this.chart.showTimeAxisTick();
     this.chart.margin({left: width+30, right: 30, top: 0, bottom: 0});
     this.chart.hover(function (d, i, datum) {
+      (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style.cursor = "pointer";
       lockOntoFn(clearBarSelectionsFunction,d,i,datum);
     });
     this.chart.click(function (d, i, datum) {
+      (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style.cursor = "pointer";
       lockOntoFn(clearBarSelectionsFunction,d,i,datum);
     });
     this.chart.colorProperty("name");
@@ -117,12 +129,13 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
           let name = event.displayTerm;
           let label = event.displayTerm;
           let startTime = new Date(event.effectiveTime);
+          let user = event.authorisingUserInRole;
           let endTime = new Date();
           if (problem.endTime) {
             endTime = new Date(problem.endTime);
           }
           let times = [{"starting_time": startTime, "ending_time": endTime}];
-          main.processedData.push({name: name, label: label, times: times});
+          main.processedData.push({user:user,name: name, label: label, times: times});
         }
       }
     });

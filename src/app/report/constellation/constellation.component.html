@@ -1,11 +1,11 @@
 <mat-table #constellationTable [dataSource]="constellationDataSource">
   <ng-container matColumnDef="data">
     <mat-header-cell *matHeaderCellDef>Constellation of Care</mat-header-cell>
-    <mat-cell *matCellDef="let reportDataRow">
-      {{reportDataRow.personName}}<br/>
-      {{reportDataRow.roleName}}
+    <mat-cell *matCellDef="let reportDataRow" [attr.data-id]="reportDataRow.id">
+      <span class="name">{{reportDataRow.personName}}</span><br/>
+      <span class="role">{{reportDataRow.roleName}}</span>
       <br/>
-      {{reportDataRow.orgName}}
+      <span class="organisation">{{reportDataRow.orgName}}</span>a
     </mat-cell>
   </ng-container>
   <mat-header-row *matHeaderRowDef="constellationDisplayedColumns"></mat-header-row>
