@@ -47,7 +47,7 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     var bars = document.querySelectorAll(`#timeline rect`);
     if (bars && bars.length>0) {
       bars.forEach(function(bar,index,a) {
-        let label = bar.__data__.name;
+        let label = bar["__data__"].name;
         bar.setAttribute('stroke',"#333333");
         bar.setAttribute('stroke-width',"0.5");
         document.getElementsByClassName('timeline-label')[index].setAttribute('font-weight','normal');
@@ -64,7 +64,8 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     document.querySelector(`rect.timelineSeries_${i}`).setAttribute('stroke',"#CC0000");
     document.querySelector(`rect.timelineSeries_${i}`).setAttribute('stroke-width',"2");
     document.getElementsByClassName('timeline-label')[i].setAttribute('font-weight','bold');
-    document.getElementById('coloredDiv').style.backgroundColor=document.querySelector(`rect.timelineSeries_${i}`).style["fill"];
+    let color = (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style["fill"];
+    document.getElementById('coloredDiv').style.backgroundColor=color;
     document.getElementById('name').innerText=datum.label;
   }
 
