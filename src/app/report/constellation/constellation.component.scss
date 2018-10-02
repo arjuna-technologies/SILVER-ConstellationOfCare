@@ -2,12 +2,21 @@ mat-cell.selected {
   background-color: gold;
 }
 
+mat-row {
+  min-height: 20px;
+}
+
+mat-cell {
+  font-size:11px;
+  line-height:11px;
+}
+
 mat-cell span {
   margin-left:3px;
   margin-right:3px;
 }
 
-mat-cell span.role::before,
+mat-cell span.name::after,
 mat-cell span.organisation::before {
   content: " / ";
 }
