@@ -28,7 +28,6 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
 
   public doChange(): void
   {
-    this.processEventDataForChart();
     this.drawChart();
   }
 
@@ -79,6 +78,9 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     document.getElementById('name').innerHTML=`${datum.label} [acc. ${name}]`;
   }
 
+  private calculateChartHeight(bars) {
+    return (bars.length * 25) + 50;
+  }
 
   private drawChart(): void
   {
@@ -114,7 +116,10 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
       lockOntoFn(clearBarSelectionsFunction,d,i,datum);
     });
     this.chart.colorProperty("name");
-    this.svg = d3.select("#timeline").append("svg").attr("width", this.width).attr("height", this.height)
+    let height = this.calculateChartHeight(this.processedData);
+    this.chart.height = height;
+    this.chart.width = this.width;
+    this.svg = d3.select("#timeline").append("svg").attr("width", this.width).attr("height", height)
       .datum(this.processedData).call(this.chart);
     this.modifyLabels();
   }

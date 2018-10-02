@@ -74,10 +74,16 @@ export class ConstellationComponent implements OnChanges, DoCheck {
     {
       const role: MIGRole = this.migInformationIndexService.roleMap.get(roleId);
 
-      if (role && role.organisation)
-        return this.migInformationIndexService.basicOrganisationMapping(role.organisation);
-      else
+      if (role && role.organisation) {
+        let org = this.migInformationIndexService.basicOrganisationMapping(role.organisation);
+        if (org == "EMISWebCR1 50005") {
+          org = "EMIS Test Org";
+        }
+        return org;
+      }
+      else {
         return '';
+      }
     }
     else
       return '';
