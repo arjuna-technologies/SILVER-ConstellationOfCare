@@ -1,8 +1,8 @@
-import { NgModule }                from '@angular/core';
-import { BrowserModule }           from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule }             from '@angular/forms';
-import { HttpClientModule }        from '@angular/common/http';
+import { NgModule, APP_INITIALIZER }           from '@angular/core';
+import { BrowserModule }                       from '@angular/platform-browser';
+import { BrowserAnimationsModule }             from '@angular/platform-browser/animations';
+import { FormsModule }                         from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatToolbarModule }     from '@angular/material/toolbar';
 import { MatCheckboxModule }    from '@angular/material/checkbox';
@@ -54,6 +54,13 @@ import { AuthenticationService }       from './authentication.service';
 import { FamilyDataService }           from './family/family-data.service';
 import { MIGDataService }              from './mig/mig-data.service';
 import { MIGInformationIndexService }  from './mig/mig-information-index.service';
+
+import { AuthenticationTokenInterceptor } from './authenticationtoken-interceptor';
+
+export function authenticationFactory(authenticationService: AuthenticationService)
+{
+    return () => authenticationService.init();
+}
 
 @NgModule
 ({
@@ -117,10 +124,24 @@ import { MIGInformationIndexService }  from './mig/mig-information-index.service
     providers:
     [
         AuthenticationService,
+        {
+            provide:    APP_INITIALIZER,
+            useFactory: authenticationFactory,
+            deps:       [ AuthenticationService ],
+            multi:      true
+        },
+        {
+            provide:  HTTP_INTERCEPTORS,
+            useClass: AuthenticationTokenInterceptor,
+            multi:    true
+        },
         FamilyDataService,
         MIGDataService,
         MIGInformationIndexService,
-        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+        {
+            provide: MAT_DATE_LOCALE,
+            useValue: 'en-GB'
+        }
     ],
     bootstrap:
     [
