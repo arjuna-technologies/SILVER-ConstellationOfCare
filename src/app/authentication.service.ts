@@ -7,7 +7,7 @@ export class AuthenticationService
 {
     private keycloakAuth: any;
 
-    constructor()
+    public constructor()
     {
     }
 
@@ -15,7 +15,7 @@ export class AuthenticationService
     public init(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            const config = { 'url': 'yourUrl', 'realm': 'yourRealm', 'clientId': 'yourClientId' };
+            const config = { 'url': 'http://localhost:8080/auth', 'realm': 'silver', 'clientId': 'coc' };
             this.keycloakAuth = new Keycloak(config);
             this.keycloakAuth.init({ onLoad: 'login-required' })
                 .success(() => { resolve(); })
