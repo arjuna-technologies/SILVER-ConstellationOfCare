@@ -1,6 +1,6 @@
 #/bin/sh
 
-npm update
+npm install
 
 ng version
 
