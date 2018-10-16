@@ -1,5 +1,5 @@
 import {Component, ViewChild}             from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTabGroup, MatTab, MatTableDataSource} from '@angular/material';
 
 import {MIGDataService}             from '../mig-data.service';
 import {MIGInformationIndexService} from '../mig-information-index.service';

@@ -34,9 +34,9 @@ export class MIGHealthDomainEventsComponent implements OnChanges, DoCheck
     public ngOnChanges(): void
     {
         if (this.format === 'raw')
-            this.eventDisplayedColumns = ['id', 'patient', 'eventType', 'effectiveTime', 'availabilityTimeStamp', 'authorisingUserInRole', 'enteredByUserInRole', 'code', 'displayTerm', 'organisation', 'observation'];
+          this.eventDisplayedColumns = ['id', 'patient', 'eventType', 'effectiveTime', 'availabilityTimeStamp', 'authorisingUserInRole', 'enteredByUserInRole', 'code', 'displayTerm', 'organisation', 'observation'];
         else
-            this.eventDisplayedColumns = ['mappedPatient', 'eventType', 'effectiveTime', 'availabilityTimeStamp', 'mappedAuthorisingUserInRole', 'mappedEnteredByUserInRole', 'code', 'displayTerm', 'mappedOrganisation', 'observation'];
+            this.eventDisplayedColumns = [/*'mappedPatient',*/ 'displayTerm', 'eventType', 'effectiveTime', 'availabilityTimeStamp', 'mappedAuthorisingUserInRole', 'mappedEnteredByUserInRole',  'mappedOrganisation'];
 
         if (this.events)
             this.eventDataSource.data = this.events;

@@ -9,9 +9,15 @@
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </mat-card-content>
       <mat-card-content *ngIf="information && (information.status === 'Success')">
-        <cnstll-health-timeline [events]="information.events"></cnstll-health-timeline>
+        <mat-tab-group>
+          <mat-tab label="Timeline">
+            <cnstll-health-timeline [events]="information.events"></cnstll-health-timeline>
+          </mat-tab>
+          <mat-tab label="Raw Data">
+            <cnstll-mig-healthdomain [format]="format" [information]="information"></cnstll-mig-healthdomain>
+          </mat-tab>
+        </mat-tab-group>
       </mat-card-content>
-
       <mat-card-content *ngIf="information && (information.status === 'No Consent')">
         <h3>No Consent has been given.</h3>
       </mat-card-content>

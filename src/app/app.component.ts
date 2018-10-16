@@ -1,66 +1,78 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MatDialog} from '@angular/material';
 
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { FamilyComponent } from './family/family/family.component';
-import { MIGInformationComponent } from './mig/mig-information/mig-information.component';
+import {LoginDialogComponent} from './login-dialog/login-dialog.component';
+import {FamilyComponent} from './family/family/family.component';
+import {MIGInformationComponent} from './mig/mig-information/mig-information.component';
+
+import { MIGDataService } from './mig/mig-data.service';
 
 @Component
 ({
-    selector:    'cnstll-root',
-    templateUrl: './app.component.html',
-    styleUrls:   ['./app.component.scss']
+  selector: 'cnstll-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent
-{
-    public username:     string;
-    public org:          string;
-    public group:        string;
+export class AppComponent {
+  public username: string;
+  public org: string;
+  public group: string;
 
-    @ViewChild('family')
-    public family: FamilyComponent;
-    @ViewChild('miginformation')
-    public migInformation: MIGInformationComponent;
+  @ViewChild('family')
+  public family: FamilyComponent;
+  @ViewChild('miginformation')
+  public migInformation: MIGInformationComponent;
 
-    public constructor(private dialog: MatDialog)
-    {
-        this.username    = '';
-        this.org         = '';
-        this.group       = '';
-        this.doOpenLoginDialog();
+  public requestTypes: any[];
+  public requestTypeCode: string;
+
+  public constructor(private dialog: MatDialog) {
+    this.username = '';
+    this.org = '';
+    this.group = '';
+    this.requestTypeCode = MIGDataService.ALLGPDATA_REQUEST_NAME;
+    this.requestTypes =
+      [
+        {code: MIGDataService.ALLGPDATA_REQUEST_NAME, label: 'All'},
+        {code: MIGDataService.SUMMARY_REQUEST_NAME, label: 'Summarys'},
+        {code: MIGDataService.PROBLEM_REQUEST_NAME, label: 'Problems'},
+        {code: MIGDataService.DIAGNOSIS_REQUEST_NAME, label: 'Diagnoses'},
+        {code: MIGDataService.MEDICATION_REQUEST_NAME, label: 'Medications'},
+        {code: MIGDataService.RISKSWARNING_REQUEST_NAME, label: 'Risk Warnings'},
+        {code: MIGDataService.PROCEDURE_REQUEST_NAME, label: 'Procedures'},
+        {code: MIGDataService.INVESTIGATION_REQUEST_NAME, label: 'Investigations'},
+        {code: MIGDataService.EXAMINATION_REQUEST_NAME, label: 'Examinations'},
+        {code: MIGDataService.EVENT_REQUEST_NAME, label: 'Events'},
+        {code: MIGDataService.PATIENTDETAIL_REQUEST_NAME, label: 'Patient Details'}
+      ];
+    this.doOpenLoginDialog();
+  }
+
+  public doOpenLoginDialog(): void {
+    if (this.username === '') {
+      const loginDialogRef = this.dialog.open(LoginDialogComponent);
+      loginDialogRef.afterClosed().subscribe((username) => this.processAfterClose(username));
     }
+    else {
+      this.username = '';
+      this.org = '';
+      this.group = '';
 
-    public doOpenLoginDialog(): void
-    {
-        if (this.username === '')
-        {
-            const loginDialogRef = this.dialog.open(LoginDialogComponent);
-            loginDialogRef.afterClosed().subscribe((username) => this.processAfterClose(username));
-        }
-        else
-        {
-            this.username = '';
-            this.org      = '';
-            this.group    = '';
-
-            this.family.doShowFamily(null);
-            this.migInformation.doLoadInformation(null);
-        }
+      this.family.doShowFamily(null);
+      this.migInformation.doLoadInformation(null);
     }
+  }
 
-    private processAfterClose(username: string): void
-    {
-        if (username && (username !== ''))
-        {
-            this.username = username;
-            this.org      = 'Newcastle City Council';
-            this.group    = 'Family Early Help';
-        }
-        else
-        {
-            this.username = '';
-            this.org      = '';
-            this.group    = '';
-        }
+  private processAfterClose(username: string): void {
+    if (username && (username !== '')) {
+      this.username = username;
+      this.org = 'Newcastle City Council';
+      this.group = 'Family Early Help';
     }
+    else {
+      this.username = '';
+      this.org = '';
+      this.group = '';
+    }
+  }
 }

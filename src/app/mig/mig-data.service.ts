@@ -1,45 +1,61 @@
-import {Injectable}               from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import { Injectable }               from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
-import {MIGInformation} from './mig-information';
+import { MIGInformation }  from './mig-information';
+import { MIGPatientTrace } from './mig-patienttrace';
 
-import {MIGPerson}       from './mig-person';
-import {MIGPatient}      from './mig-patient';
-import {MIGOrganisation} from './mig-organisation';
-import {MIGLocation}     from './mig-location';
-import {MIGUser}         from './mig-user';
-import {MIGRole}         from './mig-role';
-import {MIGUserInRole}   from './mig-userinrole';
+import { MIGPerson }       from './mig-person';
+import { MIGPatient }      from './mig-patient';
+import { MIGOrganisation } from './mig-organisation';
+import { MIGLocation }     from './mig-location';
+import { MIGUser }         from './mig-user';
+import { MIGRole }         from './mig-role';
+import { MIGUserInRole }   from './mig-userinrole';
+import { MIGPatientMatch } from './mig-patientmatch';
 
-import {MIGEncounter} from './mig-encounter';
-import {MIGProblem}   from './mig-problem';
-import {MIGEvent}     from './mig-event';
+import { MIGEncounter } from './mig-encounter';
+import { MIGProblem }   from './mig-problem';
+import { MIGEvent }     from './mig-event';
+import { MIGDocument }  from './mig-document';
 
 @Injectable()
-export class MIGDataService {
-  public static readonly ALLGPDATA_REQUEST_NAME = 'allgpdata';
-  public static readonly SUMMARY_REQUEST_NAME = 'summary';
-  public static readonly PROBLEM_REQUEST_NAME = 'problem';
-  public static readonly DIAGNOSIS_REQUEST_NAME = 'diagnosis';
-  public static readonly MEDICATION_REQUEST_NAME = 'medication';
-  public static readonly RISKSWARNING_REQUEST_NAME = 'riskswarning';
-  public static readonly PROCEDURE_REQUEST_NAME = 'procedure';
+export class MIGDataService
+{
+  public static readonly ALLGPDATA_REQUEST_NAME     = 'allgpdata';
+  public static readonly SUMMARY_REQUEST_NAME       = 'summary';
+  public static readonly PROBLEM_REQUEST_NAME       = 'problem';
+  public static readonly DIAGNOSIS_REQUEST_NAME     = 'diagnosis';
+  public static readonly MEDICATION_REQUEST_NAME    = 'medication';
+  public static readonly RISKSWARNING_REQUEST_NAME  = 'riskswarning';
+  public static readonly PROCEDURE_REQUEST_NAME     = 'procedure';
   public static readonly INVESTIGATION_REQUEST_NAME = 'investigation';
-  public static readonly EXAMINATION_REQUEST_NAME = 'examination';
-  public static readonly EVENT_REQUEST_NAME = 'event';
+  public static readonly EXAMINATION_REQUEST_NAME   = 'examination';
+  public static readonly EVENT_REQUEST_NAME         = 'event';
   public static readonly PATIENTDETAIL_REQUEST_NAME = 'patientdetail';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient)
+  {
   }
 
-  public loadMIGInformation(nhsNumber: string, requestType?: string): Promise<MIGInformation> {
-    if (requestType) {
+  public loadMIGPatientTrace(givenname: string, familyname: string, gender: string, birthday: string, birthmonth: string, birthyear: string): Promise<MIGPatientTrace>
+  {
+    return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?givenname=' + givenname + '&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
+      .toPromise()
+      .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
+      .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));
+  }
+
+  public loadMIGInformation(nhsNumber: string, requestType?: string): Promise<MIGInformation>
+  {
+    if (requestType)
+    {
       return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber + '&request_type=' + requestType)
         .toPromise()
         .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
         .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
     }
-    else {
+    else
+    {
       return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber)
         .toPromise()
         .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
@@ -47,9 +63,34 @@ export class MIGDataService {
     }
   }
 
-  private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation {
-    //console.log('Body = ' + JSON.stringify(body));
+  private loadMIGPatientTraceSuccessHandler(body: any): MIGPatientTrace
+  {
+    console.log('PatientTrace Responce Body: ' + JSON.stringify(body));
 
+    let status:           string            = 'Failed';
+    let migPatientMatchs: MIGPatientMatch[] = null;
+
+    if (body && body.status)
+    {
+      status           = body.status;
+      migPatientMatchs = [];
+
+      if (body.patientMatchs)
+        for (let patientMatch of body.patientMatchs)
+          if (patientMatch.patient && patientMatch.patient.primaryIdentifier)
+            migPatientMatchs.push(new MIGPatientMatch(patientMatch.patient.primaryIdentifier));
+    }
+
+    return new MIGPatientTrace(status, migPatientMatchs);
+  }
+
+  private loadMIGPatientTraceErrorHandler(error: any): MIGPatientTrace
+  {
+    return new MIGPatientTrace('Failed', null);
+  }
+
+  private loadMIGInformationSuccessHandler(nhsNumber: string, body: any): MIGInformation
+  {
     let status: string = body.status;
 
     let migPersons: MIGPerson[] = [];
@@ -90,7 +131,7 @@ export class MIGDataService {
     let migEncounters: MIGEncounter[] = [];
     if (body.healthDomain && body.healthDomain.encounters)
       for (let encounter of body.healthDomain.encounters)
-        migEncounters.push(new MIGEncounter(encounter.id));
+        migEncounters.push(new MIGEncounter(encounter.id, encounter.patient, encounter.ffectiveTime, encounter.duration, encounter.authorisingUserInRole, encounter.enteredByUserInRole, encounter.organisations, encounter.location, encounter.components));
 
     let migProblems: MIGProblem[] = [];
     if (body.healthDomain && body.healthDomain.problems)
@@ -102,12 +143,16 @@ export class MIGDataService {
       for (let event of body.healthDomain.events)
         migEvents.push(new MIGEvent(event.id, event.patient, event.eventType, event.effectiveTime, event.availabilityTimeStamp, event.authorisingUserInRole, event.enteredByUserInRole, event.code, event.displayTerm, event.organisation, event.observation));
 
-    return new MIGInformation(nhsNumber, status, migPersons, migPatients, migOrganisations, migLocations, migUsers, migRoles, migUserInRoles, migEncounters, migProblems, migEvents);
+    let migDocuments: MIGDocument[] = [];
+    if (body.healthDomain && body.healthDomain.documents)
+      for (let document of body.healthDomain.documents)
+        migDocuments.push(new MIGDocument(document.id, document.name, document.description, document.observations, document.code));
+
+    return new MIGInformation(nhsNumber, status, migPersons, migPatients, migOrganisations, migLocations, migUsers, migRoles, migUserInRoles, migEncounters, migProblems, migEvents, migDocuments);
   }
 
-  private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation {
-    console.log('MIG-Information Error Handler: ' + JSON.stringify(error));
-
-    return new MIGInformation(nhsNumber, 'Failed', [], [], [], [], [], [], [], [], [], []);
+  private loadMIGInformationErrorHandler(nhsNumber: string, error: any): MIGInformation
+  {
+    return new MIGInformation(nhsNumber, 'Failed', [], [], [], [], [], [], [], [], [], [], []);
   }
 }

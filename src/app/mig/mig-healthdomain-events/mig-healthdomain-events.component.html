@@ -12,23 +12,23 @@
         <mat-cell *matCellDef="let event"> {{patientMapping(event.patient)}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="eventType">
-        <mat-header-cell *matHeaderCellDef> Event Type </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{event.eventType}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="effectiveTime">
-        <mat-header-cell *matHeaderCellDef> Effective Time </mat-header-cell>
-        <mat-cell *matCellDef="let event"> {{event.effectiveTime}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> When </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.effectiveTime | date:'dd/MM/yy'}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="availabilityTimeStamp">
-        <mat-header-cell *matHeaderCellDef> Availability Time Stamp </mat-header-cell>
-        <mat-cell *matCellDef="let event"> {{event.availabilityTimeStamp}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> Available </mat-header-cell>
+        <mat-cell *matCellDef="let event"> {{event.availabilityTimeStamp | date:'dd/MM/yy'}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="authorisingUserInRole">
         <mat-header-cell *matHeaderCellDef> Authorising User In Role </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{event.authorisingUserInRole}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="mappedAuthorisingUserInRole">
-        <mat-header-cell *matHeaderCellDef> Authorising User In Role </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Authorised by </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{userInRoleMapping(event.authorisingUserInRole)}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="enteredByUserInRole">
@@ -36,7 +36,7 @@
         <mat-cell *matCellDef="let event"> {{event.enteredByUserInRole}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="mappedEnteredByUserInRole">
-        <mat-header-cell *matHeaderCellDef> Entered By User In Role </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Entered by </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{userInRoleMapping(event.enteredByUserInRole)}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="code">
@@ -50,7 +50,7 @@
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="displayTerm">
-        <mat-header-cell *matHeaderCellDef> Display Term </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Detail </mat-header-cell>
         <mat-cell *matCellDef="let event"> {{event.displayTerm}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="organisation">
@@ -63,9 +63,9 @@
     </ng-container>
     <ng-container matColumnDef="observation">
         <mat-header-cell *matHeaderCellDef> Observation </mat-header-cell>
-        <mat-cell *matCellDef="let event"> {{event.observation}} </mat-cell>
+        <mat-cell *matCellDef="let event"> {{event.observation | json}} </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="eventDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: eventDisplayedColumns;"></mat-row>
 </mat-table>
-<mat-paginator #eventPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>
+<mat-paginator #eventPaginator [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

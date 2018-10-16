@@ -14,21 +14,27 @@ let width = 250;
   styleUrls: ['./health-timeline.component.scss']
 })
 export class HealthTimelineComponent implements OnInit, OnChanges {
-  /*private labelTestData: any = [
-    {name:'one', label: "step1", times: [{"starting_time": 0, "ending_time": 135}]},
-    {name:'two', label: "step2", times: [{"starting_time": 120, "ending_time": 160}, ]},
-    {name:'three', label: "step3", times: [{"starting_time": 160, "ending_time": 175}]}
-  ];*/
-
   private chart: any;
   private svg: any;
   private width: any = 1000;
   private height: any = 700;
+  private safeToDraw = false;
+  private stillNeedToDraw = false;
 
+  public markSafeToDraw(): void {
+    this.safeToDraw = true;
+    if (this.stillNeedToDraw) {
+      this.drawChart();
+    }
+  }
 
-  public doChange(): void
-  {
-    this.drawChart();
+  public doChange(): void {
+    if (this.safeToDraw) {
+      this.drawChart();
+    }
+    else {
+      this.stillNeedToDraw = true;
+    }
   }
 
   @Input('events')
@@ -42,92 +48,100 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     this.includeInactive = true;
   }
 
-  private clearAllBarSelections: any = function() {
+  private clearAllBarSelections(): void {
     var bars = document.querySelectorAll(`#timeline rect`);
-    if (bars && bars.length>0) {
-      bars.forEach(function(bar,index,a) {
+    if (bars && bars.length > 0) {
+      bars.forEach(function (bar, index, a) {
         let label = bar["__data__"].name;
-        bar.setAttribute('stroke',"#333333");
-        bar.setAttribute('stroke-width',"0.5");
-        document.getElementsByClassName('timeline-label')[index].setAttribute('font-weight','normal');
+        bar.setAttribute('stroke', "#333333");
+        bar.setAttribute('stroke-width', "0.5");
+        document.getElementsByClassName('timeline-label')[index].setAttribute('font-weight', 'normal');
       });
     }
     var people = document.querySelectorAll("mat-cell.selected");
-    if (people && people.length>0) {
-      people.forEach(function(person,index){
+    if (people && people.length > 0) {
+      people.forEach(function (person, index) {
         person.classList.remove("selected");
       });
     }
   }
 
   public ngOnChanges(): void {
-    this.drawChart();
+    if (this.safeToDraw) {
+      this.drawChart();
+    }
+    else {
+      this.stillNeedToDraw = true;
+    }
   }
 
-  private lockOnto: any = function(clearBarSelectionsFunction,d,i,datum) {
+  private lockOnto: any = function (clearBarSelectionsFunction, d, i, datum) {
     clearBarSelectionsFunction();
-    document.querySelector(`rect.timelineSeries_${i}`).setAttribute('stroke',"#CC0000");
-    document.querySelector(`rect.timelineSeries_${i}`).setAttribute('stroke-width',"2");
-    document.getElementsByClassName('timeline-label')[i].setAttribute('font-weight','bold');
+    document.querySelector(`rect.timelineSeries_${i}`).setAttribute('stroke', "#CC0000");
+    document.querySelector(`rect.timelineSeries_${i}`).setAttribute('stroke-width', "2");
+    document.getElementsByClassName('timeline-label')[i].setAttribute('font-weight', 'bold');
     let color = (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style["fill"];
-    document.getElementById('coloredDiv').style.backgroundColor=color;
+    document.getElementById('coloredDiv').style.backgroundColor = color;
     let userId = datum.user;
     let match = document.querySelector(`mat-cell[data-id="${userId}"`);
     let name = match.getElementsByClassName('name')[0].textContent;
     (<HTMLElement>match).classList.add("selected");
-    document.getElementById('name').innerHTML=`${datum.label} [acc. ${name}]`;
+    document.getElementById('name').innerHTML = `${datum.label} [acc. ${name}]`;
   }
 
   private calculateChartHeight(bars) {
     return (bars.length * 25) + 50;
   }
 
-  private drawChart(): void
-  {
+  private drawChart(): void {
     this.processEventDataForChart();
-    document.querySelector("#timeline").innerHTML="";
-    this.chart = d3timelines.timelines();
-    let clearBarSelectionsFunction = this.clearAllBarSelections;
-    let lockOntoFn = this.lockOnto;
-    let ch = this.chart;
-    //let colFn = stringToColor;
-    let svg = this.svg;
-    //this.chart.relativeTime();
-    this.chart.rowSeparators("#CCCCCC");
-    this.chart.tickFormat({
-      format: function (d) {
-        return d3.timeFormat("'%y")(d)
-      },
-      tickTime: d3.timeYears,
-      tickInterval:d3.timeYear.every(1),
-      tickSize: 1
-    });
-    this.chart.stack();
-    this.chart.showTodayFormat({marginTop:10, marginBottom: 10, width: 2, color: "#CCCCCC"}).showToday();
-    this.chart.ending((new Date().setFullYear(new Date().getFullYear() + 1)));
-    this.chart.showTimeAxisTick();
-    this.chart.margin({left: width+30, right: 30, top: 0, bottom: 0});
-    this.chart.hover(function (d, i, datum) {
-      (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style.cursor = "pointer";
-      lockOntoFn(clearBarSelectionsFunction,d,i,datum);
-    });
-    this.chart.click(function (d, i, datum) {
-      (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style.cursor = "pointer";
-      lockOntoFn(clearBarSelectionsFunction,d,i,datum);
-    });
-    this.chart.colorProperty("name");
-    let height = this.calculateChartHeight(this.processedData);
-    this.chart.height = height;
-    this.chart.width = this.width;
-    this.svg = d3.select("#timeline").append("svg").attr("width", this.width).attr("height", height)
-      .datum(this.processedData).call(this.chart);
-    this.modifyLabels();
+    let timeline = document.querySelector("#timeline");
+    if (timeline) {
+      timeline.innerHTML = "";
+      this.chart = d3timelines.timelines();
+      let clearBarSelectionsFunction = this.clearAllBarSelections;
+      let lockOntoFn = this.lockOnto;
+      let ch = this.chart;
+      //let colFn = stringToColor;
+      let svg = this.svg;
+      //this.chart.relativeTime();
+      this.chart.rowSeparators("#CCCCCC");
+      this.chart.tickFormat({
+        format: function (d) {
+          return d3.timeFormat("'%y")(d)
+        },
+        tickTime: d3.timeYears,
+        tickInterval: d3.timeYear.every(1),
+        tickSize: 1
+      });
+      this.chart.stack();
+      this.chart.showTodayFormat({marginTop: 10, marginBottom: 10, width: 2, color: "#CCCCCC"}).showToday();
+      this.chart.ending((new Date().setFullYear(new Date().getFullYear() + 1)));
+      this.chart.showTimeAxisTick();
+      this.chart.margin({left: width + 30, right: 30, top: 0, bottom: 0});
+      this.chart.hover(function (d, i, datum) {
+        (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style.cursor = "pointer";
+        lockOntoFn(clearBarSelectionsFunction, d, i, datum);
+      });
+      this.chart.click(function (d, i, datum) {
+        (<HTMLElement>document.querySelector(`rect.timelineSeries_${i}`)).style.cursor = "pointer";
+        lockOntoFn(clearBarSelectionsFunction, d, i, datum);
+      });
+      this.chart.colorProperty("name");
+      let height = this.calculateChartHeight(this.processedData);
+      this.chart.height = height;
+      this.chart.width = this.width;
+      this.svg = d3.select("#timeline").append("svg").attr("width", this.width).attr("height", height)
+        .datum(this.processedData).call(this.chart);
+      this.modifyLabels();
+      this.stillNeedToDraw = false;
+    }
   }
 
-  private processEventDataForChart() {
+  private processEventDataForChart(): void {
     var main = this;
-    main.processedData=[];
-    this.events.forEach(function(event,index) {
+    main.processedData = [];
+    this.events.forEach(function (event, index) {
       let problem = main.migInformationIndexService.problemMap.get(event.id);
       if (problem) {
         if (problem.status == 'A' || (main.includeInactive && problem.status == 'I')) {
@@ -140,15 +154,15 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
             endTime = new Date(problem.endTime);
           }
           let times = [{"starting_time": startTime, "ending_time": endTime}];
-          main.processedData.push({user:user,name: name, label: label, times: times});
+          main.processedData.push({user: user, name: name, label: label, times: times});
         }
       }
     });
   }
 
-  private modifyLabels: any = function() {
+  private modifyLabels(): void {
     let labels = document.querySelectorAll("text.timeline-label");
-    labels.forEach(function(label,i) {
+    labels.forEach(function (label, i) {
       var thisOne = d3.select(label),
         textWidth = thisOne.node().getComputedTextLength(),    // Width of text in pixel.
         initialText = thisOne.text(),                          // Initial text.
@@ -156,7 +170,7 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
         text = initialText,
         precision = 10, //textWidth / width,                // Adjustable precision.
         maxIterations = 100; // width;                      // Set iterations limit.
-      if (textWidth>width-50) {
+      if (textWidth > width - 50) {
         while (maxIterations > 0 && text.length > 0 && Math.abs(width - textWidth) > precision) {
           text = (textWidth >= width) ? text.slice(0, -textLength * 0.15) : initialText.slice(0, textLength * 1.15);
           thisOne.text(text + '...');
@@ -168,7 +182,12 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     });
   }
 
-  public ngOnInit() {
-    this.drawChart();
+  public ngOnInit(): void {
+    if (this.safeToDraw) {
+      this.drawChart();
+    }
+    else {
+      this.stillNeedToDraw = true;
+    }
   }
 }

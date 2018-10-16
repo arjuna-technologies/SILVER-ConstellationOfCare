@@ -43,6 +43,7 @@ import { MIGHealthDomainComponent }             from './mig/mig-healthdomain/mig
 import { MIGHealthDomainEncountersComponent }   from './mig/mig-healthdomain-encounters/mig-healthdomain-encounters.component';
 import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-problems/mig-healthdomain-problems.component';
 import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
+import { MIGHealthDomainDocumentsComponent }    from './mig/mig-healthdomain-documents/mig-healthdomain-documents.component';
 import { ConstellationComponent }               from './report/constellation/constellation.component';
 import { ProblemsTimelineComponent }               from './report/problems-timeline/problems-timeline.component';
 
@@ -74,6 +75,7 @@ import { HealthTimelineComponent } from './report/health-timeline/health-timelin
         MIGHealthDomainEncountersComponent,
         MIGHealthDomainProblemsComponent,
         MIGHealthDomainEventsComponent,
+        MIGHealthDomainDocumentsComponent,
         ConstellationComponent,
         ProblemsTimelineComponent,
         HealthTimelineComponent

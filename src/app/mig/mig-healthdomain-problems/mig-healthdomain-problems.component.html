@@ -29,10 +29,10 @@
             <mat-cell *matCellDef="let problem"> {{problem.expectedDuration}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="endTime">
-            <mat-header-cell *matHeaderCellDef> End Time </mat-header-cell>
-            <mat-cell *matCellDef="let problem"> {{problem.endTime}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef> End </mat-header-cell>
+            <mat-cell *matCellDef="let problem"> {{problem.endTime | date:'dd/MM/yy'}} </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="problemDisplayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: problemDisplayedColumns;"></mat-row>
     </mat-table>
-    <mat-paginator #problemPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>
+    <mat-paginator #problemPaginator [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 100]" [showFirstLastButtons]="true"></mat-paginator>

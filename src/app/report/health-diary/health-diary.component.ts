@@ -1,20 +1,21 @@
-import {GoogleChartsLoaderService} from '../../googlecharts-loader.service';
+import { GoogleChartsLoaderService } from '../../googlecharts-loader.service';
 
-import {Component, Input, ViewChild, OnChanges, AfterViewInit} from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, AfterViewInit } from '@angular/core';
 
-import {MIGEvent} from '../../mig/mig-event';
+import { MIGEvent } from '../../mig/mig-event';
 
 declare var google: any;
 
 @Component
 ({
-  selector: 'cnstll-health-diary',
-  templateUrl: './health-diary.component.html',
-  styleUrls: ['./health-diary.component.scss']
+    selector:    'cnstll-health-diary',
+    templateUrl: './health-diary.component.html',
+    styleUrls:   ['./health-diary.component.scss']
 })
-export class HealthDiaryComponent implements AfterViewInit, OnChanges {
-  @ViewChild('eventsCalendar')
-  private calendar;
+export class HealthDiaryComponent implements AfterViewInit, OnChanges
+{
+    @ViewChild('eventsCalendar')
+    private calendar;
 
   @Input('events')
   private events: MIGEvent[];
