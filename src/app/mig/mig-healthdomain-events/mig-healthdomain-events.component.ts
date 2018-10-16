@@ -63,7 +63,11 @@ export class MIGHealthDomainEventsComponent implements OnChanges, DoCheck
 
     public organisationMapping(organisationId: string): string
     {
-        return this.migInformationIndexService.basicOrganisationMapping(organisationId);
+      let org = this.migInformationIndexService.basicOrganisationMapping(organisationId);
+      if (org == "EMISWebCR1 50005") {
+        org = "EMIS Test Org";
+      }
+      return org;
     }
 
     public userInRoleMapping(userInRoleId: string): string
