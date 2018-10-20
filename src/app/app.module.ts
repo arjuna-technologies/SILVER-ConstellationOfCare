@@ -49,6 +49,7 @@ import { AuthenticationService }      from './authentication.service';
 import { FamilyDataService }          from './family/family-data.service';
 import { MIGDataService }             from './mig/mig-data.service';
 import { MIGInformationIndexService } from './mig/mig-information-index.service';
+import { StorageService }             from './storage.service';
 
 @NgModule
 ({
@@ -109,7 +110,8 @@ import { MIGInformationIndexService } from './mig/mig-information-index.service'
         AuthenticationService,
         FamilyDataService,
         MIGDataService,
-        MIGInformationIndexService
+        MIGInformationIndexService,
+        StorageService
     ],
     bootstrap:
     [
