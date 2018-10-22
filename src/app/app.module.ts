@@ -52,6 +52,7 @@ import { FamilyDataService }          from './family/family-data.service';
 import { MIGDataService }             from './mig/mig-data.service';
 import { MIGInformationIndexService } from './mig/mig-information-index.service';
 import { HealthTimelineComponent } from './report/health-timeline/health-timeline.component';
+import { StorageService }             from './storage.service';
 
 @NgModule
 ({
@@ -115,7 +116,8 @@ import { HealthTimelineComponent } from './report/health-timeline/health-timelin
         AuthenticationService,
         FamilyDataService,
         MIGDataService,
-        MIGInformationIndexService
+        MIGInformationIndexService,
+        StorageService
     ],
     bootstrap:
     [
