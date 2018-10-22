@@ -4,11 +4,11 @@ import {FamilyMember} from '../family-member';
 
 @Component
 ({
-  selector: 'cnstll-family-member',
-  templateUrl: './family-member.component.html',
-  styleUrls: ['./family-member.component.scss']
+  selector: 'cnstll-family-member-menu-item',
+  templateUrl: 'family-member-menu-item.component.html',
+  styleUrls: ['family-member-menu-item.component.scss']
 })
-export class FamilyMemberComponent implements OnChanges {
+export class FamilyMemberMenuItemComponent implements OnChanges {
   @Input()
   public familyMember: FamilyMember;
   @Input()

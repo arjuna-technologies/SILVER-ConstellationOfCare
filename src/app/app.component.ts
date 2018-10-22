@@ -2,7 +2,7 @@ import {Component, ViewChild, Input, ViewEncapsulation} from '@angular/core';
 import {MatDialog} from '@angular/material';
 
 import {LoginDialogComponent} from './login-dialog/login-dialog.component';
-import {FamilyComponent} from './family/family/family.component';
+import {FamilyMemberChooserButtonComponent} from './family/family-member-chooser-button/family-member-chooser-button.component';
 import {FamilyChooserButtonComponent} from './family/family-chooser-button/family-chooser-button.component';
 import {MIGInformationComponent} from './mig/mig-information/mig-information.component';
 import {CaseManagementScreenComponent} from './report/case-management-screen/case-management-screen.component'
@@ -34,14 +34,14 @@ export class AppComponent {
   @ViewChild('familyChooserButton')
   public familyChooserButton: FamilyChooserButtonComponent;
 
-  @ViewChild('familyButton')
-  public familyButton: FamilyComponent;
+  @ViewChild('familyMemberChooserButton')
+  public familyMemberChooserButton: FamilyMemberChooserButtonComponent;
 
   @ViewChild('miginformation')
   public migInformation: MIGInformationComponent;
 
   @ViewChild('caseManagementButton')
-  public caseManagementButton: CaseManagementScreenComponent;
+  public caseManagementButton: CaseManagementButtonComponent;
 
   @ViewChild('caseManagementScreen')
   public caseManagementScreen: CaseManagementScreenComponent;

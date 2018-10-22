@@ -5,12 +5,12 @@ import {FamilyMember} from '../family-member';
 
 @Component
 ({
-  selector: 'cnstll-family',
-  templateUrl: './family.component.html',
-  styleUrls: ['./family.component.scss']
+  selector: 'cnstll-family-member-chooser-button',
+  templateUrl: 'family-member-chooser-button.component.html',
+  styleUrls: ['family-member-chooser-button.component.scss']
 })
 
-export class FamilyComponent implements OnInit, OnChanges {
+export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
   @Input()
   public family: Family;
 

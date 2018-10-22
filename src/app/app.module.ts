@@ -28,8 +28,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent }                         from './app.component';
 import { LoginDialogComponent }                 from './login-dialog/login-dialog.component';
 import { FamilyChooserButtonComponent }         from './family/family-chooser-button/family-chooser-button.component';
-import { FamilyComponent }                      from './family/family/family.component';
-import { FamilyMemberComponent }                from './family/family-member/family-member.component';
+import { FamilyMemberChooserButtonComponent }   from './family/family-member-chooser-button/family-member-chooser-button.component';
+import { FamilyMemberMenuItemComponent }        from './family/family-member-menu-item/family-member-menu-item.component';
 import { MIGInformationComponent }              from './mig/mig-information/mig-information.component';
 import { MIGAdminDomainComponent }              from './mig/mig-admindomain/mig-admindomain.component';
 import { MIGAdminDomainPersonsComponent }       from './mig/mig-admindomain-persons/mig-admindomain-persons.component';
@@ -62,17 +62,9 @@ import { CaseManagementButtonComponent } from './report/case-management-button/c
         AppComponent,
         LoginDialogComponent,
         FamilyChooserButtonComponent,
-        FamilyComponent,
-        FamilyMemberComponent,
+        FamilyMemberChooserButtonComponent,
+        FamilyMemberMenuItemComponent,
         MIGInformationComponent,
-        MIGAdminDomainComponent,
-        MIGAdminDomainPersonsComponent,
-        MIGAdminDomainPatientsComponent,
-        MIGAdminDomainOrganisationsComponent,
-        MIGAdminDomainLocationsComponent,
-        MIGAdminDomainUsersComponent,
-        MIGAdminDomainRolesComponent,
-        MIGAdminDomainUserInRolesComponent,
         MIGHealthDomainComponent,
         MIGHealthDomainEncountersComponent,
         MIGHealthDomainProblemsComponent,
