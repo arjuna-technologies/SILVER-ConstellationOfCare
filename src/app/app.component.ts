@@ -3,7 +3,7 @@ import {MatDialog} from '@angular/material';
 
 import {LoginDialogComponent} from './login-dialog/login-dialog.component';
 import {FamilyComponent} from './family/family/family.component';
-import {FamilyBookmarksComponent} from './family/family-bookmarks/family-bookmarks.component';
+import {FamilyChooserButtonComponent} from './family/family-chooser-button/family-chooser-button.component';
 import {MIGInformationComponent} from './mig/mig-information/mig-information.component';
 import {CaseManagementScreenComponent} from './report/case-management-screen/case-management-screen.component'
 import {CaseManagementButtonComponent} from './report/case-management-button/case-management-button.component'
@@ -31,8 +31,8 @@ export class AppComponent {
   @Input()
   public family: Family;
 
-  @ViewChild('familyBookmarksButton')
-  public familyBookmarksButton: FamilyBookmarksComponent;
+  @ViewChild('familyChooserButton')
+  public familyChooserButton: FamilyChooserButtonComponent;
 
   @ViewChild('familyButton')
   public familyButton: FamilyComponent;

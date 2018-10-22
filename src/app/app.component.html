@@ -4,7 +4,7 @@
       <span>SILVER Health Data Interface</span>
       <span class="toolbar-spacer"></span>
       <div *ngIf="username">
-        <cnstll-family-bookmarks #familyBookmarksButton [family]="family" (familySelect)="setFamily($event)"></cnstll-family-bookmarks>
+        <cnstll-family-chooser-button #familyChooserButton [family]="family" (familySelect)="setFamily($event)"></cnstll-family-chooser-button>
         <cnstll-family #familyButton *ngIf="family" [family]="family" [familyMember]="familyMember" (selectFamilyMember)="managementMode=false;setFamilyMember($event)"></cnstll-family>
         <cnstll-case-management-button *ngIf="!managementMode" #caseManagementButton [username]="username" (launchCaseManagementScreen)="family=null;familyMember=null;managementMode=true;"></cnstll-case-management-button>
       </div>

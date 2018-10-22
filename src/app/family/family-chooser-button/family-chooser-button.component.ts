@@ -7,11 +7,11 @@ import {FamilyDataService} from '../family-data.service';
 
 @Component
 ({
-  selector: 'cnstll-family-bookmarks',
-  templateUrl: './family-bookmarks.component.html',
-  styleUrls: ['./family-bookmarks.component.scss']
+  selector: 'cnstll-family-chooser-button',
+  templateUrl: 'family-chooser-button.component.html',
+  styleUrls: ['family-chooser-button.component.scss']
 })
-export class FamilyBookmarksComponent implements OnInit, OnChanges {
+export class FamilyChooserButtonComponent implements OnInit, OnChanges {
   public families: Family[];
   public familyNames: string[];
 

@@ -27,7 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent }                         from './app.component';
 import { LoginDialogComponent }                 from './login-dialog/login-dialog.component';
-import { FamilyBookmarksComponent }             from './family/family-bookmarks/family-bookmarks.component';
+import { FamilyChooserButtonComponent }         from './family/family-chooser-button/family-chooser-button.component';
 import { FamilyComponent }                      from './family/family/family.component';
 import { FamilyMemberComponent }                from './family/family-member/family-member.component';
 import { MIGInformationComponent }              from './mig/mig-information/mig-information.component';
@@ -45,7 +45,6 @@ import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-pro
 import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
 import { MIGHealthDomainDocumentsComponent }    from './mig/mig-healthdomain-documents/mig-healthdomain-documents.component';
 import { ConstellationComponent }               from './report/constellation/constellation.component';
-import { ProblemsTimelineComponent }               from './report/problems-timeline/problems-timeline.component';
 
 import { AuthenticationService }      from './authentication.service';
 import { FamilyDataService }          from './family/family-data.service';
@@ -62,7 +61,7 @@ import { CaseManagementButtonComponent } from './report/case-management-button/c
     [
         AppComponent,
         LoginDialogComponent,
-        FamilyBookmarksComponent,
+        FamilyChooserButtonComponent,
         FamilyComponent,
         FamilyMemberComponent,
         MIGInformationComponent,
@@ -80,7 +79,6 @@ import { CaseManagementButtonComponent } from './report/case-management-button/c
         MIGHealthDomainEventsComponent,
         MIGHealthDomainDocumentsComponent,
         ConstellationComponent,
-        ProblemsTimelineComponent,
         HealthTimelineComponent,
         CaseManagementScreenComponent,
         CaseManagementButtonComponent
