@@ -50,10 +50,11 @@ import { MIGPatientTraceDialogComponent }       from './mig/mig-patienttrace-dia
 import { ConstellationComponent }               from './report/constellation/constellation.component';
 import { ProblemsTimelineComponent }            from './report/problems-timeline/problems-timeline.component';
 
-import { AuthenticationService }       from './authentication.service';
-import { FamilyDataService }           from './family/family-data.service';
-import { MIGDataService }              from './mig/mig-data.service';
-import { MIGInformationIndexService }  from './mig/mig-information-index.service';
+import { AuthenticationService }      from './authentication.service';
+import { FamilyDataService }          from './family/family-data.service';
+import { MIGDataService }             from './mig/mig-data.service';
+import { MIGInformationIndexService } from './mig/mig-information-index.service';
+import { StorageService }             from './storage.service';
 
 @NgModule
 ({
@@ -120,7 +121,8 @@ import { MIGInformationIndexService }  from './mig/mig-information-index.service
         FamilyDataService,
         MIGDataService,
         MIGInformationIndexService,
-        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+        StorageService
     ],
     bootstrap:
     [
