@@ -39,7 +39,7 @@ export class MIGDataService
 
     public loadMIGPatientTrace(givenname: string, familyname: string, gender: string, birthday: string, birthmonth: string, birthyear: string): Promise<MIGPatientTrace>
     {
-        return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?givenname=' + givenname + '&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
+        return this.httpClient.get('http://dataservice.silver.arjuna.com/data/ws/mig/patienttrace?givenname=' + givenname + '&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
                    .toPromise()
                    .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
                    .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));
@@ -49,14 +49,14 @@ export class MIGDataService
     {
         if (requestType)
         {
-            return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber + '&request_type=' + requestType)
+            return this.httpClient.get('http://dataservice.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber + '&request_type=' + requestType)
                        .toPromise()
                        .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
                        .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
         }
         else
         {
-            return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber)
+            return this.httpClient.get('http://dataservice.silver.arjuna.com/data/ws/mig/problems?nhs_number=' + nhsNumber)
                        .toPromise()
                        .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
                        .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));

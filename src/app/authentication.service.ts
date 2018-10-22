@@ -11,13 +11,12 @@ export class AuthenticationService
     {
     }
 
-
     public init(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            const config = { 'url': 'http://localhost:8080/auth', 'realm': 'silver', 'clientId': 'coc' };
+            const config = { 'url': 'https://authenticator.silver.arjuna.com/auth', 'realm': 'SILVER', 'clientId': 'coc' };
             this.keycloakAuth = new Keycloak(config);
-            this.keycloakAuth.init({ onLoad: 'login-required' })
+            this.keycloakAuth.init({ onLoad: 'login-required', flow: 'implicit' })
                 .success(() => { resolve(); })
                 .error(() => { reject(); });
         });

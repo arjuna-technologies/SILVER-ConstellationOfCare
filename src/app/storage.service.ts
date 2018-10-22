@@ -20,7 +20,7 @@ export class StorageService
 
     public createInformation(id: string, value: any): Promise<StorageInformation>
     {
-        return this.httpClient.post('http://dataservice-mig.silver.arjuna.com/storage/ws/storage/' + id, JSON.stringify(value), httpOptions)
+        return this.httpClient.post('http://dataservice.silver.arjuna.com/storage/ws/storage/' + id, JSON.stringify(value), httpOptions)
                    .toPromise()
                    .then((response: any) => Promise.resolve(this.storageInformationSuccessHandler(response)))
                    .catch((error) => Promise.resolve(this.storageInformationErrorHandler(error)));
@@ -28,7 +28,7 @@ export class StorageService
 
     public readInformation(id: string): Promise<StorageInformation>
     {
-        return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/storage/ws/storage/' + id)
+        return this.httpClient.get('http://dataservice.silver.arjuna.com/storage/ws/storage/' + id)
                    .toPromise()
                    .then((response: any) => Promise.resolve(this.storageInformationSuccessHandler(response)))
                    .catch((error) => Promise.resolve(this.storageInformationErrorHandler(error)));
@@ -36,7 +36,7 @@ export class StorageService
 
     public updateInformation(id: string, value: any): Promise<StorageInformation>
     {
-        return this.httpClient.put('http://dataservice-mig.silver.arjuna.com/storage/ws/storage/' + id, JSON.stringify(value), httpOptions)
+        return this.httpClient.put('http://dataservice.silver.arjuna.com/storage/ws/storage/' + id, JSON.stringify(value), httpOptions)
                    .toPromise()
                    .then((response: any) => Promise.resolve(this.storageInformationSuccessHandler(response)))
                    .catch((error) => Promise.resolve(this.storageInformationErrorHandler(error)));
@@ -44,7 +44,7 @@ export class StorageService
 
     public deleteInformation(id: string): Promise<StorageInformation>
     {
-        return this.httpClient.delete('http://dataservice-mig.silver.arjuna.com/storage/ws/storage/' + id)
+        return this.httpClient.delete('http://dataservice.silver.arjuna.com/storage/ws/storage/' + id)
                    .toPromise()
                    .then((response: any) => Promise.resolve(this.storageInformationSuccessHandler(response)))
                    .catch((error) => Promise.resolve(this.storageInformationErrorHandler(error)));
