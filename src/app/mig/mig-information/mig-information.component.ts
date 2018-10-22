@@ -1,4 +1,4 @@
-import {Component, ViewChild}             from '@angular/core';
+import {Component, OnInit, Input, OnChanges, ViewChild}             from '@angular/core';
 import {MatPaginator, MatTabGroup, MatTab, MatTableDataSource} from '@angular/material';
 
 import {MIGDataService}             from '../mig-data.service';
@@ -12,9 +12,12 @@ import {MIGInformation} from '../mig-information';
   templateUrl: './mig-information.component.html',
   styleUrls: ['./mig-information.component.scss']
 })
-export class MIGInformationComponent {
+export class MIGInformationComponent implements OnInit, OnChanges {
   public information: MIGInformation;
+
+  @Input()
   public familyMember: FamilyMember;
+
   public format: string;
   public loading: boolean;
 
@@ -25,7 +28,15 @@ export class MIGInformationComponent {
     this.loading = false;
   }
 
-  public doLoadInformation(familyMember: FamilyMember) {
+  public ngOnInit() {
+    this.doLoadInformation(this.familyMember);
+  }
+
+  public ngOnChanges() {
+    this.doLoadInformation(this.familyMember);
+  }
+
+  private doLoadInformation(familyMember: FamilyMember) {
     if (familyMember != null) {
       this.loading = true;
       this.information = null;

@@ -53,6 +53,8 @@ import { MIGDataService }             from './mig/mig-data.service';
 import { MIGInformationIndexService } from './mig/mig-information-index.service';
 import { HealthTimelineComponent } from './report/health-timeline/health-timeline.component';
 import { StorageService }             from './storage.service';
+import { CaseManagementScreenComponent } from './report/case-management-screen/case-management-screen.component';
+import { CaseManagementButtonComponent } from './report/case-management-button/case-management-button.component';
 
 @NgModule
 ({
@@ -79,7 +81,9 @@ import { StorageService }             from './storage.service';
         MIGHealthDomainDocumentsComponent,
         ConstellationComponent,
         ProblemsTimelineComponent,
-        HealthTimelineComponent
+        HealthTimelineComponent,
+        CaseManagementScreenComponent,
+        CaseManagementButtonComponent
     ],
     imports:
     [

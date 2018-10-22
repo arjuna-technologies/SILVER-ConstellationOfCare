@@ -1,4 +1,4 @@
-import {Component, Output, ViewEncapsulation, EventEmitter} from '@angular/core';
+import {Component, Output, Input, OnInit, OnChanges, ViewEncapsulation, EventEmitter} from '@angular/core';
 
 import {Family} from '../family';
 import {FamilyMember} from '../family-member';
@@ -10,8 +10,13 @@ import {FamilyMember} from '../family-member';
   styleUrls: ['./family.component.scss']
 })
 
-export class FamilyComponent {
+export class FamilyComponent implements OnInit, OnChanges {
+  @Input()
   public family: Family;
+
+  @Input()
+  public familyMember: FamilyMember;
+
   public familyName: string;
   public memberName: string;
   public loading: boolean;
@@ -27,27 +32,39 @@ export class FamilyComponent {
     this.selectFamilyMember = new EventEmitter<FamilyMember>();
   }
 
-  public doShowLoading(): void {
-    this.loading = true;
+  public ngOnInit() {
+    if (this.familyMember && this.memberName=='')
+      this.memberName = this.familyMember.getFullName();
+    this.doShowFamily();
   }
 
-  public doShowFamily(family: Family): void {
-    this.family = family;
-    if (family)
-      this.familyName = family.getFamilyName();
+  public ngOnChanges() {
+    if (this.familyMember && this.memberName=='')
+      this.memberName = this.familyMember.getFullName();
+    this.doShowFamily();
+  }
+
+  private doShowFamily(): void {
+    if (this.family)
+      this.familyName = this.family.getFamilyName();
     else
       this.familyName = '';
-    this.memberName = '';
+    if (this.familyMember)
+      this.memberName = this.familyMember.getFullName();
+    else
+      this.memberName = '';
     this.loading = false;
   }
 
   public doSelectFamilyMember(familyMember: FamilyMember): void {
     //console.log('NHS Number: ' + familyMember.nhsNumber);
     if (familyMember) {
+      this.familyMember = familyMember;
       this.memberName = familyMember.getFullName();
     }
     else
+      this.familyMember = null;
       this.memberName = '';
-    this.selectFamilyMember.emit(familyMember);
+    this.selectFamilyMember.emit(this.familyMember);
   }
 }

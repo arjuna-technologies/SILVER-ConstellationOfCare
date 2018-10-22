@@ -1,9 +1,14 @@
-import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild, Input, ViewEncapsulation} from '@angular/core';
 import {MatDialog} from '@angular/material';
 
 import {LoginDialogComponent} from './login-dialog/login-dialog.component';
 import {FamilyComponent} from './family/family/family.component';
+import {FamilyBookmarksComponent} from './family/family-bookmarks/family-bookmarks.component';
 import {MIGInformationComponent} from './mig/mig-information/mig-information.component';
+import {CaseManagementScreenComponent} from './report/case-management-screen/case-management-screen.component'
+import {CaseManagementButtonComponent} from './report/case-management-button/case-management-button.component'
+import {FamilyMember} from './family/family-member';
+import {Family} from './family/family';
 
 import { MIGDataService } from './mig/mig-data.service';
 
@@ -18,15 +23,44 @@ export class AppComponent {
   public org: string;
   public group: string;
 
-  @ViewChild('family')
-  public family: FamilyComponent;
+  public managementMode: any;
+
+  @Input()
+  public familyMember: FamilyMember;
+
+  @Input()
+  public family: Family;
+
+  @ViewChild('familyBookmarksButton')
+  public familyBookmarksButton: FamilyBookmarksComponent;
+
+  @ViewChild('familyButton')
+  public familyButton: FamilyComponent;
+
   @ViewChild('miginformation')
   public migInformation: MIGInformationComponent;
+
+  @ViewChild('caseManagementButton')
+  public caseManagementButton: CaseManagementScreenComponent;
+
+  @ViewChild('caseManagementScreen')
+  public caseManagementScreen: CaseManagementScreenComponent;
 
   public requestTypes: any[];
   public requestTypeCode: string;
 
+  public setFamily(family) {
+    this.family = family;
+    this.setFamilyMember(null);
+  }
+
+  public setFamilyMember(familyMember) {
+    this.familyMember = familyMember;
+  }
+
   public constructor(private dialog: MatDialog) {
+    this.familyMember=null;
+    this.managementMode=true;
     this.username = '';
     this.org = '';
     this.group = '';
@@ -58,8 +92,9 @@ export class AppComponent {
       this.org = '';
       this.group = '';
 
-      this.family.doShowFamily(null);
-      this.migInformation.doLoadInformation(null);
+      this.family=null;
+      this.familyMember=null;
+      this.managementMode=true;
     }
   }
 

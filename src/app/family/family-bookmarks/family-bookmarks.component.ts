@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, Input, OnChanges, Output, EventEmitter} from '@angular/core';
 
 import {Family}       from '../family';
 import {FamilyMember} from '../family-member';
@@ -11,10 +11,13 @@ import {FamilyDataService} from '../family-data.service';
   templateUrl: './family-bookmarks.component.html',
   styleUrls: ['./family-bookmarks.component.scss']
 })
-export class FamilyBookmarksComponent implements OnInit {
+export class FamilyBookmarksComponent implements OnInit, OnChanges {
   public families: Family[];
   public familyNames: string[];
+
+  @Input()
   public family: Family;
+
   public loading: boolean;
 
   @Output()
@@ -29,6 +32,15 @@ export class FamilyBookmarksComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.familyNames = [];
+
+    this.families = null;
+    this.loading = true;
+
+    this.loadFamilies();
+  }
+
+  public ngOnChanges(): void {
     this.familyNames = [];
 
     this.families = null;
