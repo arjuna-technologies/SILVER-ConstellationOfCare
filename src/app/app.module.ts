@@ -31,14 +31,6 @@ import { FamilyChooserButtonComponent }         from './family/family-chooser-bu
 import { FamilyMemberChooserButtonComponent }   from './family/family-member-chooser-button/family-member-chooser-button.component';
 import { FamilyMemberMenuItemComponent }        from './family/family-member-menu-item/family-member-menu-item.component';
 import { MIGInformationComponent }              from './mig/mig-information/mig-information.component';
-import { MIGAdminDomainComponent }              from './mig/mig-admindomain/mig-admindomain.component';
-import { MIGAdminDomainPersonsComponent }       from './mig/mig-admindomain-persons/mig-admindomain-persons.component';
-import { MIGAdminDomainPatientsComponent }      from './mig/mig-admindomain-patients/mig-admindomain-patients.component';
-import { MIGAdminDomainOrganisationsComponent } from './mig/mig-admindomain-organisations/mig-admindomain-organisations.component';
-import { MIGAdminDomainLocationsComponent }     from './mig/mig-admindomain-locations/mig-admindomain-locations.component';
-import { MIGAdminDomainUsersComponent }         from './mig/mig-admindomain-users/mig-admindomain-users.component';
-import { MIGAdminDomainRolesComponent }         from './mig/mig-admindomain-roles/mig-admindomain-roles.component';
-import { MIGAdminDomainUserInRolesComponent }   from './mig/mig-admindomain-userinroles/mig-admindomain-userinroles.component';
 import { MIGHealthDomainComponent }             from './mig/mig-healthdomain/mig-healthdomain.component';
 import { MIGHealthDomainEncountersComponent }   from './mig/mig-healthdomain-encounters/mig-healthdomain-encounters.component';
 import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-problems/mig-healthdomain-problems.component';
