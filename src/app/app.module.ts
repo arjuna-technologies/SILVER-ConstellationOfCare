@@ -9,7 +9,7 @@ import { MatCheckboxModule }    from '@angular/material/checkbox';
 import { MatSidenavModule }     from '@angular/material/sidenav';
 import { MatDialogModule }      from '@angular/material/dialog';
 import { MatTabsModule }        from '@angular/material/tabs';
-import { MatTableModule }       from '@angular/material/table'
+import { MatTableModule }       from '@angular/material/table';
 import { MatPaginatorModule }   from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule }   from '@angular/material/expansion';
@@ -28,7 +28,6 @@ import { MAT_DATE_LOCALE }      from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent }                         from './app.component';
-import { LoginDialogComponent }                 from './login-dialog/login-dialog.component';
 import { FamilyBookmarksComponent }             from './family/family-bookmarks/family-bookmarks.component';
 import { FamilyComponent }                      from './family/family/family.component';
 import { FamilyMemberComponent }                from './family/family-member/family-member.component';
@@ -68,7 +67,6 @@ export function authenticationFactory(authenticationService: AuthenticationServi
     declarations:
     [
         AppComponent,
-        LoginDialogComponent,
         FamilyBookmarksComponent,
         FamilyComponent,
         FamilyMemberComponent,
@@ -119,7 +117,6 @@ export function authenticationFactory(authenticationService: AuthenticationServi
     ],
     entryComponents:
     [
-        LoginDialogComponent,
         MIGPatientTraceDialogComponent
     ],
     providers:
