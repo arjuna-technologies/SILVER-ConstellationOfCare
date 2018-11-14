@@ -22,6 +22,7 @@ import { MatIconModule }        from '@angular/material/icon';
 import { MatCardModule }        from '@angular/material/card';
 import { MatListModule }        from '@angular/material/list';
 import { MatChipsModule }       from '@angular/material/chips';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -37,6 +38,7 @@ import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-pro
 import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
 import { MIGHealthDomainDocumentsComponent }    from './mig/mig-healthdomain-documents/mig-healthdomain-documents.component';
 import { ConstellationComponent }               from './report/constellation/constellation.component';
+import { FamilyMemberDetailsFormComponent }     from './family/family-member-details-form/family-member-details-form.component';
 
 import { AuthenticationService }      from './authentication.service';
 import { FamilyDataService }          from './family/family-data.service';
@@ -44,8 +46,11 @@ import { MIGDataService }             from './mig/mig-data.service';
 import { MIGInformationIndexService } from './mig/mig-information-index.service';
 import { HealthTimelineComponent } from './report/health-timeline/health-timeline.component';
 import { StorageService }             from './storage.service';
-import { CaseManagementScreenComponent } from './report/case-management-screen/case-management-screen.component';
 import { CaseManagementButtonComponent } from './report/case-management-button/case-management-button.component';
+import { FamilyFormComponent } from './family/family-form/family-form.component';
+import { FamiliesFormComponent } from './family/families-form/families-form.component';
+import { CaseManagementScreenComponent } from './admin/case-management-screen/case-management-screen.component';
+import { FamilyListPanelComponent } from './family/family-list-panel/family-list-panel.component';
 
 @NgModule
 ({
@@ -64,8 +69,12 @@ import { CaseManagementButtonComponent } from './report/case-management-button/c
         MIGHealthDomainDocumentsComponent,
         ConstellationComponent,
         HealthTimelineComponent,
+        CaseManagementButtonComponent,
+        FamilyMemberDetailsFormComponent,
+        FamilyFormComponent,
+        FamiliesFormComponent,
         CaseManagementScreenComponent,
-        CaseManagementButtonComponent
+        FamilyListPanelComponent,
     ],
     imports:
     [
@@ -91,7 +100,8 @@ import { CaseManagementButtonComponent } from './report/case-management-button/c
         MatCardModule,
         MatListModule,
         MatChipsModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatGridListModule
     ],
     entryComponents:
     [

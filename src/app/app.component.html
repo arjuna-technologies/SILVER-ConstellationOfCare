@@ -17,5 +17,5 @@
   </mat-toolbar>
 
   <cnstll-mig-information #miginformation *ngIf="familyMember" [familyMember]="familyMember"></cnstll-mig-information>
-  <cnstll-case-management-screen #caseManagementScreen *ngIf="managementMode" [username]="username"> </cnstll-case-management-screen>
+  <cnstll-case-management-screen #caseManagementScreen *ngIf="managementMode && username" [username]="username" (selectFamilyAndFamilyMember)="selectFamilyAndFamilyMember($event)"> </cnstll-case-management-screen>
 </div>

@@ -53,7 +53,7 @@
   </ng-container>
   <ng-container matColumnDef="event">
     <mat-header-cell *matHeaderCellDef> Event</mat-header-cell>
-    <mat-cell *matCellDef="let encounter"> {{encounter.components[0].event}}</mat-cell>
+    <mat-cell *matCellDef="let encounter"> {{encounter.components | json }}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="displayName">
     <mat-header-cell *matHeaderCellDef> Detail</mat-header-cell>

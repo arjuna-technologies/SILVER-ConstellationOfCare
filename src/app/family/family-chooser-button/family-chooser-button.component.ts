@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, Input, OnChanges, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, Input, OnChanges, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 
 import {Family}       from '../family';
 import {FamilyMember} from '../family-member';
@@ -12,29 +12,28 @@ import {FamilyDataService} from '../family-data.service';
   styleUrls: ['family-chooser-button.component.scss']
 })
 export class FamilyChooserButtonComponent implements OnInit, OnChanges {
-  public families: Family[];
-  public familyNames: string[];
+  public families: Family[]= [];
+  public familyNames: string[]= [];
 
   @Input()
-  public family: Family;
+  public family: Family = null;
 
-  public loading: boolean;
+  @ViewChild("familyNameButton")
+  public familyNameButton: ElementRef;
+
+  public loading: boolean = true;
 
   @Output()
-  public familySelect: EventEmitter<Family>;
+  public familySelect: EventEmitter<Family> = new EventEmitter<Family>();
 
   public constructor(private familyDataService: FamilyDataService) {
-    this.families = null;
-    this.familyNames = [];
-    this.family = null;
-    this.loading = true;
-    this.familySelect = new EventEmitter<Family>();
+
   }
 
   public ngOnInit(): void {
     this.familyNames = [];
 
-    this.families = null;
+    this.families = [];
     this.loading = true;
 
     this.loadFamilies();
@@ -43,7 +42,7 @@ export class FamilyChooserButtonComponent implements OnInit, OnChanges {
   public ngOnChanges(): void {
     this.familyNames = [];
 
-    this.families = null;
+    this.families = [];
     this.loading = true;
 
     this.loadFamilies();
@@ -68,7 +67,7 @@ export class FamilyChooserButtonComponent implements OnInit, OnChanges {
     this.loading = false;
 
     for (let family of families)
-      this.familyNames.push(this.generateFamilyName(family.familyMembers));
+      this.familyNames.push(family.getFamilyName());
   }
 
   private loadFamiliesFailed(error: any): void {
@@ -98,30 +97,5 @@ export class FamilyChooserButtonComponent implements OnInit, OnChanges {
     this.loading = false;
 
     this.familySelect.emit(null);
-  }
-
-  private generateFamilyName(familyMembers: FamilyMember[]): string {
-    let surnames: string[] = [];
-
-    for (let familyMember of familyMembers)
-      surnames.push(familyMember.surname);
-
-    surnames.sort();
-
-    let surnameIndex = 0;
-    while (surnameIndex < surnames.length - 1)
-      if (surnames[surnameIndex] === surnames[surnameIndex + 1])
-        surnames.splice(surnameIndex, 1);
-      else
-        surnameIndex++;
-
-    let concatSurnames = '';
-    for (let surnameIndex = 0; surnameIndex < surnames.length; surnameIndex++)
-      if (surnameIndex === 0)
-        concatSurnames = surnames[surnameIndex];
-      else
-        concatSurnames = concatSurnames.concat('/', surnames[surnameIndex]);
-
-    return concatSurnames;
   }
 }

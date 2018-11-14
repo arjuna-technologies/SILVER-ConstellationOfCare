@@ -35,7 +35,17 @@ export class Family {
       return concatSurnames;
     }
     else
-      return '';
+      return null;
+  }
+
+  public getFamilyNameLongForm(): string {
+    let familyName = this.getFamilyName();
+    if (familyName) {
+      return `the ${familyName} family`;
+    }
+    else {
+      return `<Empty Family>`;
+    }
   }
 
 

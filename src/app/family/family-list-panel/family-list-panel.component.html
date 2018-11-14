@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h3>{{family.getFamilyNameLongForm()}}<span [className]="'closeCard'" (click)="closePanel()" >&nbsp;&times;</span></h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p [style.margin]="'0 8px'">View health record for:</p>
+    <mat-list>
+      <mat-list-item *ngFor="let familyMember of family.familyMembers;index as index;last as last">
+        <cnstll-family-member-menu-item [familyMember]="familyMember"
+                                        (selectFamilyMember)="doSelectFamilyAndFamilyMember($event)"></cnstll-family-member-menu-item>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

@@ -12,34 +12,28 @@ import {FamilyMember} from '../family-member';
 
 export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
   @Input()
-  public family: Family;
+  public family: Family = null;
 
   @Input()
   public familyMember: FamilyMember;
 
-  public familyName: string;
-  public memberName: string;
-  public loading: boolean;
+  public familyName: string = '';
+  public memberName: string = '';
+  public loading: boolean = false;
 
   @Output()
-  public selectFamilyMember: EventEmitter<FamilyMember>;
+  public selectFamilyMember: EventEmitter<FamilyMember> = new EventEmitter<FamilyMember>();
 
-  public constructor() {
-    this.family = null;
-    this.familyName = '';
-    this.memberName = '';
-    this.loading = false;
-    this.selectFamilyMember = new EventEmitter<FamilyMember>();
-  }
+  public constructor() { }
 
   public ngOnInit() {
-    if (this.familyMember && this.memberName=='')
+    if (this.familyMember)
       this.memberName = this.familyMember.getFullName();
     this.doShowFamily();
   }
 
   public ngOnChanges() {
-    if (this.familyMember && this.memberName=='')
+    if (this.familyMember)
       this.memberName = this.familyMember.getFullName();
     this.doShowFamily();
   }

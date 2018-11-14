@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title [className]="'familyFormTitle'">
+      <h3>
+        {{ editing ? 'Editing ' : 'Adding '}} {{ familyToEdit ?
+      familyToEdit.getFamilyNameLongForm() : 'family'}}
+      </h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      <label for="id">Case ID for Family:</label>
+      <input #id type="text" id="id" name="id" value=""/>
+    </p>
+    <h4>Family Members:</h4>
+    <p *ngIf="familyToEdit && familyToEdit.familyMembers && familyToEdit.familyMembers.length==0" class="no-members">No
+      family
+      members.</p>
+    <mat-list *ngIf="familyToEdit">
+      <mat-list-item *ngFor="let familyMember of familyToEdit.familyMembers;index as index2">
+        <span>{{familyMember.getFullName()}}</span>
+        <button mat-button [attr.data-index]="index2" class="family-member-edit-button"
+                (click)="editFamilyMember(index2,familyMember)">Edit
+        </button>
+        <mat-divider [inset]="true"></mat-divider>
+      </mat-list-item>
+      <cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember" [editing]="!isCurrentlyEditingFamilyMemberNew()"
+                                           [familyMemberToEdit]="currentlyEditingFamilyMember"
+                                           (newFamilyMemberSaver)="newFamilyMemberSaved($event)"
+                                           (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"></cnstll-family-member-details-form>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="addFamilyMember($event)">Add a new family member...</button>
+    <button mat-button (click)="saveFamily($event)">Save {{ familyToEdit ?
+        familyToEdit.getFamilyNameLongForm() : 'family'}}</button>
+  </mat-card-actions>
+</mat-card>
+

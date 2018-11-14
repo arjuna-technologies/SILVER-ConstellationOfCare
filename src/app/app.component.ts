@@ -5,10 +5,12 @@ import {LoginDialogComponent} from './login-dialog/login-dialog.component';
 import {FamilyMemberChooserButtonComponent} from './family/family-member-chooser-button/family-member-chooser-button.component';
 import {FamilyChooserButtonComponent} from './family/family-chooser-button/family-chooser-button.component';
 import {MIGInformationComponent} from './mig/mig-information/mig-information.component';
-import {CaseManagementScreenComponent} from './report/case-management-screen/case-management-screen.component'
+import {CaseManagementScreenComponent} from './admin/case-management-screen/case-management-screen.component'
 import {CaseManagementButtonComponent} from './report/case-management-button/case-management-button.component'
 import {FamilyMember} from './family/family-member';
 import {Family} from './family/family';
+
+import { FamilyMemberDetailsFormComponent } from './family/family-member-details-form/family-member-details-form.component';
 
 import { MIGDataService } from './mig/mig-data.service';
 
@@ -49,6 +51,12 @@ export class AppComponent {
   public requestTypes: any[];
   public requestTypeCode: string;
 
+  public selectFamilyAndFamilyMember(familyAndFamilyMember) {
+    this.managementMode=false;
+    this.setFamily(familyAndFamilyMember.family);
+    this.setFamilyMember(familyAndFamilyMember.familyMember);
+  }
+
   public setFamily(family) {
     this.family = family;
     this.setFamilyMember(null);
@@ -68,7 +76,7 @@ export class AppComponent {
     this.requestTypes =
       [
         {code: MIGDataService.ALLGPDATA_REQUEST_NAME, label: 'All'},
-        {code: MIGDataService.SUMMARY_REQUEST_NAME, label: 'Summarys'},
+        {code: MIGDataService.SUMMARY_REQUEST_NAME, label: 'Summaries'},
         {code: MIGDataService.PROBLEM_REQUEST_NAME, label: 'Problems'},
         {code: MIGDataService.DIAGNOSIS_REQUEST_NAME, label: 'Diagnoses'},
         {code: MIGDataService.MEDICATION_REQUEST_NAME, label: 'Medications'},

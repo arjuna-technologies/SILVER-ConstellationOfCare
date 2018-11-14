@@ -33,7 +33,8 @@ export class MIGHealthDomainEncountersComponent implements OnChanges, DoCheck
         if (this.format === 'raw')
           this.encounterDisplayedColumns = [ 'id', 'patient', 'effectiveTime', 'duration', 'authorisingUserInRole', 'enteredByUserInRole', 'organisations', 'location'];
         else
-          this.encounterDisplayedColumns = [ /*'mappedPatient',*/ 'displayName', 'mappedLocation','mappedAuthorisingUserInRole', 'mappedEnteredByUserInRole', 'mappedOrganisation' ];
+          this.encounterDisplayedColumns = [ /*'mappedPatient',*/ 'displayName', 'mappedLocation','mappedAuthorisingUserInRole', 'mappedEnteredByUserInRole', 'mappedOrganisation','event' ];
+          // TODO - add effectiveTime (and duration?) into display and show these on timeline
 
         if (this.encounters)
             this.encounterDataSource.data = this.encounters;
