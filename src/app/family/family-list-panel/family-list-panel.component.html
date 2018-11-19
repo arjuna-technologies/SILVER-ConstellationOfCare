@@ -5,12 +5,19 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p [style.margin]="'0 8px 5px'">View health record for:</p>
-    <mat-grid-list cols="1" rowHeight="fit" [style.height.px]="40*family.familyMembers.length">
-      <mat-grid-tile *ngFor="let familyMember of family.familyMembers;index as index;last as last">
-        <cnstll-family-member-menu-item [familyMember]="familyMember"
-                                        (selectFamilyMember)="doSelectFamilyAndFamilyMember($event)"></cnstll-family-member-menu-item>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </mat-card-content>
+    <div *ngIf="family?.familyMembers.length > 0">
+      <p [style.margin]="'0 8px 5px'">View health record for:</p>
+      <mat-grid-list cols="1" rowHeight="fit" [style.height.px]="40*family.familyMembers.length">
+        <mat-grid-tile *ngFor="let familyMember of family.familyMembers;index as index;last as last">
+          <cnstll-family-member-menu-item [familyMember]="familyMember"
+                                          (selectFamilyMember)="doSelectFamilyAndFamilyMember($event)"></cnstll-family-member-menu-item>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div *ngIf="family?.familyMembers.length == 0">
+      <p>
+        No family members entered yet.<br/>Close this panel and click Edit to add members.
+      </p>
+    </div>
+    </mat-card-content>
 </mat-card>

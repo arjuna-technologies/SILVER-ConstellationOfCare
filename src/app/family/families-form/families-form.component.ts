@@ -22,7 +22,17 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   public getGridRowHeight() {
     let maxFamilyHeight = this.getLargestFamilySize();
     let familyListHeight = 40 * maxFamilyHeight;
-    return 200+familyListHeight;
+    let retHeight = 100 + familyListHeight;
+    return retHeight < 500 ? 500 : retHeight;
+  }
+
+  public getGridCardHeight() {
+    let familiesCount = 3;
+    if (this.families.length>familiesCount) {
+      familiesCount = this.families.length;
+    }
+    let rows = Math.floor(familiesCount/3);
+    return 80*rows; // for every 3 rows, another 100% of screen estate that we can scroll into
   }
 
   public getLargestFamilySize() {

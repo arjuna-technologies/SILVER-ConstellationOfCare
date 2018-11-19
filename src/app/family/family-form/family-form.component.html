@@ -10,7 +10,7 @@
   <mat-card-content>
     <p>
       <label for="id">Case ID for Family:</label>
-      <input #id type="text" id="id" name="id" value=""/>
+      <input mat-input #id type="text" id="id" name="id" value=""/>
     </p>
     <h4>Family Members:</h4>
     <p *ngIf="familyToEdit && familyToEdit.familyMembers && familyToEdit.familyMembers.length==0" class="no-members">No
