@@ -23,7 +23,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     let maxFamilyHeight = this.getLargestFamilySize();
     let familyListHeight = 40 * maxFamilyHeight;
     let retHeight = 100 + familyListHeight;
-    return retHeight < 300 ? 300 : retHeight;
+    return retHeight < 400 ? 400 : retHeight;
   }
 
   public getGridCardHeight() {
@@ -92,7 +92,9 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
 
   public newFamilySaved(family:Family) {
     this.currentlyEditingFamily = null;
-    this.families.push(family);
+    this.families = [family].concat(this.families); // for now, add to start
+    //this.families.push(family);
+    console.log(this.families);
     this.familyDataService.saveFamilies(this.families);
   }
 
