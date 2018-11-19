@@ -13,6 +13,9 @@ export class FamilyMemberMenuItemComponent implements OnChanges {
   public familyMember: FamilyMember;
   @Input()
   public loading: boolean;
+
+  @Input()
+  public hasConsents: string; // "unknown", "true" or "false"
   @Output()
   public selectFamilyMember: EventEmitter<FamilyMember>;
 
