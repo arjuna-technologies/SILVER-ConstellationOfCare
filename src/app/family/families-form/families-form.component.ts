@@ -94,7 +94,6 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.currentlyEditingFamily = null;
     this.families = [family].concat(this.families); // for now, add to start
     //this.families.push(family);
-    console.log(this.families);
     this.familyDataService.saveFamilies(this.families);
   }
 
