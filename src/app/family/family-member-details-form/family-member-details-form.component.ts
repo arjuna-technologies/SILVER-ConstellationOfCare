@@ -12,6 +12,13 @@ import {
 
 import {FamilyMember} from '../family-member';
 
+
+export interface Gender {
+  value: string;
+  viewValue: string;
+}
+
+
 @Component({
   selector: 'cnstll-family-member-details-form',
   templateUrl: './family-member-details-form.component.html',
@@ -22,9 +29,14 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   @ViewChild('firstName') firstName: ElementRef;
   @ViewChild('surname') surname: ElementRef;
   @ViewChild('dateOfBirth') dateOfBirth: ElementRef;
-  @ViewChild('gender') gender: ElementRef;
+  @ViewChild('gender') legalGender: string;
   @ViewChild('role') role: ElementRef;
   @ViewChild('nhsNumber') nhsNumber: ElementRef;
+
+  genders: Gender[] = [
+    {value: 'female', viewValue: 'Female'},
+    {value: 'male', viewValue: 'Male'},
+  ];
 
   @Input()
   public editing: any = false;
@@ -59,7 +71,7 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
         this.dateOfBirth.nativeElement.value = this.familyMemberToEdit.dateOfBirth;
       }
       if (this.familyMemberToEdit.gender) {
-        this.gender.nativeElement.value = this.familyMemberToEdit.gender;
+        this.legalGender = this.familyMemberToEdit.gender;
       }
       if (this.familyMemberToEdit.nhsNumber) {
         this.nhsNumber.nativeElement.value = this.familyMemberToEdit.nhsNumber;
@@ -84,7 +96,7 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     let firstName = this.firstName.nativeElement.value;
     let surname = this.surname.nativeElement.value;
     let dateOfBirth = this.dateOfBirth.nativeElement.value;
-    let gender = this.gender.nativeElement.value;
+    let gender = this.legalGender;
     let nhsNumber = this.nhsNumber.nativeElement.value;
     let role = this.role.nativeElement.value;
     let newFamilyMember = new FamilyMember(id,firstName,surname,dateOfBirth,gender,nhsNumber,role);
@@ -96,7 +108,7 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     let firstName = this.firstName.nativeElement.value;
     let surname = this.surname.nativeElement.value;
     let dateOfBirth = this.dateOfBirth.nativeElement.value;
-    let gender = this.gender.nativeElement.value;
+    let gender = this.legalGender;
     let nhsNumber = this.nhsNumber.nativeElement.value;
     let role = this.role.nativeElement.value;
     let editedFamilyMember = new FamilyMember(id,firstName,surname,dateOfBirth,gender,nhsNumber,role);

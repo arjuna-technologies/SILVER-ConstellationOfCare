@@ -19,6 +19,22 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   @Output()
   public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
+  public getGridRowHeight() {
+    let maxFamilyHeight = this.getLargestFamilySize();
+    let familyListHeight = 40 * maxFamilyHeight;
+    return 200+familyListHeight;
+  }
+
+  public getLargestFamilySize() {
+    let maxFamilySize=4;
+    for (let family of this.families) {
+      if (family.familyMembers.length>maxFamilySize) {
+        maxFamilySize = family.familyMembers.length;
+      }
+    }
+    return maxFamilySize;
+  }
+
   public doSelectFamilyAndFamilyMember(familyAndFamilyMember): void {
     this.selectFamilyAndFamilyMember.emit({
       family: familyAndFamilyMember.family,

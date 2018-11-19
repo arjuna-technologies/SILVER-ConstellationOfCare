@@ -5,8 +5,8 @@
   <mat-card-header>
     <mat-card-title><h3>Family/Case Records</h3></mat-card-title>
   </mat-card-header>
-  <mat-card-content [style.overflow]="'auto'" [style.height.px]="'400'">
-    <mat-grid-list cols="3" rowHeight="fit" style="height: 400px">
+  <mat-card-content [style.overflow]="'auto'" [style.height.px]="getGridRowHeight()">
+    <mat-grid-list cols="3" rowHeight="fit" [style.height.px]="getGridRowHeight()">
       <mat-grid-tile [colspan]="3" *ngIf="families.length==0">
         <h2>No Families Stored.</h2>
       </mat-grid-tile>

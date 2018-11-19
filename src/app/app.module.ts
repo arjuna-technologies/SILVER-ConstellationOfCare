@@ -9,6 +9,10 @@ import { MatCheckboxModule }    from '@angular/material/checkbox';
 import { MatSidenavModule }     from '@angular/material/sidenav';
 import { MatDialogModule }      from '@angular/material/dialog';
 import { MatTabsModule }        from '@angular/material/tabs';
+import { MatDatepickerModule }  from '@angular/material/datepicker';
+import { MatNativeDateModule }  from '@angular/material';
+import { MAT_DATE_LOCALE }      from '@angular/material';
+import { MatSelectModule }      from '@angular/material/select';
 import { MatTableModule }       from '@angular/material/table'
 import { MatPaginatorModule }   from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -16,7 +20,7 @@ import { MatExpansionModule }   from '@angular/material/expansion';
 import { MatFormFieldModule }   from '@angular/material/form-field';
 import { MatInputModule }       from '@angular/material';
 import { MatButtonModule }      from '@angular/material/button';
-import { MatMenuModule }       from '@angular/material/menu';
+import { MatMenuModule }        from '@angular/material/menu';
 import { MatRadioModule }       from '@angular/material/radio';
 import { MatIconModule }        from '@angular/material/icon';
 import { MatCardModule }        from '@angular/material/card';
@@ -87,8 +91,11 @@ import { FamilyListPanelComponent } from './family/family-list-panel/family-list
         MatDialogModule,
         MatCheckboxModule,
         MatTabsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         MatTableModule,
         MatPaginatorModule,
+        MatSelectModule,
         MatProgressBarModule,
         MatFormFieldModule,
         MatExpansionModule,
@@ -112,7 +119,9 @@ import { FamilyListPanelComponent } from './family/family-list-panel/family-list
         AuthenticationService,
         FamilyDataService,
         MIGDataService,
+        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
         MIGInformationIndexService,
+        MatDatepickerModule,
         StorageService
     ],
     bootstrap:
