@@ -52,7 +52,7 @@ export class StorageService
 
     private storageInformationSuccessHandler(body: any): StorageInformation
     {
-        console.log('body: ' + JSON.stringify(body));
+        //console.log('body: ' + JSON.stringify(body));
 
         let outcome: string = body.outcome;
         let message: string = body.message;
@@ -63,7 +63,7 @@ export class StorageService
 
     private storageInformationErrorHandler(error: any): StorageInformation
     {
-        console.log('Storage-Information Error Handler: ' + JSON.stringify(error));
+        //console.log('Storage-Information Error Handler: ' + JSON.stringify(error));
 
         return new StorageInformation('Failed', 'Communication problem', null);
     }

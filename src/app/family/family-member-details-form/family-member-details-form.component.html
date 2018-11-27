@@ -22,7 +22,7 @@
       <mat-label>Date of Birth:</mat-label>
       <input matInput #dateOfBirth [matDatepicker]="dateOfBirthPicker" placeholder="e.g. 1/11/1975" type="text" class="dateOfBirth" name="dateOfBirth" value="">
       <mat-datepicker-toggle matSuffix [for]="dateOfBirthPicker"></mat-datepicker-toggle>
-      <mat-datepicker #dateOfBirthPicker></mat-datepicker>
+      <mat-datepicker startAt="multi-year" #dateOfBirthPicker></mat-datepicker>
     </mat-form-field>&nbsp;&nbsp;
     <mat-form-field>
       <mat-label>Legal Gender:</mat-label>

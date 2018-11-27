@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { MIGInformation }  from './mig-information';
 import { MIGPatientTrace } from './mig-patienttrace';
-
+import { MIGInformationIndexService } from './mig-information-index.service';
 import { MIGPerson }       from './mig-person';
 import { MIGPatient }      from './mig-patient';
 import { MIGOrganisation } from './mig-organisation';
@@ -33,13 +33,13 @@ export class MIGDataService
   public static readonly EVENT_REQUEST_NAME         = 'event';
   public static readonly PATIENTDETAIL_REQUEST_NAME = 'patientdetail';
 
-  constructor(private httpClient: HttpClient)
+  constructor(private httpClient: HttpClient, private migInformationIndexService: MIGInformationIndexService)
   {
   }
 
-  public loadMIGPatientTrace(givenname: string, familyname: string, gender: string, birthday: string, birthmonth: string, birthyear: string): Promise<MIGPatientTrace>
+  public loadMIGPatientTrace(familyname: string, gender: string, birthday: string, birthmonth: string, birthyear: string): Promise<MIGPatientTrace>
   {
-    return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?givenname=' + givenname + '&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
+    return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
       .toPromise()
       .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
       .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));
@@ -65,7 +65,8 @@ export class MIGDataService
 
   private loadMIGPatientTraceSuccessHandler(body: any): MIGPatientTrace
   {
-    console.log('PatientTrace Responce Body: ' + JSON.stringify(body));
+    //console.log('PatientTrace Response Body: ');
+    //console.dir(body);
 
     let status:           string            = 'Failed';
     let migPatientMatchs: MIGPatientMatch[] = null;
@@ -77,8 +78,11 @@ export class MIGDataService
 
       if (body.patientMatchs)
         for (let patientMatch of body.patientMatchs)
-          if (patientMatch.patient && patientMatch.patient.primaryIdentifier)
-            migPatientMatchs.push(new MIGPatientMatch(patientMatch.patient.primaryIdentifier));
+          if (patientMatch.patient && patientMatch.patient.primaryIdentifier) {
+            let matchResult = new MIGPatientMatch(patientMatch.patient);
+            matchResult.setOrganisation(this.migInformationIndexService);
+            migPatientMatchs.push(matchResult);
+          }
     }
 
     return new MIGPatientTrace(status, migPatientMatchs);
