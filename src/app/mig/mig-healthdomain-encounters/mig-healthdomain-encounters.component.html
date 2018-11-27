@@ -33,7 +33,7 @@
     </ng-container>
     <ng-container matColumnDef="components">
         <mat-header-cell *matHeaderCellDef> Components </mat-header-cell>
-        <mat-cell *matCellDef="let encounter"> {{encounter.components}} </mat-cell>
+        <mat-cell *matCellDef="let encounter"> {{encounter.components | json}} </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="encounterDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: encounterDisplayedColumns;"></mat-row>

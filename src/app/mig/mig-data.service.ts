@@ -65,7 +65,8 @@ export class MIGDataService
 
     private loadMIGPatientTraceSuccessHandler(body: any): MIGPatientTrace
     {
-        console.log('PatientTrace Responce Body: ' + JSON.stringify(body));
+        console.log('PatientTrace Response Body: ');
+        console.dir(body);
 
         let status:           string            = 'Failed';
         let migPatientMatchs: MIGPatientMatch[] = null;
