@@ -33,9 +33,9 @@ export class AppComponent
 
     public constructor(private dialog: MatDialog)
     {
-        this.username    = '';
-        this.org         = '';
-        this.group       = '';
+        this.username    = 'TestUser';
+        this.org         = 'TestOrg';
+        this.group       = 'TestGroup';
         this.showSideBar = false;
 
         this.requestTypeCode = MIGDataService.ALLGPDATA_REQUEST_NAME;
