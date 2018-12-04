@@ -96,4 +96,8 @@ export class MIGPatientMatch {
       this.organisation = lookupOrgName;
     }
   }
+
+  public getDisplayText() {
+    return `${this.name} [dob. ${this.birthDate}]: ${this.address}`;
+  }
 }

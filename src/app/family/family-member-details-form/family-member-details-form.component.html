@@ -39,9 +39,33 @@
     <mat-form-field>
       <mat-label>Role in Family:</mat-label>
       <input matInput #role type="text" class="role" name="role" value="" width="200" placeholder="e.g. Guardian, Grandmother, Stepfather"/>
-    </mat-form-field>
+    </mat-form-field><br/>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title><h4>Possible NHS Number Matches</h4></mat-card-title>
+        <mat-card-subtitle>(click a match to copy the NHS number)</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list matList #matches type="text">
+          <mat-list-item ngClass="clickable-nhs-match" matListItem *ngFor="let match of nhsMatchesForDisplay"
+                         (click)="clickNHSMatch(match)"> {{ match.displayText }} </mat-list-item>
+        </mat-list>
+        <mat-list *ngIf="nhsMatchesForDisplay.length==0" #matches type="text" class="matches" name="matches">
+          <mat-list-item matListItem ngClass="nhs-no-match" >No matches yet.</mat-list-item>
+        </mat-list>
+        <mat-form-field>
+          <mat-label>Postcode: (for NHS number lookup only)</mat-label>
+          <input matInput #postcode placeholder="e.g. NE1 7RL" type="text" class="postcode" name="postcode" value="">
+          <mat-hint align="end">This will not be stored.</mat-hint>
+        </mat-form-field>&nbsp;
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button align="end" (click)="doPatientTrace()">Lookup NHS Number</button>
+      </mat-card-actions>
+    </mat-card>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button (click)="saveFamilyMember()">Save {{firstName ? firstName.value : 'family member'}} {{surname ? surname.value : ''}}</button>
   </mat-card-actions>
+
 </mat-card>

@@ -37,9 +37,38 @@ export class MIGDataService
   {
   }
 
-  public loadMIGPatientTrace(familyname: string, gender: string, birthday: string, birthmonth: string, birthyear: string): Promise<MIGPatientTrace>
+  public loadMIGPatientTrace(patientTraceOptions: any): Promise<MIGPatientTrace>
   {
-    return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?&familyname=' + familyname + '&gender=' + gender + '&birthday=' + birthday + '&birthmonth=' + birthmonth + '&birthyear=' + birthyear)
+    let queryStringParts = [];
+
+    if (patientTraceOptions.firstName) {
+      queryStringParts.push(`givenname=${patientTraceOptions.firstName}`);
+    }
+
+    if (patientTraceOptions.surname) {
+      queryStringParts.push(`familyname=${patientTraceOptions.surname}`);
+    }
+
+    if (patientTraceOptions.gender) {
+      queryStringParts.push(`gender=${patientTraceOptions.gender}`);
+    }
+
+    if (patientTraceOptions.dateOfBirth) {
+      let dateOfBirthParts = patientTraceOptions.dateOfBirth.split('/');
+      if (dateOfBirthParts.length==3) {
+        queryStringParts.push(`birthday=${dateOfBirthParts[0]}`);
+        queryStringParts.push(`birthmonth=${dateOfBirthParts[1]}`);
+        queryStringParts.push(`birthyear=${dateOfBirthParts[2]}`);
+      }
+    }
+
+    if (patientTraceOptions.postcode) {
+      queryStringParts.push(`postcode=${patientTraceOptions.postcode}`);
+    }
+
+    let queryString = queryStringParts.join('&');
+
+    return this.httpClient.get(`http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?${queryString}`)
       .toPromise()
       .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
       .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));

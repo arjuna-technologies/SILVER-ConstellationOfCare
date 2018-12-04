@@ -11,12 +11,17 @@ import {
 } from '@angular/core';
 
 import {FamilyMember} from '../family-member';
-import {MIGPatientTrace} from '../../mig/mig-patienttrace'
+import {MIGPatientTrace} from '../../mig/mig-patienttrace';
 import {MIGDataService} from '../../mig/mig-data.service';
 
 export interface Gender {
   value: string;
   viewValue: string;
+}
+
+export interface MatchForDisplay {
+  nhsNumber: string;
+  displayText: string;
 }
 
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
@@ -85,6 +90,7 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   @ViewChild('gender') legalGender: string;
   @ViewChild('role') role: ElementRef;
   @ViewChild('nhsNumber') nhsNumber: ElementRef;
+  @ViewChild('postcode') postcode: ElementRef;
 
   genders: Gender[] = [
     {value: 'Female', viewValue: 'Female'},
@@ -93,7 +99,7 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     {value: 'Unknown', viewValue: 'Unknown'}
   ];
 
-  possibleNHSMatches: any = [];
+  nhsMatchesForDisplay: MatchForDisplay[] = [];
 
   @Input()
   public editing: any = false;
@@ -114,6 +120,9 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   }
 
   ngOnChanges() {
+    if (this.familyMemberToEdit.nhsNumber) {
+      this.nhsNumber.nativeElement.value = this.familyMemberToEdit.nhsNumber;
+    }
   }
 
   ngAfterViewInit() {
@@ -148,23 +157,31 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     }
   }
 
+  public clickNHSMatch(match: MatchForDisplay) {
+    this.familyMemberToEdit.nhsNumber = match.nhsNumber;
+    this.nhsNumber.nativeElement.value = match.nhsNumber;
+    this.nhsMatchesForDisplay = [];
+  }
 
   public doPatientTrace(): void
   {
-    let nhsNo = this.nhsNumber.nativeElement.value;
-    let firstName = this.firstName.nativeElement.value;
-    let surname = this.surname.nativeElement.value;
-    let gender = this.legalGender;
-    let dateParts = this.dateOfBirth.nativeElement.value.split('/');
-    let day = null;
-    let month = null;
-    let year = null;
-    if (dateParts.length==3) {
-      day = dateParts[0];
-      month = dateParts[1];
-      year = dateParts[2];
+    let patientTraceOptions = {};
+    if (this.dateOfBirth && this.dateOfBirth.nativeElement.value.split('/').length==3) {
+      patientTraceOptions.dateOfBirth = this.dateOfBirth.nativeElement.value;
     }
-    this.migDataService.loadMIGPatientTrace(this.surname.nativeElement.value, this.legalGender, day,month,year)
+    if (this.firstName && this.firstName.nativeElement.value.length>0) {
+      patientTraceOptions.firstName = this.firstName.nativeElement.value;
+    }
+    if (this.surname && this.surname.nativeElement.value.length>0) {
+      patientTraceOptions.surname = this.surname.nativeElement.value
+    }
+    if (this.legalGender) {
+      patientTraceOptions.gender = this.legalGender;
+    }
+    if (this.postcode && this.postcode.nativeElement.value.length>0) {
+      patientTraceOptions.postcode = this.postcode.nativeElement.value;
+    }
+    this.migDataService.loadMIGPatientTrace(patientTraceOptions)
         .then(patientTrace => this.migPatientTraceSuccess(patientTrace))
         .catch(error => this.migPatientTraceFailed(error));
   }
@@ -172,8 +189,14 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   private processPatientTraceResults(patientTraceResults:MIGPatientTrace): void {
     let ptr = patientTraceResults;
     if (ptr.status && ptr.patientMatchs.length>0) {
-      for (let patient in ptr.patientMatchs) {
-        //console.log(ptr.patientMatchs[patient]);
+      this.nhsMatchesForDisplay = [];
+      for (let i in ptr.patientMatchs) {
+        let personText = ptr.patientMatchs[i].getDisplayText();
+        let matchForDisplay:MatchForDisplay = {
+          nhsNumber: ptr.patientMatchs[i].nhsNumber,
+          displayText: personText
+        };
+        this.nhsMatchesForDisplay.push(matchForDisplay);
       }
     }
   }
@@ -183,15 +206,11 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     if (patientTrace !== null) {
       this.processPatientTraceResults(patientTrace);
     }
-    else {
-      //console.log('patient trace succeeded but no data:' + patientTrace.status);
-    }
   }
 
   private migPatientTraceFailed(patientTrace: MIGPatientTrace): void
   {
-    //console.log('patient trace failed:' + patientTrace.status);
-    this.possibleNHSMatches = [];
+    this.nhsMatchesForDisplay = [];
   }
 
   public saveNewFamilyMember(event) {
