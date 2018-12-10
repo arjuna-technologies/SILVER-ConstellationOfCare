@@ -17,8 +17,8 @@ export class FamilyDataService {
       .then((response) => {
 
         let familiesData = [];
-        if (response['outcome'] == "Success" && response['content'] && response['content']['families']) {
-          familiesData = response['content']['families'];
+        if (response['outcome'] == "Success" && response['content'] && response['content']['value'] && response['content']['value']['families']) {
+          familiesData = response['content']['value']['families'];
         } else {
           console.error(response);
         }
