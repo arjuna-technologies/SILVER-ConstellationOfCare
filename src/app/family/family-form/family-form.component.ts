@@ -44,7 +44,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   public addFamilyMember() {
-    let newFamilyMember = new FamilyMember(null,"","","","","","");
+    let newFamilyMember = new FamilyMember({});
     this.currentlyEditingFamilyMember = newFamilyMember;
     this.indexOfCurrentlyEditingFamilyMember = -1;
   }
@@ -81,7 +81,10 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     for(let member of this.familyToEdit.familyMembers) {
       newFamilyMembers.push(member);
     }
-    let newFamily = new Family(id,newFamilyMembers);
+    let newFamily = new Family({
+      id: id,
+      familyMembers: newFamilyMembers
+    });
     this.newFamilySaver.emit(newFamily);
   }
 
@@ -91,7 +94,10 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     for(let member of this.familyToEdit.familyMembers) {
       newFamilyMembers.push(member);
     }
-    let editedFamily = new Family(id,newFamilyMembers);
+    let editedFamily = new Family({
+      id: id,
+      familyMembers: newFamilyMembers
+    });
     this.editedFamilySaver.emit(editedFamily);
   }
 

@@ -18,6 +18,9 @@ export class FamilyChooserButtonComponent implements OnInit, OnChanges {
   @Input()
   public family: Family = null;
 
+  @Input()
+  public username: string;
+
   @ViewChild("familyNameButton")
   public familyNameButton: ElementRef;
 
@@ -55,7 +58,7 @@ export class FamilyChooserButtonComponent implements OnInit, OnChanges {
   private loadFamilies(): void {
     this.loading = true;
 
-    this.familyDataService.loadFamilies()
+    this.familyDataService.loadFamilies(this.username)
       .then(families => this.loadFamiliesSuccess(families))
       .catch(error => this.loadFamiliesFailed(error));
   }

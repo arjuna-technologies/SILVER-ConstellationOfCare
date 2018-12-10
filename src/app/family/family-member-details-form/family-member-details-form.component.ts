@@ -167,24 +167,39 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   {
     let patientTraceOptions = {};
     if (this.dateOfBirth && this.dateOfBirth.nativeElement.value.split('/').length==3) {
-      patientTraceOptions.dateOfBirth = this.dateOfBirth.nativeElement.value;
+      patientTraceOptions['dateOfBirth'] = this.dateOfBirth.nativeElement.value;
     }
     if (this.firstName && this.firstName.nativeElement.value.length>0) {
-      patientTraceOptions.firstName = this.firstName.nativeElement.value;
+      patientTraceOptions['firstName'] = this.firstName.nativeElement.value;
     }
     if (this.surname && this.surname.nativeElement.value.length>0) {
-      patientTraceOptions.surname = this.surname.nativeElement.value
+      patientTraceOptions['surname'] = this.surname.nativeElement.value
     }
     if (this.legalGender) {
-      patientTraceOptions.gender = this.legalGender;
+      patientTraceOptions['gender'] = this.legalGender;
     }
     if (this.postcode && this.postcode.nativeElement.value.length>0) {
-      patientTraceOptions.postcode = this.postcode.nativeElement.value;
+      patientTraceOptions['postcode'] = this.postcode.nativeElement.value;
     }
     this.migDataService.loadMIGPatientTrace(patientTraceOptions)
         .then(patientTrace => this.migPatientTraceSuccess(patientTrace))
         .catch(error => this.migPatientTraceFailed(error));
   }
+
+  private isEPTButtonDisabled() {
+    // TODO should only enable if required fields are present.
+    return false;
+  }
+
+  private isSaveMemberButtonDisabled() {
+    let valid_genders = this.genders.map(gender => gender.value);
+    if (valid_genders.indexOf(this.legalGender)>-1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 
   private processPatientTraceResults(patientTraceResults:MIGPatientTrace): void {
     let ptr = patientTraceResults;
@@ -221,7 +236,15 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     let gender = this.legalGender;
     let nhsNumber = this.nhsNumber.nativeElement.value;
     let role = this.role.nativeElement.value;
-    let newFamilyMember = new FamilyMember(id,firstName,surname,dateOfBirth,gender,nhsNumber,role);
+    let newFamilyMember = new FamilyMember({
+      id: id,
+      firstName: firstName,
+      surname: surname,
+      dateOfBirth: dateOfBirth,
+      gender: gender,
+      nhsNumber: nhsNumber,
+      role: role
+    });
     this.newFamilyMemberSaver.emit(newFamilyMember);
     this.doPatientTrace();
   }
@@ -234,7 +257,15 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     let gender = this.legalGender;
     let nhsNumber = this.nhsNumber.nativeElement.value;
     let role = this.role.nativeElement.value;
-    let editedFamilyMember = new FamilyMember(id,firstName,surname,dateOfBirth,gender,nhsNumber,role);
+    let editedFamilyMember = new FamilyMember({
+      id: id,
+      firstName: firstName,
+      surname: surname,
+      dateOfBirth: dateOfBirth,
+      gender: gender,
+      nhsNumber: nhsNumber,
+      role: role
+    });
     this.editedFamilyMemberSaver.emit(editedFamilyMember);
     this.doPatientTrace();
   }

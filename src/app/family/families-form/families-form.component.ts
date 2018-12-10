@@ -1,9 +1,9 @@
-import { Component, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
-import { Family } from '../family';
-import { FamilyMember } from '../family-member';
+import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
+import {Family} from '../family';
+import {FamilyMember} from '../family-member';
 
 import {FamilyDataService} from '../family-data.service';
-import { MatGridList, MatGridTile } from '@angular/material';
+import {MatGridList, MatGridTile} from '@angular/material';
 
 @Component({
   selector: 'cnstll-families-form',
@@ -13,6 +13,9 @@ import { MatGridList, MatGridTile } from '@angular/material';
 export class FamiliesFormComponent implements OnInit, OnChanges {
 
   public families: Family[] = [];
+
+  @Input()
+  public username: string;
 
   private expanded: any[] = [];
 
@@ -28,17 +31,17 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
 
   public getGridCardHeight() {
     let familiesCount = 3;
-    if (this.families.length>familiesCount) {
+    if (this.families.length > familiesCount) {
       familiesCount = this.families.length;
     }
-    let rows = Math.floor(familiesCount/3);
-    return 80*rows; // for every 3 rows, another 100% of screen estate that we can scroll into
+    let rows = Math.floor(familiesCount / 3);
+    return 80 * rows; // for every 3 rows, another 100% of screen estate that we can scroll into
   }
 
   public getLargestFamilySize() {
-    let maxFamilySize=4;
+    let maxFamilySize = 4;
     for (let family of this.families) {
-      if (family.familyMembers.length>maxFamilySize) {
+      if (family.familyMembers.length > maxFamilySize) {
         maxFamilySize = family.familyMembers.length;
       }
     }
@@ -53,7 +56,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   }
 
   public toggleExpanded(index) {
-    if (this.expanded[index]==false) {
+    if (this.expanded[index] == false) {
       this.expanded[index] = true;
     } else {
       this.expanded[index] = false;
@@ -75,14 +78,65 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   private indexOfCurrentlyEditingFamily: number = -1;
 
   private isCurrentFamilyNew() {
-    return (this.indexOfCurrentlyEditingFamily==-1);
+    return (this.indexOfCurrentlyEditingFamily == -1);
   }
 
   public addFamily() {
-    let members : FamilyMember[] = [];
-    let newFamily = new Family(this.getNewFamilyID(), members);
+    let members: FamilyMember[] = [];
+    let newFamily = new Family({
+      id: this.getNewFamilyID(),
+      familyMembers: members
+    });
     this.currentlyEditingFamily = newFamily;
     this.indexOfCurrentlyEditingFamily = -1;
+  }
+
+  public addTestFamilies() {
+    let testFamilyMembers = {};
+    let testFamilies = {};
+
+    testFamilyMembers['p00'] = ['Amy', 'Smith', '20/12/1970', 'Female', '4853379371', "Mother of Clare and Wife of David"];
+    testFamilyMembers['p01'] = ['Bill', 'Jones', '12/01/1971', 'Male', '6424561811', "David's Son"];
+    testFamilyMembers['p02'] = ['Clare', 'Smith', '13/03/1995', 'Female', '9051292074', "Amy's Daughter"];
+    testFamilyMembers['p03'] = ['David', 'Jones', '07/07/1997', 'Male', '5700200716', "Amy's Husband"];
+
+    testFamilies['f00']=['p00', 'p01', 'p02', 'p03'];
+
+    testFamilyMembers['p04'] = ['Amy', 'Brown', '20/12/1970', 'Female', '8225676149', "Mother"];
+    testFamilyMembers['p05'] = ['Bill', 'Lee', '12/01/1971', 'Male', '9620344472', "New Partner"];
+    testFamilyMembers['p06'] = ['Clare', 'Brown', '13/03/1995', 'Female', '4160066348', "Daughter"];
+    testFamilyMembers['p07'] = ['David', 'Brown', '07/07/1997', 'Male', '5894678846', "Son"];
+
+    testFamilies['f01']=['p04', 'p05', 'p06', 'p07'];
+
+    testFamilyMembers['p11'] = ['Richard', 'Garner', '21/12/1933', 'Male', '4160066348', "Grandfather"];
+    testFamilyMembers['p08'] = ['Amy', 'James', '20/12/1970', 'Female', '8880028669', "Mother"];
+    testFamilyMembers['p09'] = ['Bill', 'James', '12/01/1971', 'Male', '6068998983', "Husband"];
+    testFamilyMembers['p10'] = ['Clare', 'James', '13/03/1995', 'Female', '4198838577', "Daughter"];
+
+    testFamilies['f02']=['p11', 'p08', 'p09', 'p10'];
+
+    for (let familyId in testFamilies) {
+      let familyMemberIds = testFamilies[familyId];
+      let familyMembers=[];
+      for (let familyMemberId of familyMemberIds) {
+        let familyMember = {
+          id: familyMemberId,
+          firstName: testFamilyMembers[familyMemberId][0],
+          surname: testFamilyMembers[familyMemberId][1],
+          dateOfBirth: testFamilyMembers[familyMemberId][2],
+          gender: testFamilyMembers[familyMemberId][3],
+          nhsNumber:testFamilyMembers[familyMemberId][4],
+          role:testFamilyMembers[familyMemberId][5]
+        };
+        familyMembers.push(familyMember);
+      }
+      let family = new Family({
+        id: familyId,
+        familyMembers: familyMembers
+      });
+      this.families.push(family);
+    }
   }
 
   public editFamily(index) {
@@ -90,18 +144,18 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.indexOfCurrentlyEditingFamily = index;
   }
 
-  public newFamilySaved(family:Family) {
+  public newFamilySaved(family: Family) {
     this.currentlyEditingFamily = null;
     this.families = [family].concat(this.families); // for now, add to start
     //this.families.push(family);
-    this.familyDataService.saveFamilies(this.families);
+    this.familyDataService.saveFamilies(this.username, this.families);
   }
 
-  public editedFamilySaved(family:Family) {
+  public editedFamilySaved(family: Family) {
     this.currentlyEditingFamily = null;
-    this.families[this.indexOfCurrentlyEditingFamily]=family;
-    this.indexOfCurrentlyEditingFamily=-1;
-    this.familyDataService.saveFamilies(this.families);
+    this.families[this.indexOfCurrentlyEditingFamily] = family;
+    this.indexOfCurrentlyEditingFamily = -1;
+    this.familyDataService.saveFamilies(this.username, this.families);
   }
 
   private initialiseExpandedFlags() {
@@ -118,9 +172,13 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   }
 
   private loadFamilies(): void {
-    this.familyDataService.loadFamilies()
+    this.familyDataService.loadFamilies(this.username)
       .then(families => this.loadFamiliesSuccess(families))
       .catch(error => this.loadFamiliesFailed(error));
+  }
+
+  private saveFamilies(): void {
+    this.familyDataService.saveFamilies(this.username, this.families);
   }
 
   private loadFamiliesSuccess(families: Family[]): void {

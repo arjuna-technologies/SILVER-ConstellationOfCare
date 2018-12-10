@@ -7,14 +7,14 @@ export class FamilyMember {
   public nhsNumber: string;
   public role: string;
 
-  public constructor(id: string, firstName: string, surname: string, dateOfBirth: string, gender: string, nhsNumber: string, role:string) {
-    this.id = id;
-    this.firstName = firstName;
-    this.surname = surname;
-    this.dateOfBirth = dateOfBirth;
-    this.gender = gender;
-    this.nhsNumber = nhsNumber;
-    this.role = role;
+  public constructor(familyMemberDataObject) {
+    this.id = familyMemberDataObject.id;
+    this.firstName = familyMemberDataObject.firstName;
+    this.surname = familyMemberDataObject.surname;
+    this.dateOfBirth = familyMemberDataObject.dateOfBirth;
+    this.gender = familyMemberDataObject.gender;
+    this.nhsNumber = familyMemberDataObject.nhsNumber;
+    this.role = familyMemberDataObject.role;
   }
 
   public getFullName() {
