@@ -63,7 +63,7 @@
     </ng-container>
     <ng-container matColumnDef="observation">
         <mat-header-cell *matHeaderCellDef> Observation </mat-header-cell>
-        <mat-cell *matCellDef="let event"> {{event.observation}} </mat-cell>
+        <mat-cell *matCellDef="let event"> {{event.observation | json}} </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="eventDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: eventDisplayedColumns;"></mat-row>
