@@ -3,6 +3,7 @@ import {
   OnChanges,
   OnInit,
   AfterViewInit,
+  AfterContentInit,
   ElementRef,
   ViewChild,
   Input,
@@ -13,6 +14,7 @@ import {
 import {FamilyMember} from '../family-member';
 import {MIGPatientTrace} from '../../mig/mig-patienttrace';
 import {MIGDataService} from '../../mig/mig-data.service';
+import {ConsentsService} from '../../consent/consents.service';
 
 export interface Gender {
   value: string;
@@ -24,7 +26,7 @@ export interface MatchForDisplay {
   displayText: string;
 }
 
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import {NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS} from "@angular/material";
 
 export class AppDateAdapter extends NativeDateAdapter {
   parse(value: any): Date | null {
@@ -61,7 +63,7 @@ export const APP_DATE_FORMATS =
     dateInput: {month: 'short', year: 'numeric', day: 'numeric'}
   },
   display: {
-    dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
+    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
     //dateInput: 'input',
     monthYearLabel: {year: 'numeric', month: 'short'},
     dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
@@ -81,8 +83,9 @@ export const APP_DATE_FORMATS =
     {
       provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
     }
-  ]})
-export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, AfterViewInit {
+  ]
+})
+export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, AfterContentInit {
 
   @ViewChild('firstName') firstName: ElementRef;
   @ViewChild('surname') surname: ElementRef;
@@ -113,39 +116,33 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   @Output()
   public editedFamilyMemberSaver: EventEmitter<FamilyMember> = new EventEmitter<FamilyMember>();
 
-  constructor(private migDataService:MIGDataService) {
+  constructor(private migDataService: MIGDataService, private consentsService: ConsentsService) {
   }
 
   ngOnInit() {
   }
 
   ngOnChanges() {
-    if (this.familyMemberToEdit.nhsNumber) {
-      this.nhsNumber.nativeElement.value = this.familyMemberToEdit.nhsNumber;
-    }
-  }
-
-  ngAfterViewInit() {
     if (this.familyMemberToEdit) {
-      if (this.familyMemberToEdit.firstName) {
-        this.firstName.nativeElement.value = this.familyMemberToEdit.firstName;
-      }
-      if (this.familyMemberToEdit.surname) {
-        this.surname.nativeElement.value = this.familyMemberToEdit.surname;
-      }
       if (this.familyMemberToEdit.dateOfBirth) {
         this.dateOfBirth.nativeElement.value = this.familyMemberToEdit.dateOfBirth;
       }
       if (this.familyMemberToEdit.gender) {
         this.legalGender = this.familyMemberToEdit.gender;
       }
-      if (this.familyMemberToEdit.nhsNumber) {
-        this.nhsNumber.nativeElement.value = this.familyMemberToEdit.nhsNumber;
-      }
-      if (this.familyMemberToEdit.role) {
-        this.role.nativeElement.value = this.familyMemberToEdit.role;
-      }
     }
+  }
+
+  ngAfterContentInit() {
+      console.log(this.familyMemberToEdit);
+      if (this.familyMemberToEdit) {
+        if (this.familyMemberToEdit.dateOfBirth) {
+          this.dateOfBirth.nativeElement.value = this.familyMemberToEdit.dateOfBirth;
+        }
+        if (this.familyMemberToEdit.gender) {
+          this.legalGender = this.familyMemberToEdit.gender;
+        }
+      }
   }
 
   public saveFamilyMember(event) {
@@ -163,27 +160,26 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     this.nhsMatchesForDisplay = [];
   }
 
-  public doPatientTrace(): void
-  {
+  public doPatientTrace(): void {
     let patientTraceOptions = {};
-    if (this.dateOfBirth && this.dateOfBirth.nativeElement.value.split('/').length==3) {
+    if (this.dateOfBirth && this.dateOfBirth.nativeElement.value.split('/').length == 3) {
       patientTraceOptions['dateOfBirth'] = this.dateOfBirth.nativeElement.value;
     }
-    if (this.firstName && this.firstName.nativeElement.value.length>0) {
+    if (this.firstName && this.firstName.nativeElement.value.length > 0) {
       patientTraceOptions['firstName'] = this.firstName.nativeElement.value;
     }
-    if (this.surname && this.surname.nativeElement.value.length>0) {
+    if (this.surname && this.surname.nativeElement.value.length > 0) {
       patientTraceOptions['surname'] = this.surname.nativeElement.value
     }
     if (this.legalGender) {
       patientTraceOptions['gender'] = this.legalGender;
     }
-    if (this.postcode && this.postcode.nativeElement.value.length>0) {
+    if (this.postcode && this.postcode.nativeElement.value.length > 0) {
       patientTraceOptions['postcode'] = this.postcode.nativeElement.value;
     }
     this.migDataService.loadMIGPatientTrace(patientTraceOptions)
-        .then(patientTrace => this.migPatientTraceSuccess(patientTrace))
-        .catch(error => this.migPatientTraceFailed(error));
+      .then(patientTrace => this.migPatientTraceSuccess(patientTrace))
+      .catch(error => this.migPatientTraceFailed(error));
   }
 
   private isEPTButtonDisabled() {
@@ -193,21 +189,31 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
 
   private isSaveMemberButtonDisabled() {
     let valid_genders = this.genders.map(gender => gender.value);
-    if (valid_genders.indexOf(this.legalGender)>-1) {
+    if (valid_genders.indexOf(this.legalGender) > -1) {
       return false;
     } else {
       return true;
     }
   }
 
+  private recordConsent() {
+    let nhsNumber = this.familyMemberToEdit.nhsNumber;
+    this.consentsService.createConsentRecord(nhsNumber);
+  }
 
-  private processPatientTraceResults(patientTraceResults:MIGPatientTrace): void {
+  private listConsents() {
+    let nhsNumber = this.familyMemberToEdit.nhsNumber;
+    this.consentsService.listConsentContexts(nhsNumber);
+  }
+
+
+  private processPatientTraceResults(patientTraceResults: MIGPatientTrace): void {
     let ptr = patientTraceResults;
-    if (ptr.status && ptr.patientMatchs.length>0) {
+    if (ptr.status && ptr.patientMatchs.length > 0) {
       this.nhsMatchesForDisplay = [];
       for (let i in ptr.patientMatchs) {
         let personText = ptr.patientMatchs[i].getDisplayText();
-        let matchForDisplay:MatchForDisplay = {
+        let matchForDisplay: MatchForDisplay = {
           nhsNumber: ptr.patientMatchs[i].nhsNumber,
           displayText: personText
         };
@@ -216,15 +222,13 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     }
   }
 
-  private migPatientTraceSuccess(patientTrace: MIGPatientTrace): void
-  {
+  private migPatientTraceSuccess(patientTrace: MIGPatientTrace): void {
     if (patientTrace !== null) {
       this.processPatientTraceResults(patientTrace);
     }
   }
 
-  private migPatientTraceFailed(patientTrace: MIGPatientTrace): void
-  {
+  private migPatientTraceFailed(patientTrace: MIGPatientTrace): void {
     this.nhsMatchesForDisplay = [];
   }
 

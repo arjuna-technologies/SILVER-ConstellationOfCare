@@ -12,15 +12,15 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>First Name:</mat-label>
-      <input matInput #firstName type="text" class="firstName" name="firstName" value="" placeholder="e.g. John"/>
+      <input matInput #firstName type="text" class="firstName" name="firstName" [value]="familyMemberToEdit.firstName" placeholder="e.g. John"/>
     </mat-form-field>&nbsp;&nbsp;
     <mat-form-field>
       <mat-label>Surname:</mat-label>
-      <input matInput #surname type="text" class="surname" name="surname" value="" placeholder="e.g. Smith"/>
+      <input matInput #surname type="text" class="surname" name="surname" [value]="familyMemberToEdit.surname" placeholder="e.g. Smith"/>
     </mat-form-field><br/>
     <mat-form-field>
       <mat-label>Date of Birth:</mat-label>
-      <input matInput #dateOfBirth [matDatepicker]="dateOfBirthPicker" placeholder="e.g. 1/11/1975" type="text" class="dateOfBirth" name="dateOfBirth" value="">
+      <input matInput #dateOfBirth [matDatepicker]="dateOfBirthPicker" placeholder="e.g. 1/11/1975" type="text" class="dateOfBirth" name="dateOfBirth">
       <mat-datepicker-toggle matSuffix [for]="dateOfBirthPicker"></mat-datepicker-toggle>
       <mat-datepicker startAt="multi-year" #dateOfBirthPicker></mat-datepicker>
     </mat-form-field>&nbsp;&nbsp;
@@ -34,11 +34,11 @@
     </mat-form-field><br/>
     <mat-form-field>
       <mat-label>NHS Number:</mat-label>
-      <input matInput #nhsNumber type="text" class="nhsNumber" name="nhsNumber" value="" placeholder="e.g. 6358274937" />
+      <input matInput #nhsNumber type="text" class="nhsNumber" name="nhsNumber" [value]="familyMemberToEdit.nhsNumber" placeholder="e.g. 6358274937" />
     </mat-form-field>&nbsp;&nbsp;
     <mat-form-field>
       <mat-label>Role in Family:</mat-label>
-      <input matInput #role type="text" class="role" name="role" value="" width="200" placeholder="e.g. Guardian, Grandmother, Stepfather"/>
+      <input matInput #role type="text" class="role" name="role" [value]="familyMemberToEdit.role" width="200" placeholder="e.g. Guardian, Grandmother, Stepfather"/>
     </mat-form-field><br/>
     <mat-card>
       <mat-card-header>
@@ -66,6 +66,8 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-button id='save-member-button'[disabled]="isSaveMemberButtonDisabled()" (click)="saveFamilyMember()">Save {{firstName ? firstName.value : 'family member'}} {{surname ? surname.value : ''}}</button>
+    <button mat-button id='record-consent' [disabled]="isSaveMemberButtonDisabled()" (click)="recordConsent()">Record Consent{{(firstName && surname && firstName.value && surname.value) ? ' for '+firstName.value+' '+surname.value : ''}}</button>
+    <button mat-button id='list-consents' [disabled]="isSaveMemberButtonDisabled()" (click)="listConsents()">List Consents{{(firstName && surname && firstName.value && surname.value) ? ' for '+firstName.value+' '+surname.value : ''}}</button>
   </mat-card-actions>
 
 </mat-card>
