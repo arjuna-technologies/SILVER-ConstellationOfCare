@@ -12,6 +12,7 @@ import {MatGridList, MatGridTile} from '@angular/material';
 })
 export class FamiliesFormComponent implements OnInit, OnChanges {
 
+  @Input()
   public families: Family[] = [];
 
   @Input()
@@ -19,8 +20,29 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
 
   private expanded: any[] = [];
 
+  @Input()
+  public family: Family;
+
+  @Input()
+  public familyMember: FamilyMember;
+
+  @Input()
+  public mode: string = 'view';
+
   @Output()
   public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public selectFamilyOnly: EventEmitter<Family> = new EventEmitter<Family>();
+
+  @Output()
+  public updateFamilies: EventEmitter<Family[]> = new EventEmitter<Family[]>();
+
+  @Output()
+  public selectViewMode: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public selectEditMode: EventEmitter<any> = new EventEmitter<any>();
 
   public getGridRowHeight() {
     let maxFamilyHeight = this.getLargestFamilySize();
@@ -48,6 +70,22 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     return maxFamilySize;
   }
 
+  public doSelectEditMode(): void {
+    this.selectEditMode.emit();
+  }
+
+  public doSelectViewMode(): void {
+    this.selectViewMode.emit();
+  }
+
+  public doUpdateFamilies(families): void {
+    this.updateFamilies.emit(families);
+  }
+
+  public doSelectFamilyOnly(family): void {
+    this.selectFamilyOnly.emit(family);
+  }
+
   public doSelectFamilyAndFamilyMember(familyAndFamilyMember): void {
     this.selectFamilyAndFamilyMember.emit({
       family: familyAndFamilyMember.family,
@@ -55,12 +93,10 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     });
   }
 
-  public toggleExpanded(index) {
-    if (this.expanded[index] == false) {
-      this.expanded[index] = true;
-    } else {
-      this.expanded[index] = false;
-    }
+  public viewFamily(family) {
+    this.selectFamilyOnly.emit(family);
+    this.doSelectViewMode();
+    this.family = family;
   }
 
   constructor(private familyDataService: FamilyDataService) {
@@ -73,7 +109,8 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     return `C${n}`;
   }
 
-  public currentlyEditingFamily: Family = null
+  @Input()
+  public family: Family = null;
 
   private indexOfCurrentlyEditingFamily: number = -1;
 
@@ -87,8 +124,9 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
       id: this.getNewFamilyID(),
       familyMembers: members
     });
-    this.currentlyEditingFamily = newFamily;
     this.indexOfCurrentlyEditingFamily = -1;
+    this.doSelectFamilyOnly(newFamily);
+    this.doSelectEditMode();
   }
 
   public addTestFamilies() {
@@ -140,28 +178,27 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   }
 
   public editFamily(index) {
-    this.currentlyEditingFamily = this.families[index];
+    this.doSelectFamilyOnly(this.families[index]);
+    this.family=this.families[index];
+    this.familyMember = null;
     this.indexOfCurrentlyEditingFamily = index;
+    this.doSelectEditMode();
   }
 
   public newFamilySaved(family: Family) {
-    this.currentlyEditingFamily = null;
+    this.doSelectFamilyOnly(null);
     this.families = [family].concat(this.families); // for now, add to start
     //this.families.push(family);
     this.familyDataService.saveFamilies(this.username, this.families);
+    this.doSelectViewMode();
   }
 
   public editedFamilySaved(family: Family) {
-    this.currentlyEditingFamily = null;
+    this.doSelectFamilyOnly(null);
     this.families[this.indexOfCurrentlyEditingFamily] = family;
     this.indexOfCurrentlyEditingFamily = -1;
     this.familyDataService.saveFamilies(this.username, this.families);
-  }
-
-  private initialiseExpandedFlags() {
-    for (let family in this.families) {
-      this.expanded.push(false);
-    }
+    this.doSelectViewMode();
   }
 
   ngOnInit() {
@@ -183,12 +220,14 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
 
   private loadFamiliesSuccess(families: Family[]): void {
     this.families = families;
-    this.initialiseExpandedFlags();
+    console.log('loaded families and setting to:');
+    console.log(families);
+    this.doUpdateFamilies(this.families);
   }
 
   private loadFamiliesFailed(error: any): void {
     this.families = [];
-    this.initialiseExpandedFlags();
+    this.doUpdateFamilies(this.families);
   }
 
 }

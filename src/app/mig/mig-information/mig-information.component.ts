@@ -3,6 +3,7 @@ import {MatPaginator, MatTabGroup, MatTab, MatTableDataSource} from '@angular/ma
 
 import {MIGDataService}             from '../mig-data.service';
 import {MIGInformationIndexService} from '../mig-information-index.service';
+import {Family} from '../../family/family';
 import {FamilyMember} from '../../family/family-member';
 import {MIGInformation} from '../mig-information';
 
@@ -16,7 +17,16 @@ export class MIGInformationComponent implements OnInit, OnChanges {
   public information: MIGInformation;
 
   @Input()
+  public families: Family[];
+
+  @Input()
+  public family: Family;
+
+  @Input()
   public familyMember: FamilyMember;
+
+  @Input()
+  public mode: string = 'view';
 
   public format: string;
   public loading: boolean;

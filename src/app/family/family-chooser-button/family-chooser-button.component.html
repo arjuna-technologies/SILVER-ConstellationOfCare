@@ -6,7 +6,7 @@
 <mat-menu #familyMenu="matMenu">
   <mat-list *ngIf="families">
     <mat-list-item *ngFor="let family of families; index as index; last as last">
-      <button mat-menu-item #familyNameButton (click)="doFamilySelect(family.id)">{{familyNames[index]}}</button>
+      <button mat-menu-item #familyNameButton (click)="doFamilySelect(family.id)">{{family.getFamilyName()}}</button>
       <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
     </mat-list-item>
   </mat-list>

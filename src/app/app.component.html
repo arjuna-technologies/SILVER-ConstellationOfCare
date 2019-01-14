@@ -4,9 +4,9 @@
       <span>SILVER Health Data Interface</span>
       <span class="toolbar-spacer"></span>
       <div *ngIf="username">
-        <cnstll-family-chooser-button [username]="username" #familyChooserButton [family]="family" (familySelect)="setFamily($event)"></cnstll-family-chooser-button>
-        <cnstll-family-member-chooser-button #familyMemberChooserButton *ngIf="family" [family]="family" [familyMember]="familyMember" (selectFamilyMember)="managementMode=false;setFamilyMember($event)"></cnstll-family-member-chooser-button>
-        <cnstll-case-management-button *ngIf="!managementMode" #caseManagementButton [username]="username" (launchCaseManagementScreen)="family=null;familyMember=null;managementMode=true;"></cnstll-case-management-button>
+        <cnstll-family-chooser-button [username]="username" #familyChooserButton [families]="families" [family]="family" [familyMember]="familyMember" [mode]="mode" (selectFamilyOnly)="doSelectFamilyOnly($event)"></cnstll-family-chooser-button>
+        <cnstll-family-member-chooser-button #familyMemberChooserButton *ngIf="family" [families]="families" [family]="family" [familyMember]="familyMember" [mode]="mode" (selectFamilyOnly)="doSelectFamilyOnly($event)" (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"></cnstll-family-member-chooser-button>
+        <cnstll-case-management-button #caseManagementButton [families]="families" [family]="family" [familyMember]="familyMember" [mode]="mode" [username]="username" (launchCaseManagementScreen)="doSelectFamilyOnly(null)"></cnstll-case-management-button>
       </div>
       <button mat-button (click)="doOpenLoginDialog()">
         <mat-icon>home</mat-icon>
@@ -16,6 +16,6 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <cnstll-mig-information #miginformation *ngIf="familyMember" [familyMember]="familyMember"></cnstll-mig-information>
-  <cnstll-case-management-screen #caseManagementScreen *ngIf="managementMode && username" [username]="username" (selectFamilyAndFamilyMember)="selectFamilyAndFamilyMember($event)"> </cnstll-case-management-screen>
+  <cnstll-mig-information #miginformation *ngIf="familyMember" [families]="families" [family]="family" [familyMember]="familyMember" [mode]="mode" [familyMember]="familyMember"></cnstll-mig-information>
+  <cnstll-case-management-screen #caseManagementScreen *ngIf="username" [families]="families" [family]="family" [familyMember]="familyMember" [mode]="mode" [username]="username" (updateFamilies)="doUpdateFamilies($event)" (selectFamilyOnly)="doSelectFamilyOnly($event)" (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"> </cnstll-case-management-screen>
 </div>

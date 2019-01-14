@@ -16,6 +16,12 @@ export class FamilyListPanelComponent implements OnInit, OnChanges {
   public family:Family;
 
   @Input()
+  public familyMember:FamilyMember;
+
+  @Input()
+  public mode: string = 'view';
+
+  @Input()
   public hasConsents = {}; // for each family member, one of "unknown", "true" or "false"
 
   constructor(private hasConsentsService:HasConsentsService) {

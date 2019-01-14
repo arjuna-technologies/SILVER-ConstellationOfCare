@@ -11,38 +11,43 @@ export class FamilyDataService {
 
   constructor(private httpClient: HttpClient) { }
 
+  private processFamiliesResponse(response): any {
+    let familiesData = [];
+    if (response['outcome'] == "Success" && response['content'] && response['content']['families']) {
+      familiesData = response['content']['families'];
+    } else {
+      console.log('Error parsing loadFamilies response:'),
+        console.error(response['content']);
+    }
+
+    let families = [];
+    for (let i in familiesData) {
+      let familyData = familiesData[i];
+      let family = new Family(familyData);
+      families.push(family);
+    }
+
+    return families;
+  }
+
   public loadFamilies(username: string): Promise<Family[]> {
     return this.httpClient.get(`http://dataservice-mig.silver.arjuna.com/storage/ws/storage/${username}`)
       .toPromise()
       .then((response) => {
-
-        let familiesData = [];
-        if (response['outcome'] == "Success" && response['content'] && response['content']['families']) {
-          familiesData = response['content']['families'];
-        } else {
-          console.log('Error parsing loadFamilies response:'),
-          console.error(response['content']);
-        }
-
-        let families = [];
-        for (let i in familiesData) {
-          let familyData = familiesData[i];
-          let family = new Family(familyData);
-          families.push(family);
-        }
-
-        return families as Family[];
+        return this.processFamiliesResponse(response) as Family[];
       });
   }
 
   public loadFamily(familyId: string): Promise<Family> {
     let family: Family = null;
-
+    console.log(this.families);
     for (let current of this.families)
       if (familyId === current.id)
         family = current;
 
-    return new Promise(resolve => setTimeout(() => resolve(family), 100));
+    console.log('in the FDS, id ',familyId, ' was loaded, family is',family);
+
+    return new Promise(resolve => resolve(family));
   }
 
   public saveFamilies(username: string, families: Family[]) {

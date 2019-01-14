@@ -12,17 +12,23 @@ import {FamilyMember} from '../family-member';
 
 export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
   @Input()
+  public families: Family[] = null;
+
+  @Input()
   public family: Family = null;
 
   @Input()
   public familyMember: FamilyMember;
+
+  @Input()
+  public mode: string = 'view';
 
   public familyName: string = '';
   public memberName: string = '';
   public loading: boolean = false;
 
   @Output()
-  public selectFamilyMember: EventEmitter<FamilyMember> = new EventEmitter<FamilyMember>();
+  public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
   public constructor() { }
 
@@ -50,7 +56,7 @@ export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
     this.loading = false;
   }
 
-  public doSelectFamilyMember(familyMember: FamilyMember): void {
+  public doSelectFamilyAndFamilyMember(familyMember: FamilyMember): void {
     //console.log('NHS Number: ' + familyMember.nhsNumber);
     if (familyMember) {
       this.familyMember = familyMember;
@@ -59,6 +65,9 @@ export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
     else
       this.familyMember = null;
       this.memberName = '';
-    this.selectFamilyMember.emit(this.familyMember);
+    this.selectFamilyAndFamilyMember.emit({
+      family: this.family,
+      familyMember: this.familyMember
+    });
   }
 }

@@ -1,28 +1,27 @@
-<cnstll-family-form *ngIf="currentlyEditingFamily" [familyToEdit]="currentlyEditingFamily"
+<cnstll-family-form *ngIf="family && mode=='edit'" [familyToEdit]="family"
                     [editing]="!isCurrentFamilyNew()" (newFamilySaver)="newFamilySaved($event)"
                     (editedFamilySaver)="editedFamilySaved($event)"></cnstll-family-form>
-<mat-card *ngIf="!currentlyEditingFamily">
+<mat-card *ngIf="!family">
   <mat-card-header>
     <mat-card-title><h3>Family/Case Records</h3></mat-card-title>
   </mat-card-header>
   <mat-card-content [style.overflow]="'auto'" [style.height.%]="getGridCardHeight()" [style.maxHeight.px]="getGridRowHeight()">
     <mat-grid-list cols="3"  [style.maxHeight.px]="getGridRowHeight()" [style.height.px]="getGridRowHeight()">
-      <mat-grid-tile [colspan]="3" *ngIf="families.length==0">
+      <mat-grid-tile [colspan]="3" *ngIf="!families || families.length==0">
         <h2>No Families Stored.</h2>
       </mat-grid-tile>
-      <mat-grid-tile *ngFor="let family of families;index as index;last as last">
-        <div>
-          <h2 [ngClass]="['family-tile-header', 'family-name']" *ngIf="!expanded[index]" (click)="toggleExpanded(index)">
-            {{ family.getFamilyNameLongForm() }}
-          </h2>
-          <p *ngIf="!expanded[index]">
-            <button mat-button (click)="editFamily(index)">Edit</button>
-          </p>
-          <cnstll-family-list-panel *ngIf="expanded[index]&&!currentlyEditingFamily" [family]="family"
-                                    (close)="toggleExpanded(index)"
-                                    (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"></cnstll-family-list-panel>
-        </div>
-      </mat-grid-tile>
+      <div *ngIf="families && families.length>0">
+        <mat-grid-tile *ngFor="let family of families;index as index;last as last">
+          <div>
+            <h2 [ngClass]="['family-tile-header', 'family-name']" *ngIf="!expanded[index]" (click)="viewFamily(family)">
+              {{ family.getFamilyNameLongForm() }}
+            </h2>
+            <p>
+              <button mat-button (click)="editFamily(index)">Edit</button>
+            </p>
+          </div>
+        </mat-grid-tile>
+      </div>
     </mat-grid-list>
   </mat-card-content>
   <mat-card-actions>
@@ -30,3 +29,6 @@
     <button mat-button (click)="addTestFamilies($event)">Add Test Families</button>
   </mat-card-actions>
 </mat-card>
+<cnstll-family-list-panel *ngIf="family" [family]="family" [mode]="mode" [familyMember]="familyMember" (close)="viewFamily(null)"
+                          (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"></cnstll-family-list-panel>
+

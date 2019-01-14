@@ -25,13 +25,17 @@ export class AppComponent {
   public org: string;
   public group: string;
 
-  public managementMode: any;
+  @Input()
+  public families: Family[];
 
   @Input()
   public familyMember: FamilyMember;
 
   @Input()
   public family: Family;
+
+  @Input()
+  public mode: string = 'view';
 
   @ViewChild('familyChooserButton')
   public familyChooserButton: FamilyChooserButtonComponent;
@@ -51,8 +55,24 @@ export class AppComponent {
   public requestTypes: any[];
   public requestTypeCode: string;
 
-  public selectFamilyAndFamilyMember(familyAndFamilyMember) {
-    this.managementMode=false;
+
+  public setViewMode() {
+    this.mode = 'view';
+  }
+
+  public setEditMode() {
+    this.mode = 'edit';
+  }
+
+  public doSelectFamilyOnly(family) {
+    console.log('doselecting family:',family);
+    this.setFamily(family);
+    console.log('doselecting familymember to null');
+    this.setFamilyMember(null);
+    console.log('done');
+  }
+
+  public doSelectFamilyAndFamilyMember(familyAndFamilyMember) {
     this.setFamily(familyAndFamilyMember.family);
     this.setFamilyMember(familyAndFamilyMember.familyMember);
   }
@@ -66,9 +86,13 @@ export class AppComponent {
     this.familyMember = familyMember;
   }
 
+  public doUpdateFamilies(families) {
+    this.families = families;
+    this.doSelectFamilyOnly(null);
+  }
+
   public constructor(private dialog: MatDialog) {
     this.familyMember=null;
-    this.managementMode=true;
     this.username = '';
     this.org = '';
     this.group = '';
@@ -102,7 +126,6 @@ export class AppComponent {
 
       this.family=null;
       this.familyMember=null;
-      this.managementMode=true;
     }
   }
 
