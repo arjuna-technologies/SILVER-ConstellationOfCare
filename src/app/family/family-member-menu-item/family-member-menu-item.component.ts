@@ -1,5 +1,6 @@
 import {Component, Input, Output, OnChanges, ViewEncapsulation, SimpleChanges, EventEmitter} from '@angular/core';
 
+import {Family} from '../family';
 import {FamilyMember} from '../family-member';
 
 @Component
@@ -9,27 +10,33 @@ import {FamilyMember} from '../family-member';
   styleUrls: ['family-member-menu-item.component.scss']
 })
 export class FamilyMemberMenuItemComponent implements OnChanges {
+
+  @Input()
+  public family: Family;
+
   @Input()
   public familyMember: FamilyMember;
+
   @Input()
   public loading: boolean;
 
   @Input()
   public hasConsents: string; // "unknown", "true" or "false"
+
   @Output()
-  public selectFamilyMember: EventEmitter<FamilyMember>;
+  public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
   public constructor() {
     this.loading = false;
-
-    this.selectFamilyMember = new EventEmitter<FamilyMember>();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
   }
 
-  public doSelectNHSNumber(): void {
-    if (this.familyMember.nhsNumber !== '')
-      this.selectFamilyMember.emit(this.familyMember);
+  public doSelectFamilyAndFamilyMember(): void {
+    this.selectFamilyAndFamilyMember.emit({
+      family: this.family,
+      familyMember: this.familyMember
+    });
   }
 }

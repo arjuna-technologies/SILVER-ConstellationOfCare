@@ -23,8 +23,6 @@ export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
   @Input()
   public mode: string = 'view';
 
-  public familyName: string = '';
-  public memberName: string = '';
   public loading: boolean = false;
 
   @Output()
@@ -33,41 +31,21 @@ export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
   public constructor() { }
 
   public ngOnInit() {
-    if (this.familyMember)
-      this.memberName = this.familyMember.getFullName();
     this.doShowFamily();
   }
 
   public ngOnChanges() {
-    if (this.familyMember)
-      this.memberName = this.familyMember.getFullName();
     this.doShowFamily();
   }
 
   private doShowFamily(): void {
-    if (this.family)
-      this.familyName = this.family.getFamilyName();
-    else
-      this.familyName = '';
-    if (this.familyMember)
-      this.memberName = this.familyMember.getFullName();
-    else
-      this.memberName = '';
     this.loading = false;
   }
 
-  public doSelectFamilyAndFamilyMember(familyMember: FamilyMember): void {
-    //console.log('NHS Number: ' + familyMember.nhsNumber);
-    if (familyMember) {
-      this.familyMember = familyMember;
-      this.memberName = familyMember.getFullName();
-    }
-    else
-      this.familyMember = null;
-      this.memberName = '';
+  public doSelectFamilyAndFamilyMember(familyAndFamilyMember: any): void {
     this.selectFamilyAndFamilyMember.emit({
-      family: this.family,
-      familyMember: this.familyMember
+      family: familyAndFamilyMember.family,
+      familyMember: familyAndFamilyMember.familyMember
     });
   }
 }

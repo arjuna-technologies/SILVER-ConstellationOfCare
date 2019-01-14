@@ -3,8 +3,6 @@ import {Component, OnInit, ViewEncapsulation, Input, OnChanges, Output, EventEmi
 import {Family}       from '../family';
 import {FamilyMember} from '../family-member';
 
-import {FamilyDataService} from '../family-data.service';
-
 @Component
 ({
   selector: 'cnstll-family-chooser-button',
@@ -14,13 +12,13 @@ import {FamilyDataService} from '../family-data.service';
 export class FamilyChooserButtonComponent implements OnInit, OnChanges {
 
   @Input()
-  public families: Family[]= [];
+  public families: Family[];
 
   @Input()
-  public family: Family = null;
+  public family: Family;
 
   @Input()
-  public familyMember: FamilyMember = null;
+  public familyMember: FamilyMember;
 
   @Input()
   public mode: string = 'view';
@@ -36,7 +34,7 @@ export class FamilyChooserButtonComponent implements OnInit, OnChanges {
   @Output()
   public selectFamilyOnly: EventEmitter<Family> = new EventEmitter<Family>();
 
-  public constructor(private familyDataService: FamilyDataService) {
+  public constructor() {
 
   }
 
@@ -48,31 +46,8 @@ export class FamilyChooserButtonComponent implements OnInit, OnChanges {
 
   }
 
-  public doFamilySelect(familyId: string): void {
-    this.loadFamily(familyId);
-  }
-
-  private loadFamily(familyId: string): void {
-    this.loading = true;
-
-    this.familyDataService.loadFamily(familyId)
-      .then(family => this.loadFamilySuccess(family))
-      .catch(error => this.loadFamilyFailed(error));
-  }
-
-  private loadFamilySuccess(family: Family): void {
-    this.family = family;
-    this.loading = false;
-
-    console.log('load success of family',family);
+  public doFamilySelect(family): void {
     this.selectFamilyOnly.emit(family);
-    console.log('emitted',family);
   }
 
-  private loadFamilyFailed(error: any): void {
-    this.family = null;
-    this.loading = false;
-
-    this.selectFamilyOnly.emit(null);
-  }
 }

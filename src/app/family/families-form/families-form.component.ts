@@ -53,7 +53,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
 
   public getGridCardHeight() {
     let familiesCount = 3;
-    if (this.families.length > familiesCount) {
+    if (this.families && this.families.length > familiesCount) {
       familiesCount = this.families.length;
     }
     let rows = Math.floor(familiesCount / 3);
@@ -62,9 +62,11 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
 
   public getLargestFamilySize() {
     let maxFamilySize = 4;
-    for (let family of this.families) {
-      if (family.familyMembers.length > maxFamilySize) {
-        maxFamilySize = family.familyMembers.length;
+    if (this.families && this.families.length > 0) {
+      for (let family of this.families) {
+        if (family.familyMembers.length > maxFamilySize) {
+          maxFamilySize = family.familyMembers.length;
+        }
       }
     }
     return maxFamilySize;
@@ -109,9 +111,6 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     return `C${n}`;
   }
 
-  @Input()
-  public family: Family = null;
-
   private indexOfCurrentlyEditingFamily: number = -1;
 
   private isCurrentFamilyNew() {
@@ -138,25 +137,25 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     testFamilyMembers['p02'] = ['Clare', 'Smith', '13/03/1995', 'Female', '9051292074', "Amy's Daughter"];
     testFamilyMembers['p03'] = ['David', 'Jones', '07/07/1997', 'Male', '5700200716', "Amy's Husband"];
 
-    testFamilies['f00']=['p00', 'p01', 'p02', 'p03'];
+    testFamilies['f00'] = ['p00', 'p01', 'p02', 'p03'];
 
     testFamilyMembers['p04'] = ['Amy', 'Brown', '20/12/1970', 'Female', '8225676149', "Mother"];
     testFamilyMembers['p05'] = ['Bill', 'Lee', '12/01/1971', 'Male', '9620344472', "New Partner"];
     testFamilyMembers['p06'] = ['Clare', 'Brown', '13/03/1995', 'Female', '4160066348', "Daughter"];
     testFamilyMembers['p07'] = ['David', 'Brown', '07/07/1997', 'Male', '5894678846', "Son"];
 
-    testFamilies['f01']=['p04', 'p05', 'p06', 'p07'];
+    testFamilies['f01'] = ['p04', 'p05', 'p06', 'p07'];
 
     testFamilyMembers['p11'] = ['Richard', 'Garner', '21/12/1933', 'Male', '4160066348', "Grandfather"];
     testFamilyMembers['p08'] = ['Amy', 'James', '20/12/1970', 'Female', '8880028669', "Mother"];
     testFamilyMembers['p09'] = ['Bill', 'James', '12/01/1971', 'Male', '6068998983', "Husband"];
     testFamilyMembers['p10'] = ['Clare', 'James', '13/03/1995', 'Female', '4198838577', "Daughter"];
 
-    testFamilies['f02']=['p11', 'p08', 'p09', 'p10'];
+    testFamilies['f02'] = ['p11', 'p08', 'p09', 'p10'];
 
     for (let familyId in testFamilies) {
       let familyMemberIds = testFamilies[familyId];
-      let familyMembers=[];
+      let familyMembers = [];
       for (let familyMemberId of familyMemberIds) {
         let familyMember = {
           id: familyMemberId,
@@ -164,8 +163,8 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
           surname: testFamilyMembers[familyMemberId][1],
           dateOfBirth: testFamilyMembers[familyMemberId][2],
           gender: testFamilyMembers[familyMemberId][3],
-          nhsNumber:testFamilyMembers[familyMemberId][4],
-          role:testFamilyMembers[familyMemberId][5]
+          nhsNumber: testFamilyMembers[familyMemberId][4],
+          role: testFamilyMembers[familyMemberId][5]
         };
         familyMembers.push(familyMember);
       }
@@ -179,7 +178,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
 
   public editFamily(index) {
     this.doSelectFamilyOnly(this.families[index]);
-    this.family=this.families[index];
+    this.family = this.families[index];
     this.familyMember = null;
     this.indexOfCurrentlyEditingFamily = index;
     this.doSelectEditMode();
