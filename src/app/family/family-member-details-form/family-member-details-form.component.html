@@ -67,7 +67,7 @@
   <mat-card-actions>
     <button mat-button id='save-member-button'[disabled]="isSaveMemberButtonDisabled()" (click)="saveFamilyMember()">Save {{firstName ? firstName.value : 'family member'}} {{surname ? surname.value : ''}}</button>
     <button mat-button id='record-consent' [disabled]="isSaveMemberButtonDisabled()" (click)="recordConsent()">Record Consent{{(firstName && surname && firstName.value && surname.value) ? ' for '+firstName.value+' '+surname.value : ''}}</button>
-    <button mat-button id='list-consents' [disabled]="isSaveMemberButtonDisabled()" (click)="listConsents()">List Consents{{(firstName && surname && firstName.value && surname.value) ? ' for '+firstName.value+' '+surname.value : ''}}</button>
+    <button mat-button id='revoke-consent' [disabled]="isSaveMemberButtonDisabled()" (click)="revokeConsent()">Revoke Consent{{(firstName && surname && firstName.value && surname.value) ? ' for '+firstName.value+' '+surname.value : ''}}</button>
   </mat-card-actions>
 
 </mat-card>

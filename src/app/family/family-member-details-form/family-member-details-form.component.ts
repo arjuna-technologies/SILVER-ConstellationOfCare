@@ -201,9 +201,9 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     this.consentsService.createConsentRecord(nhsNumber);
   }
 
-  private listConsents() {
+  private revokeConsent() {
     let nhsNumber = this.familyMemberToEdit.nhsNumber;
-    this.consentsService.listConsentContexts(nhsNumber);
+    this.consentsService.revokeConsentRecord(nhsNumber);
   }
 
 
