@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 
 const CONSENT_TYPE_MIG_DEMO = "351ece5c-0e37-4c3f-bf17-3620a4bc71f9";
 const CONSTRAINT_ID_ORGANISATION = "0079f42a-cae6-4e8e-baf2-a8029fbade8e";
@@ -22,13 +22,14 @@ const CONSENT_TYPE_TO_USE = CONSENT_TYPE_MIG_DEMO;
 
 export class ConsentsService {
 
-  constructor(private httpClient: HttpClient) { }
-
-  private generatePseudoUniqueId(): string {
-    return (1000000000 *  Math.random()).toString(16);
+  constructor(private httpClient: HttpClient) {
   }
 
-  private createConsentContextPayload(nhsNumber:string, consentName:string, consentContextId:string, consentId: string): any {
+  private generatePseudoUniqueId(): string {
+    return (1000000000 * Math.random()).toString(16);
+  }
+
+  private createConsentContextPayload(nhsNumber: string, consentName: string, consentContextId: string, consentId: string): any {
     let now = (new Date()).toISOString();
     let payload = {
       consent_id: consentId,
@@ -44,8 +45,8 @@ export class ConsentsService {
   private createConsentPayload(consentId: string): any {
     let payload = {
       constraints: [
-            {id: CONSTRAINT_ID_ORGANISATION, value: ORGANISATION_TO_USE},
-            {id: CONSTRAINT_ID_PURPOSE, value: PURPOSE_TO_USE}],
+        {id: CONSTRAINT_ID_ORGANISATION, value: ORGANISATION_TO_USE},
+        {id: CONSTRAINT_ID_PURPOSE, value: PURPOSE_TO_USE}],
       id: consentId,
       type_id: CONSENT_TYPE_TO_USE
     };
@@ -58,7 +59,7 @@ export class ConsentsService {
     let consentId = this.generatePseudoUniqueId();
     let consentContextId = this.generatePseudoUniqueId();
     let parentThis = this;
-    return this.createConsent(nhsNumber,consentId).then(
+    return this.createConsent(nhsNumber, consentId).then(
       (consentResponse) => {
         return this.createConsentContext(nhsNumber, consentName, consentContextId, consentId).then(
           (consentContextResponse) => {
@@ -95,17 +96,15 @@ export class ConsentsService {
     );
   }
 
-  private createConsentContext(nhsNumber: string, consentName: string, consentContextId:string, consentId:string): Promise<any>
-  {
-    let payload = this.createConsentContextPayload(nhsNumber,consentName,consentContextId,consentId);
+  private createConsentContext(nhsNumber: string, consentName: string, consentContextId: string, consentId: string): Promise<any> {
+    let payload = this.createConsentContextPayload(nhsNumber, consentName, consentContextId, consentId);
     return this.httpClient.post('http://consentservice.silver.arjuna.com/consentengine/ws/consentcontextdef/consentcontext/' + consentContextId, payload)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandler(nhsNumber, response)))
       .catch((error) => Promise.resolve(this.errorHandler(nhsNumber, error)));
   }
 
-  private createConsent(nhsNumber: string, consentId: string): Promise<any>
-  {
+  private createConsent(nhsNumber: string, consentId: string): Promise<any> {
     let payload = this.createConsentPayload(consentId);
     return this.httpClient.post('http://consentservice.silver.arjuna.com/consentengine/ws/consentdef/consent/' + consentId, payload)
       .toPromise()
@@ -114,8 +113,7 @@ export class ConsentsService {
       .catch((error) => Promise.resolve(this.errorHandler(nhsNumber, error)));
   }
 
-  private deleteConsentContext(consentContextId: string): Promise<any>
-  {
+  private deleteConsentContext(consentContextId: string): Promise<any> {
     return this.httpClient.delete('http://consentservice.silver.arjuna.com/consentengine/ws/consentcontextdef/consentcontext/' + consentContextId)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandler(consentContextId, response)))
@@ -123,8 +121,7 @@ export class ConsentsService {
       .catch((error) => Promise.resolve(this.errorHandler(consentContextId, error)));
   }
 
-  private deleteConsent(consentId: string): Promise<any>
-  {
+  private deleteConsent(consentId: string): Promise<any> {
     return this.httpClient.delete('http://consentservice.silver.arjuna.com/consentengine/ws/consentdef/consent/' + consentId)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandler(consentId, response)))
@@ -132,8 +129,7 @@ export class ConsentsService {
       .catch((error) => Promise.resolve(this.errorHandler(consentId, error)));
   }
 
-  private listConsentContexts(nhsNumber: string): Promise<any>
-  {
+  private listConsentContexts(nhsNumber: string): Promise<any> {
     return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
       .toPromise()
       .then((listOfConsentContexts: any) => {
@@ -149,8 +145,7 @@ export class ConsentsService {
     }
   }
 
-  private errorHandler(nhsNumber: string, error: any): any
-  {
+  private errorHandler(nhsNumber: string, error: any): any {
     return {
       nhsNumber: nhsNumber,
       response: error

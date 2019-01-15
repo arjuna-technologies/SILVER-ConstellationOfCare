@@ -134,15 +134,15 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   }
 
   ngAfterContentInit() {
-      console.log(this.familyMemberToEdit);
-      if (this.familyMemberToEdit) {
-        if (this.familyMemberToEdit.dateOfBirth) {
-          this.dateOfBirth.nativeElement.value = this.familyMemberToEdit.dateOfBirth;
-        }
-        if (this.familyMemberToEdit.gender) {
-          this.legalGender = this.familyMemberToEdit.gender;
-        }
+    console.log(this.familyMemberToEdit);
+    if (this.familyMemberToEdit) {
+      if (this.familyMemberToEdit.dateOfBirth) {
+        this.dateOfBirth.nativeElement.value = this.familyMemberToEdit.dateOfBirth;
       }
+      if (this.familyMemberToEdit.gender) {
+        this.legalGender = this.familyMemberToEdit.gender;
+      }
+    }
   }
 
   public saveFamilyMember(event) {

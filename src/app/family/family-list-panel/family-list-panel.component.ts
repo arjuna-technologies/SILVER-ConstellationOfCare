@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges, AfterViewInit } from '@angular/core';
-import { MatGridList, MatGridTile } from '@angular/material';
-import { HasConsentsService } from '../../consent/has-consents.service';
+import {Component, Input, OnInit, Output, EventEmitter, OnChanges, AfterViewInit} from '@angular/core';
+import {MatGridList, MatGridTile} from '@angular/material';
+import {HasConsentsService} from '../../consent/has-consents.service';
 
 import {Family}       from '../family';
 import {FamilyMember} from '../family-member';
@@ -13,18 +13,18 @@ import {FamilyMember} from '../family-member';
 export class FamilyListPanelComponent implements OnInit, OnChanges {
 
   @Input()
-  public family:Family;
+  public family: Family;
 
   @Input()
-  public familyMember:FamilyMember;
+  public familyMember: FamilyMember;
 
   @Input()
-  public mode: string = 'view';
+  public mode: string = 'cases';
 
   @Input()
   public hasConsents = {}; // for each family member, one of "unknown", "true" or "false"
 
-  constructor(private hasConsentsService:HasConsentsService) {
+  constructor(private hasConsentsService: HasConsentsService) {
 
   }
 
@@ -41,7 +41,7 @@ export class FamilyListPanelComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     for (let familyMember of this.family.familyMembers) {
-      this.hasConsents[familyMember.nhsNumber]="unknown";
+      this.hasConsents[familyMember.nhsNumber] = "unknown";
     }
   }
 
@@ -54,22 +54,32 @@ export class FamilyListPanelComponent implements OnInit, OnChanges {
   }
 
   private hasConsentsSuccessHandler(response) {
-    this.hasConsents[response.nhsNumber]=response.hasConsents;
+    this.hasConsents[response.nhsNumber] = response.hasConsents;
   }
 
   private hasConsentsErrorHandler(response) {
     console.error(response.error);
-    this.hasConsents[response.nhsNumber]="unknown";
+    this.hasConsents[response.nhsNumber] = "unknown";
   }
 
   @Output()
   public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
+  public inspectFamilyMember: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
   public close: EventEmitter<any> = new EventEmitter();
 
   public doSelectFamilyAndFamilyMember(familyMember: FamilyMember): void {
     this.selectFamilyAndFamilyMember.emit({
+      family: this.family,
+      familyMember: familyMember
+    });
+  }
+
+  public doInspectFamilyMember(familyMember: FamilyMember): void {
+    this.inspectFamilyMember.emit({
       family: this.family,
       familyMember: familyMember
     });

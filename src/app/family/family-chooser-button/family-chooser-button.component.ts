@@ -1,4 +1,14 @@
-import {Component, OnInit, ViewEncapsulation, Input, OnChanges, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 
 import {Family}       from '../family';
 import {FamilyMember} from '../family-member';
@@ -21,7 +31,7 @@ export class FamilyChooserButtonComponent implements OnInit, OnChanges {
   public familyMember: FamilyMember;
 
   @Input()
-  public mode: string = 'view';
+  public mode: string = 'cases';
 
   @Input()
   public username: string;

@@ -5,30 +5,30 @@
   <mat-card-header>
     <mat-card-title><h3>Family/Case Records</h3></mat-card-title>
   </mat-card-header>
-  <mat-card-content [style.overflow]="'auto'" [style.height.%]="getGridCardHeight()" [style.maxHeight.px]="getGridRowHeight()">
-    <mat-grid-list cols="3"  [style.maxHeight.px]="getGridRowHeight()" [style.height.px]="getGridRowHeight()">
-      <mat-grid-tile [colspan]="3" *ngIf="!families || families.length==0">
-        <h2>No Families Stored.</h2>
-      </mat-grid-tile>
+  <mat-card-content>
+    <mat-list [style.display]="'flex'" [style.justifyContent]="'center'">
+      <mat-list-item *ngIf="!families || families.length==0">
+        <h2><span [style.textAlign]="'center'">No Families Stored.</span></h2>
+      </mat-list-item>
       <div *ngIf="families && families.length>0">
-        <mat-grid-tile *ngFor="let family of families;index as index;last as last">
+        <mat-list-item [style.textAlign]="'center'" *ngFor="let family of families;index as index;last as last">
           <div>
-            <h2 [ngClass]="['family-tile-header', 'family-name']" *ngIf="!expanded[index]" (click)="viewFamily(family)">
-              {{ family.getFamilyNameLongForm() }}
+            <h2 [style.marginBottom]="'8px'" [ngClass]="['family-tile-header', 'family-name']" *ngIf="!expanded[index]" (click)="viewFamily(family)">
+              <mat-icon ngClass="peopleIcon" [style.fontSize]="'1.35em'" [style.verticalAlign]="'middle'" [style.height]="'inherit'" [style.width]="'inherit'">people</mat-icon>
+              <span [style.marginLeft]="'8px'">{{ family.getFamilyNameLongForm() }}</span>
             </h2>
-            <p>
-              <button mat-button (click)="editFamily(index)">Edit</button>
-            </p>
           </div>
-        </mat-grid-tile>
+        </mat-list-item>
       </div>
-    </mat-grid-list>
+    </mat-list>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button (click)="addFamily($event)">Add a new family...</button>
     <button mat-button (click)="addTestFamilies($event)">Add Test Families</button>
   </mat-card-actions>
 </mat-card>
-<cnstll-family-list-panel *ngIf="family" [family]="family" [mode]="mode" [familyMember]="familyMember" (close)="viewFamily(null)"
-                          (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"></cnstll-family-list-panel>
+<cnstll-family-list-panel *ngIf="family" [family]="family" [mode]="mode" [familyMember]="familyMember"
+                          (close)="viewFamily(null)"
+                          (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"
+                          (inspectFamilyMember)="doInspectFamilyMember($event)"></cnstll-family-list-panel>
 

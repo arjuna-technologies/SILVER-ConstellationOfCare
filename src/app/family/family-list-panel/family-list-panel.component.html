@@ -1,27 +1,28 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
-      <h3>{{family.getFamilyNameLongForm()}}</h3>
+      <h3><span>{{family.getFamilyNameLongForm()}}</span></h3>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div *ngIf="family?.familyMembers.length > 0">
-      <p [style.margin]="'0 8px 5px'">Click to view health record for:</p>
+      <p [style.margin]="'0 8px 5px'" [style.textAlign]="'center'">Click to view health record for:</p>
       <mat-grid-list cols="1" rowHeight="fit" [style.height.px]="40*family.familyMembers.length">
         <mat-grid-tile *ngFor="let familyMember of family.familyMembers">
           <cnstll-family-member-menu-item [familyMember]="familyMember"
                                           (selectFamilyMember)="doSelectFamilyAndFamilyMember($event)"
+                                          (inspectFamilyMember)="doInspectFamilyMember($event)"
                                           [hasConsents]="hasConsents[familyMember.nhsNumber]"></cnstll-family-member-menu-item>
         </mat-grid-tile>
       </mat-grid-list>
     </div>
     <div *ngIf="family?.familyMembers.length == 0">
-      <p>
-        No family members entered yet.<br/>Close this panel and click Edit to add members.
+      <p [style.textAlign]="'center'">>
+        No family members entered yet.<br/>Go back and click Add to add members.
       </p>
     </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button (click)="closePanel()">Back to Case Management Screen</button>
-    </mat-card-actions>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="closePanel()"><span [style.textAlign]="'center'">Back to Case Management Screen</span></button>
+  </mat-card-actions>
 </mat-card>

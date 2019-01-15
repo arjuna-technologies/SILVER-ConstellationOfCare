@@ -1,7 +1,6 @@
 import {FamilyMember} from './family-member';
 
-function isTypedArray(obj)
-{
+function isTypedArray(obj) {
   return !!obj && obj.byteLength !== undefined;
 }
 
@@ -11,9 +10,9 @@ export class Family {
 
   public constructor(dataObject) {
     this.id = dataObject.id;
-    let typedFamilyMembers:FamilyMember[] = [];
+    let typedFamilyMembers: FamilyMember[] = [];
     for (let familyMemberData of dataObject.familyMembers) {
-      let familyMember:FamilyMember = new FamilyMember(familyMemberData);
+      let familyMember: FamilyMember = new FamilyMember(familyMemberData);
       typedFamilyMembers.push(familyMember);
     }
     this.familyMembers = typedFamilyMembers;

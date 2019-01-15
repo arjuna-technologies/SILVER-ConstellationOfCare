@@ -3,27 +3,26 @@
 .mat-menu-item-content,
 .mat-list,
 .mat-list-item,
-.mat-list-item-content
-{
-  padding:0;
+.mat-list-item-content {
+  padding: 0;
 }
 
 .mat-menu-item .mat-icon {
-  margin-right:0px;
+  margin-right: 0px;
 }
 
 mat-icon.personIcon {
-  color:dodgerblue !important;
+  color: dodgerblue !important;
 }
 
 mat-icon.hasConsentsIcon {
-  color:green !important;
+  color: green !important;
 }
 
 mat-icon.noConsentsIcon {
-  color:red !important;
+  color: red !important;
 }
 
 mat-icon.unknownConsentsIcon {
-  color:orange !important;
+  color: orange !important;
 }

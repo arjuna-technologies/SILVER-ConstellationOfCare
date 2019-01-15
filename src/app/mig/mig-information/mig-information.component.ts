@@ -26,7 +26,7 @@ export class MIGInformationComponent implements OnInit, OnChanges {
   public familyMember: FamilyMember;
 
   @Input()
-  public mode: string = 'view';
+  public mode: string = 'cases';
 
   public format: string;
   public loading: boolean;

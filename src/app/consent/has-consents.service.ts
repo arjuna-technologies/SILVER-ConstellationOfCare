@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -7,14 +7,14 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 
 export class HasConsentsService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
-  public hasConsents(nhsNumber: string): Promise<any>
-  {
+  public hasConsents(nhsNumber: string): Promise<any> {
     return this.httpClient.get('http://dataservice-mig.silver.arjuna.com/data/ws/mig/hasconsents?nhs_number=' + nhsNumber)
-        .toPromise()
-        .then((response: any) => Promise.resolve(this.successHandler(nhsNumber, response)))
-        .catch((error) => Promise.resolve(this.errorHandler(nhsNumber, error)));
+      .toPromise()
+      .then((response: any) => Promise.resolve(this.successHandler(nhsNumber, response)))
+      .catch((error) => Promise.resolve(this.errorHandler(nhsNumber, error)));
   }
 
   private successHandler(nhsNumber: string, response: any): any {
@@ -25,8 +25,7 @@ export class HasConsentsService {
     }
   }
 
-  private errorHandler(nhsNumber: string, error: any): any
-  {
+  private errorHandler(nhsNumber: string, error: any): any {
     return {
       nhsNumber: nhsNumber,
       status: 'error',

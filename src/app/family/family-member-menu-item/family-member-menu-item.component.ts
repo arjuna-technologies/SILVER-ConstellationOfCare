@@ -26,6 +26,9 @@ export class FamilyMemberMenuItemComponent implements OnChanges {
   @Output()
   public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  public inspectFamilyMember: EventEmitter<any> = new EventEmitter<any>();
+
   public constructor() {
     this.loading = false;
   }
@@ -35,6 +38,13 @@ export class FamilyMemberMenuItemComponent implements OnChanges {
 
   public doSelectFamilyAndFamilyMember(): void {
     this.selectFamilyAndFamilyMember.emit({
+      family: this.family,
+      familyMember: this.familyMember
+    });
+  }
+
+  public doInspectFamilyMember(): void {
+    this.inspectFamilyMember.emit({
       family: this.family,
       familyMember: this.familyMember
     });

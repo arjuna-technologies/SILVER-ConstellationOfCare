@@ -1,4 +1,14 @@
-import { Component, OnInit, Input, Output, OnChanges, EventEmitter, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  OnChanges,
+  EventEmitter,
+  AfterViewInit,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 
 import {FamilyMember} from '../family-member';
 import {Family} from '../family';
@@ -29,18 +39,18 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   private indexOfCurrentlyEditingFamilyMember: number = -1;
 
   private isCurrentlyEditingFamilyMemberNew() {
-    return (this.indexOfCurrentlyEditingFamilyMember==-1);
+    return (this.indexOfCurrentlyEditingFamilyMember == -1);
   }
 
-  public newFamilyMemberSaved(familyMember:FamilyMember) {
+  public newFamilyMemberSaved(familyMember: FamilyMember) {
     this.familyToEdit.familyMembers.push(familyMember);
     this.currentlyEditingFamilyMember = null;
   }
 
-  public editedFamilyMemberSaved(familyMember:FamilyMember) {
+  public editedFamilyMemberSaved(familyMember: FamilyMember) {
     this.currentlyEditingFamilyMember = null;
-    this.familyToEdit.familyMembers[this.indexOfCurrentlyEditingFamilyMember]=familyMember;
-    this.indexOfCurrentlyEditingFamilyMember=-1;
+    this.familyToEdit.familyMembers[this.indexOfCurrentlyEditingFamilyMember] = familyMember;
+    this.indexOfCurrentlyEditingFamilyMember = -1;
   }
 
   public addFamilyMember() {
@@ -49,16 +59,19 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.indexOfCurrentlyEditingFamilyMember = -1;
   }
 
-  public editFamilyMember(index:number,familyMember:FamilyMember) {
+  public editFamilyMember(index: number, familyMember: FamilyMember) {
     this.currentlyEditingFamilyMember = familyMember;
     this.indexOfCurrentlyEditingFamilyMember = index;
   }
 
-  constructor() { }
+  constructor() {
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
-  ngOnChanges() { }
+  ngOnChanges() {
+  }
 
   ngAfterViewInit() {
     if (this.familyToEdit && this.familyToEdit.id) {
@@ -77,8 +90,8 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   public saveNewFamily(event) {
     let id = this.id.nativeElement.value;
-    let newFamilyMembers:FamilyMember[] = [];
-    for(let member of this.familyToEdit.familyMembers) {
+    let newFamilyMembers: FamilyMember[] = [];
+    for (let member of this.familyToEdit.familyMembers) {
       newFamilyMembers.push(member);
     }
     let newFamily = new Family({
@@ -90,8 +103,8 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   public saveEditedFamily(event) {
     let id = this.id.nativeElement.value;
-    let newFamilyMembers:FamilyMember[] = [];
-    for(let member of this.familyToEdit.familyMembers) {
+    let newFamilyMembers: FamilyMember[] = [];
+    for (let member of this.familyToEdit.familyMembers) {
       newFamilyMembers.push(member);
     }
     let editedFamily = new Family({
@@ -106,7 +119,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
 // TODO clean up the FamilyName HTML element in the form, possibly unneeded checks present now?
 
 /*
-Old code for if we need to make family name editable
+ Old code for if we need to make family name editable
  <p>
  <label for="name">Family Name:</label>
  <input #name disabled="disabled" type="text" id="name" value=""/>

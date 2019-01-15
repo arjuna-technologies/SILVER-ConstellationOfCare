@@ -8,5 +8,10 @@ div.form-row {
 }
 
 .mat-card-header-text {
-  margin:0 !important;
+  margin: 0 auto 10px !important;
+}
+
+.mat-card-actions {
+  justify-content: center;
+  display: flex !important;
 }

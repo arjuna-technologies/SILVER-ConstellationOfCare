@@ -10,7 +10,7 @@ export class Focus {
   public familyMember: FamilyMember;
   public familyIndex: number = null;
   public familyMemberIndex: number = null;
-  public mode: string = 'view';
+  public mode: string = 'cases';
 
   /**
    * All parameters are compulsory
@@ -18,9 +18,9 @@ export class Focus {
    * @param families the current list of families loaded (stored elsewhere)
    * @param family the currently selected family (object) if any
    * @param familyMember the currently selected family member (object) if any
-   * @param mode the mode such as 'view' or 'edit'
+   * @param mode the mode such as 'cases' or 'mig'
    */
-  public constructor(families: Family[], family: Family, familyMember: FamilyMember, mode:string = 'view') {
+  public constructor(families: Family[], family: Family, familyMember: FamilyMember, mode: string = 'cases') {
     this.family = family;
     this.familyMember = familyMember;
     this.familyIndex = this.findFamilyInFamilies(families, family);

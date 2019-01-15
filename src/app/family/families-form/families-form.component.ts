@@ -27,22 +27,19 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   public familyMember: FamilyMember;
 
   @Input()
-  public mode: string = 'view';
+  public mode: string = 'cases';
 
   @Output()
   public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public inspectFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
   public selectFamilyOnly: EventEmitter<Family> = new EventEmitter<Family>();
 
   @Output()
   public updateFamilies: EventEmitter<Family[]> = new EventEmitter<Family[]>();
-
-  @Output()
-  public selectViewMode: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  public selectEditMode: EventEmitter<any> = new EventEmitter<any>();
 
   public getGridRowHeight() {
     let maxFamilyHeight = this.getLargestFamilySize();
@@ -72,14 +69,6 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     return maxFamilySize;
   }
 
-  public doSelectEditMode(): void {
-    this.selectEditMode.emit();
-  }
-
-  public doSelectViewMode(): void {
-    this.selectViewMode.emit();
-  }
-
   public doUpdateFamilies(families): void {
     this.updateFamilies.emit(families);
   }
@@ -95,9 +84,15 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     });
   }
 
+  public doInspectFamilyMember(familyAndFamilyMember): void {
+    this.inspectFamilyMember.emit({
+      family: familyAndFamilyMember.family,
+      familyMember: familyAndFamilyMember.familyMember
+    });
+  }
+
   public viewFamily(family) {
     this.selectFamilyOnly.emit(family);
-    this.doSelectViewMode();
     this.family = family;
   }
 
@@ -125,7 +120,6 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     });
     this.indexOfCurrentlyEditingFamily = -1;
     this.doSelectFamilyOnly(newFamily);
-    this.doSelectEditMode();
   }
 
   public addTestFamilies() {
@@ -181,7 +175,6 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.family = this.families[index];
     this.familyMember = null;
     this.indexOfCurrentlyEditingFamily = index;
-    this.doSelectEditMode();
   }
 
   public newFamilySaved(family: Family) {
@@ -189,7 +182,6 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.families = [family].concat(this.families); // for now, add to start
     //this.families.push(family);
     this.familyDataService.saveFamilies(this.username, this.families);
-    this.doSelectViewMode();
   }
 
   public editedFamilySaved(family: Family) {
@@ -197,7 +189,6 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.families[this.indexOfCurrentlyEditingFamily] = family;
     this.indexOfCurrentlyEditingFamily = -1;
     this.familyDataService.saveFamilies(this.username, this.families);
-    this.doSelectViewMode();
   }
 
   ngOnInit() {
@@ -219,8 +210,6 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
 
   private loadFamiliesSuccess(families: Family[]): void {
     this.families = families;
-    console.log('loaded families and setting to:');
-    console.log(families);
     this.doUpdateFamilies(this.families);
   }
 

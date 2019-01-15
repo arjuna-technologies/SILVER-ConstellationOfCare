@@ -21,14 +21,15 @@ export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
   public familyMember: FamilyMember;
 
   @Input()
-  public mode: string = 'view';
+  public mode: string = 'cases';
 
   public loading: boolean = false;
 
   @Output()
-  public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
+  public inspectFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
-  public constructor() { }
+  public constructor() {
+  }
 
   public ngOnInit() {
     this.doShowFamily();
@@ -43,7 +44,7 @@ export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
   }
 
   public doSelectFamilyAndFamilyMember(familyAndFamilyMember: any): void {
-    this.selectFamilyAndFamilyMember.emit({
+    this.inspectFamilyMember.emit({
       family: familyAndFamilyMember.family,
       familyMember: familyAndFamilyMember.familyMember
     });

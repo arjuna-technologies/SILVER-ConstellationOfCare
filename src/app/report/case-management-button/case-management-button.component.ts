@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import {Component, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
 
 import {Family} from '../../family/family';
 import {FamilyMember} from '../../family/family-member';
@@ -20,7 +20,7 @@ export class CaseManagementButtonComponent {
   private familyMember: FamilyMember = null;
 
   @Input()
-  private mode: string = 'view';
+  private mode: string = 'cases';
 
   @Input()
   private username: string;

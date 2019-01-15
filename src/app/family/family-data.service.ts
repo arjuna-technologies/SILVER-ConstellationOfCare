@@ -9,7 +9,8 @@ export class FamilyDataService {
   private families: Family[] = [];
   private familyMembers: FamilyMember[] = [];
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   private processFamiliesResponse(response): any {
     let familiesData = [];
@@ -45,7 +46,7 @@ export class FamilyDataService {
       if (familyId === current.id)
         family = current;
 
-    console.log('in the FDS, id ',familyId, ' was loaded, family is',family);
+    console.log('in the FDS, id ', familyId, ' was loaded, family is', family);
 
     return new Promise(resolve => resolve(family));
   }

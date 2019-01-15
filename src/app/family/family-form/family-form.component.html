@@ -3,7 +3,7 @@
     <mat-card-title [className]="'familyFormTitle'">
       <h3>
         {{ editing ? 'Editing ' : 'Adding '}} {{ familyToEdit ?
-      familyToEdit.getFamilyNameLongForm() : 'family'}}
+        familyToEdit.getFamilyNameLongForm() : 'family'}}
       </h3>
     </mat-card-title>
   </mat-card-header>
@@ -24,16 +24,18 @@
         </button>
         <mat-divider [inset]="true"></mat-divider>
       </mat-list-item>
-      <cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember" [editing]="!isCurrentlyEditingFamilyMemberNew()"
-                                           [familyMemberToEdit]="currentlyEditingFamilyMember"
-                                           (newFamilyMemberSaver)="newFamilyMemberSaved($event)"
-                                           (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"></cnstll-family-member-details-form>
+      <cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember"
+                                         [editing]="!isCurrentlyEditingFamilyMemberNew()"
+                                         [familyMemberToEdit]="currentlyEditingFamilyMember"
+                                         (newFamilyMemberSaver)="newFamilyMemberSaved($event)"
+                                         (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"></cnstll-family-member-details-form>
     </mat-list>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button (click)="addFamilyMember($event)">Add a new family member...</button>
     <button mat-button (click)="saveFamily($event)">Save {{ familyToEdit ?
-        familyToEdit.getFamilyNameLongForm() : 'family'}}</button>
+      familyToEdit.getFamilyNameLongForm() : 'family'}}
+    </button>
   </mat-card-actions>
 </mat-card>
 

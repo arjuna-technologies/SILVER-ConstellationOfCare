@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Family } from '../../family/family';
-import { FamilyMember } from '../../family/family-member';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Family} from '../../family/family';
+import {FamilyMember} from '../../family/family-member';
 
 @Component({
   selector: 'cnstll-case-management-screen',
@@ -13,7 +13,7 @@ export class CaseManagementScreenComponent implements OnInit {
   public username: string;
 
   @Input()
-  public mode: string = 'view';
+  public mode: string = 'cases';
 
   @Input()
   public families: Family[];
@@ -28,16 +28,20 @@ export class CaseManagementScreenComponent implements OnInit {
   public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
+  public inspectFamilyMember: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
   public selectFamilyOnly: EventEmitter<Family> = new EventEmitter<Family>();
 
   @Output()
   public updateFamilies: EventEmitter<Family[]> = new EventEmitter<Family[]>();
 
-  @Output()
-  public selectEditMode: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  public selectViewMode: EventEmitter<any> = new EventEmitter<any>();
+  public doInspectFamilyMember(familyAndFamilyMember): void {
+    this.selectFamilyAndFamilyMember.emit({
+      family: familyAndFamilyMember.family,
+      familyMember: familyAndFamilyMember.familyMember
+    });
+  }
 
   public doSelectFamilyAndFamilyMember(familyAndFamilyMember): void {
     this.selectFamilyAndFamilyMember.emit({
@@ -50,19 +54,12 @@ export class CaseManagementScreenComponent implements OnInit {
     this.selectFamilyOnly.emit(family);
   }
 
-  public doSelectEditMode(): void {
-    this.selectEditMode.emit();
-  }
-
-  public doSelectViewMode(): void {
-    this.selectViewMode.emit();
-  }
-
   public doUpdateFamilies(families): void {
     this.updateFamilies.emit(families);
   }
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

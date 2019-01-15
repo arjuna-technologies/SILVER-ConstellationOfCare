@@ -10,9 +10,9 @@ import {CaseManagementButtonComponent} from './report/case-management-button/cas
 import {FamilyMember} from './family/family-member';
 import {Family} from './family/family';
 
-import { FamilyMemberDetailsFormComponent } from './family/family-member-details-form/family-member-details-form.component';
+import {FamilyMemberDetailsFormComponent} from './family/family-member-details-form/family-member-details-form.component';
 
-import { MIGDataService } from './mig/mig-data.service';
+import {MIGDataService} from './mig/mig-data.service';
 
 @Component
 ({
@@ -35,7 +35,7 @@ export class AppComponent {
   public family: Family;
 
   @Input()
-  public mode: string = 'view';
+  public mode: string = 'cases';
 
   @ViewChild('familyChooserButton')
   public familyChooserButton: FamilyChooserButtonComponent;
@@ -55,26 +55,30 @@ export class AppComponent {
   public requestTypes: any[];
   public requestTypeCode: string;
 
-
-  public setViewMode() {
-    this.mode = 'view';
+  public setCasesMode() {
+    this.mode = 'cases';
   }
 
-  public setEditMode() {
-    this.mode = 'edit';
+  public setMIGMode() {
+    this.mode = 'mig';
   }
 
   public doSelectFamilyOnly(family) {
-    console.log('doselecting family:',family);
     this.setFamily(family);
-    console.log('doselecting familymember to null');
     this.setFamilyMember(null);
-    console.log('done');
+    this.mode = 'cases';
   }
 
   public doSelectFamilyAndFamilyMember(familyAndFamilyMember) {
     this.setFamily(familyAndFamilyMember.family);
     this.setFamilyMember(familyAndFamilyMember.familyMember);
+    this.mode = 'cases';
+  }
+
+  public doInspectFamilyMember(familyAndFamilyMember) {
+    this.setFamily(familyAndFamilyMember.family);
+    this.setFamilyMember(familyAndFamilyMember.familyMember);
+    this.mode = 'mig';
   }
 
   public setFamily(family) {
@@ -92,7 +96,7 @@ export class AppComponent {
   }
 
   public constructor(private dialog: MatDialog) {
-    this.familyMember=null;
+    this.familyMember = null;
     this.username = '';
     this.org = '';
     this.group = '';
@@ -124,8 +128,8 @@ export class AppComponent {
       this.org = '';
       this.group = '';
 
-      this.family=null;
-      this.familyMember=null;
+      this.family = null;
+      this.familyMember = null;
     }
   }
 
