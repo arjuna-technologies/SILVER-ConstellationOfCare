@@ -55,17 +55,8 @@ export class AppComponent {
   public requestTypes: any[];
   public requestTypeCode: string;
 
-  public setCasesMode() {
-    this.mode = 'cases';
-  }
-
-  public setMIGMode() {
-    this.mode = 'mig';
-  }
-
   public doSelectFamilyOnly(family) {
     this.setFamily(family);
-    this.setFamilyMember(null);
     this.mode = 'cases';
   }
 
@@ -83,7 +74,7 @@ export class AppComponent {
 
   public setFamily(family) {
     this.family = family;
-    this.setFamilyMember(null);
+    this.familyMember = null;
   }
 
   public setFamilyMember(familyMember) {
@@ -92,7 +83,6 @@ export class AppComponent {
 
   public doUpdateFamilies(families) {
     this.families = families;
-    this.doSelectFamilyOnly(null);
   }
 
   public constructor(private dialog: MatDialog) {

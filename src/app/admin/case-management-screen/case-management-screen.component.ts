@@ -37,7 +37,7 @@ export class CaseManagementScreenComponent implements OnInit {
   public updateFamilies: EventEmitter<Family[]> = new EventEmitter<Family[]>();
 
   public doInspectFamilyMember(familyAndFamilyMember): void {
-    this.selectFamilyAndFamilyMember.emit({
+    this.inspectFamilyMember.emit({
       family: familyAndFamilyMember.family,
       familyMember: familyAndFamilyMember.familyMember
     });

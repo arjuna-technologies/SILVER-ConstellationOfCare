@@ -1,14 +1,17 @@
 <button mat-button [matMenuTriggerFor]="personMenu">
-  <mat-icon>person</mat-icon>
-  <span *ngIf="familyMember" title="Click to change person">{{familyMember.getFullName()}}</span>
+  <mat-icon [ngClass]="personIcon">person</mat-icon>
+  <span *ngIf="familyMember" title="Click to change person">{{familyMember?.getFullName()}}</span>
   <span *ngIf="!familyMember">&lt;select person&gt;</span>
 </button>
 <mat-menu #personMenu="matMenu">
   <mat-list>
-    <mat-list-item *ngFor="let familyMember of family.familyMembers; index as index; last as last">
-      <cnstll-family-member-menu-item [familyMember]="familyMember"
-                                      (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"></cnstll-family-member-menu-item>
-      <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+    <mat-list-item *ngFor="let famMember of family.familyMembers; index as index; last as last">
+      <cnstll-family-member-menu-item [family]="family" [familyMember]="famMember"
+                                      (inspectFamilyMember)="doInspectFamilyMember($event)"></cnstll-family-member-menu-item>
+      <mat-divider [inset]="true"></mat-divider>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-button (click)="doSelectFamilyOnly(family)">View whole family</button>
     </mat-list-item>
   </mat-list>
 </mat-menu>

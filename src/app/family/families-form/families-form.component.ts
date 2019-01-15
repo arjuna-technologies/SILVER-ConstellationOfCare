@@ -192,7 +192,9 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.loadFamilies();
+    if (this.families==null || this.families.length==0) {
+      this.loadFamilies();
+    }
   }
 
   ngOnChanges() {
@@ -211,11 +213,13 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   private loadFamiliesSuccess(families: Family[]): void {
     this.families = families;
     this.doUpdateFamilies(this.families);
+    this.doSelectFamilyOnly(null);
   }
 
   private loadFamiliesFailed(error: any): void {
     this.families = [];
     this.doUpdateFamilies(this.families);
+    this.doSelectFamilyOnly(null);
   }
 
 }
