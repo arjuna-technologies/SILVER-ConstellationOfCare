@@ -12,6 +12,7 @@ import {
 
 import {FamilyMember} from '../family-member';
 import {Family} from '../family';
+import {HasConsentsService} from '../../consent/has-consents.service';
 
 @Component({
   selector: 'cnstll-family-form',
@@ -24,7 +25,13 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild('id') id: ElementRef;
 
   @Input()
-  public familyToEdit: Family;
+  public family: Family;
+
+  @Input()
+  public familyMember: FamilyMember;
+
+  @Input()
+  public mode: string = 'cases';
 
   @Input()
   public editing: any = false;
@@ -35,6 +42,77 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   @Output()
   public editedFamilySaver: EventEmitter<Family> = new EventEmitter<Family>();
 
+  @Input()
+  public hasConsents = {}; // for each family member, one of "unknown", "true" or "false"
+
+  @Output()
+  public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public inspectFamilyMember: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public close: EventEmitter<any> = new EventEmitter();
+
+  public doSelectFamilyAndFamilyMember(familyMember: FamilyMember): void {
+    this.selectFamilyAndFamilyMember.emit({
+      family: this.family,
+      familyMember: familyMember
+    });
+  }
+
+  public doInspectFamilyMember(familyMember: FamilyMember): void {
+    this.inspectFamilyMember.emit({
+      family: this.family,
+      familyMember: familyMember
+    });
+  }
+
+  public closePanel() {
+    this.close.emit(null);
+  }
+
+  constructor(private hasConsentsService: HasConsentsService) {
+
+  }
+
+  private hasConsentsSuccessHandler(response) {
+    this.hasConsents[response.nhsNumber] = response.hasConsents;
+  }
+
+  private hasConsentsErrorHandler(response) {
+    console.error(response.error);
+    this.hasConsents[response.nhsNumber] = "unknown";
+  }
+
+  private checkConsents() {
+    for (let familyMember of this.family.familyMembers) {
+      let nhsNumber = parseInt(familyMember.nhsNumber);
+      if (nhsNumber && nhsNumber > 0) {
+        this.hasConsentsService.hasConsents(familyMember.nhsNumber)
+          .then((response: any) => this.hasConsentsSuccessHandler(response))
+          .catch((error) => this.hasConsentsErrorHandler(error));
+      }
+    }
+  }
+
+  ngOnInit() {
+    for (let familyMember of this.family.familyMembers) {
+      this.hasConsents[familyMember.nhsNumber] = "unknown";
+    }
+  }
+
+  ngAfterViewInit() {
+    this.checkConsents();
+    if (this.family && this.family.id) {
+      this.id.nativeElement.value = this.family.id;
+    }
+  }
+
+  ngOnChanges() {
+    this.checkConsents();
+  }
+
   public currentlyEditingFamilyMember: FamilyMember;
   private indexOfCurrentlyEditingFamilyMember: number = -1;
 
@@ -43,13 +121,13 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   public newFamilyMemberSaved(familyMember: FamilyMember) {
-    this.familyToEdit.familyMembers.push(familyMember);
+    this.family.familyMembers.push(familyMember);
     this.currentlyEditingFamilyMember = null;
   }
 
   public editedFamilyMemberSaved(familyMember: FamilyMember) {
     this.currentlyEditingFamilyMember = null;
-    this.familyToEdit.familyMembers[this.indexOfCurrentlyEditingFamilyMember] = familyMember;
+    this.family.familyMembers[this.indexOfCurrentlyEditingFamilyMember] = familyMember;
     this.indexOfCurrentlyEditingFamilyMember = -1;
   }
 
@@ -64,21 +142,6 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.indexOfCurrentlyEditingFamilyMember = index;
   }
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
-  ngOnChanges() {
-  }
-
-  ngAfterViewInit() {
-    if (this.familyToEdit && this.familyToEdit.id) {
-      this.id.nativeElement.value = this.familyToEdit.id;
-    }
-  }
-
   public saveFamily(event) {
     if (this.editing) {
       this.saveEditedFamily(event);
@@ -91,7 +154,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   public saveNewFamily(event) {
     let id = this.id.nativeElement.value;
     let newFamilyMembers: FamilyMember[] = [];
-    for (let member of this.familyToEdit.familyMembers) {
+    for (let member of this.family.familyMembers) {
       newFamilyMembers.push(member);
     }
     let newFamily = new Family({
@@ -104,7 +167,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   public saveEditedFamily(event) {
     let id = this.id.nativeElement.value;
     let newFamilyMembers: FamilyMember[] = [];
-    for (let member of this.familyToEdit.familyMembers) {
+    for (let member of this.family.familyMembers) {
       newFamilyMembers.push(member);
     }
     let editedFamily = new Family({
@@ -115,8 +178,6 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
 }
-
-// TODO clean up the FamilyName HTML element in the form, possibly unneeded checks present now?
 
 /*
  Old code for if we need to make family name editable
