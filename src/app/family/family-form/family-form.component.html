@@ -33,15 +33,18 @@
     <button mat-button (click)="saveFamily($event)">Save {{ family ?
       family.getFamilyNameLongForm() : 'family'}}
     </button>
+    <button mat-button (click)="deleteFamily($event)">Delete the {{family.getFamilyName()}} family</button>
     <button mat-button (click)="closePanel()"><span [style.textAlign]="'center'">Back to Case List</span></button>
   </mat-card-actions>
 </mat-card>
 <cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember&&mode=='cases'"
+                                   [indexOfFamilyMember]="indexOfCurrentlyEditingFamilyMember"
                                    [editing]="!isCurrentlyEditingFamilyMemberNew()"
                                    [familyMemberToEdit]="currentlyEditingFamilyMember"
                                    (newFamilyMemberSaver)="newFamilyMemberSaved($event)"
+                                   (familyMemberDeleter)="deleteFamilyMember($event)"
                                    (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"
                                    (close)="familyMemberClosed($event)"></cnstll-family-member-details-form>
 <cnstll-consent-screen *ngIf="mode=='consent'" [familyMember]="currentlyEditingFamilyMember"
-                       [consented]="hasConsents[currentlyEditingFamilyMember.nhsNumber]"
+                       [consented]="hasConsents[currentlyEditingFamilyMember.nhsNumber]=='true'"
                        (close)="familyMemberClosed($event)"></cnstll-consent-screen>

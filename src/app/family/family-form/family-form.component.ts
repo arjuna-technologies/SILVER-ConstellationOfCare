@@ -28,6 +28,9 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   public family: Family;
 
   @Input()
+  public indexOfFamily: number = -1; // used for deleting the family
+
+  @Input()
   public familyMember: FamilyMember;
 
   @Input()
@@ -41,6 +44,9 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output()
   public editedFamilySaver: EventEmitter<Family> = new EventEmitter<Family>();
+
+  @Output()
+  public familyDeleter: EventEmitter<number> = new EventEmitter<number>();
 
   @Input()
   public hasConsents = {}; // for each family member, one of "unknown", "true" or "false"
@@ -94,6 +100,15 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
           .catch((error) => this.hasConsentsErrorHandler(error));
       }
     }
+  }
+
+  private deleteFamily() {
+    this.familyDeleter.emit(this.indexOfFamily);
+  }
+
+  private deleteFamilyMember(index) {
+    this.family.familyMembers.splice(index);
+    this.editedFamilySaver.emit(this.family);
   }
 
   ngOnInit() {

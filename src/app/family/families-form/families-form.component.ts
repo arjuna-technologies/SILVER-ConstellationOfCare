@@ -168,6 +168,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
       });
       this.families.push(family);
     }
+    this.familyDataService.saveFamilies(this.username, this.families);
   }
 
   public editFamily(index) {
@@ -175,6 +176,12 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.family = this.families[index];
     this.familyMember = null;
     this.indexOfCurrentlyEditingFamily = index;
+  }
+
+  public deleteFamily(indexOfFamilyToDelete) {
+    this.families.splice(indexOfFamilyToDelete, 1);
+    this.familyDataService.saveFamilies(this.username, this.families);
+    this.doSelectFamilyOnly(null);
   }
 
   public newFamilySaved(family: Family) {

@@ -2,6 +2,7 @@
                     (close)="viewFamily(null)"
                     (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"
                     (inspectFamilyMember)="doInspectFamilyMember($event)"
+                    (familyDeleter)="deleteFamily($event)"
                     [editing]="!isCurrentFamilyNew()" (newFamilySaver)="newFamilySaved($event)"
                     (editedFamilySaver)="editedFamilySaved($event)"></cnstll-family-form>
 <mat-card *ngIf="!family">

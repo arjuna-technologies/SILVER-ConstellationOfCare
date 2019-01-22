@@ -112,11 +112,17 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   @Input()
   public familyMemberToEdit: FamilyMember;
 
+  @Input()
+  public indexOfFamilyMember: number = -1; //used for delete
+
   @Output()
   public newFamilyMemberSaver: EventEmitter<FamilyMember> = new EventEmitter<FamilyMember>();
 
   @Output()
   public editedFamilyMemberSaver: EventEmitter<FamilyMember> = new EventEmitter<FamilyMember>();
+
+  @Output()
+  public familyMemberDeleter: EventEmitter<number> = new EventEmitter<number>();
 
   @Output()
   public close: EventEmitter<any> = new EventEmitter();
@@ -224,6 +230,10 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
 
   private migPatientTraceFailed(patientTrace: MIGPatientTrace): void {
     this.nhsMatchesForDisplay = [];
+  }
+
+  public deleteFamilyMember() {
+    this.familyMemberDeleter.emit(this.indexOfFamilyMember);
   }
 
   public saveNewFamilyMember(event) {

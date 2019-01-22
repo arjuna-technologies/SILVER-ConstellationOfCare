@@ -21,6 +21,7 @@ export class ConsentScreenComponent implements OnInit {
   constructor(private consentsService: ConsentsService) { }
 
   ngOnInit() {
+    console.log('initialising consent screen, with consented equal to '+this.consented);
   }
 
   private recordConsent() {
