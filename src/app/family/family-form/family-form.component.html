@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="!currentlyEditingFamilyMember&&mode=='cases'">
   <mat-card-header>
     <mat-card-title [className]="'familyFormTitle'">
       <h3><span>{{family.getFamilyNameLongForm()}}</span></h3>
@@ -19,15 +19,13 @@
                                         (inspectFamilyMember)="doInspectFamilyMember($event)"
                                         [hasConsents]="hasConsents[familyMember.nhsNumber]"></cnstll-family-member-menu-item>
         <button mat-button [attr.data-index]="index2" class="family-member-edit-button"
-                (click)="editFamilyMember(index2,familyMember)">Edit
+                (click)="editFamilyMember(index2,familyMember)">Edit {{familyMember.firstName}}'s Details
+        </button>
+        <button mat-button [attr.data-index]="index2" class="family-member-consent-button"
+                (click)="editConsent(index2,familyMember)">Edit {{familyMember.firstName}}'s Consent
         </button>
         <mat-divider [inset]="true"></mat-divider>
       </mat-list-item>
-      <cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember"
-                                         [editing]="!isCurrentlyEditingFamilyMemberNew()"
-                                         [familyMemberToEdit]="currentlyEditingFamilyMember"
-                                         (newFamilyMemberSaver)="newFamilyMemberSaved($event)"
-                                         (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"></cnstll-family-member-details-form>
     </mat-list>
   </mat-card-content>
   <mat-card-actions>
@@ -38,4 +36,12 @@
     <button mat-button (click)="closePanel()"><span [style.textAlign]="'center'">Back to Case List</span></button>
   </mat-card-actions>
 </mat-card>
-
+<cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember&&mode=='cases'"
+                                   [editing]="!isCurrentlyEditingFamilyMemberNew()"
+                                   [familyMemberToEdit]="currentlyEditingFamilyMember"
+                                   (newFamilyMemberSaver)="newFamilyMemberSaved($event)"
+                                   (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"
+                                   (close)="familyMemberClosed($event)"></cnstll-family-member-details-form>
+<cnstll-consent-screen *ngIf="mode=='consent'" [familyMember]="currentlyEditingFamilyMember"
+                       [consented]="hasConsents[currentlyEditingFamilyMember.nhsNumber]"
+                       (close)="familyMemberClosed($event)"></cnstll-consent-screen>

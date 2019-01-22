@@ -78,10 +78,10 @@ export class FamilyListPanelComponent implements OnInit, OnChanges {
     });
   }
 
-  public doInspectFamilyMember(familyMember: FamilyMember): void {
+  public doInspectFamilyMember(familyAndFamilyMember): void {
     this.inspectFamilyMember.emit({
-      family: this.family,
-      familyMember: familyMember
+      family: familyAndFamilyMember.family,
+      familyMember: familyAndFamilyMember.familyMember
     });
   }
 

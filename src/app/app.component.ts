@@ -61,24 +61,23 @@ export class AppComponent {
   }
 
   public doSelectFamilyAndFamilyMember(familyAndFamilyMember) {
-    this.setFamily(familyAndFamilyMember.family);
-    this.setFamilyMember(familyAndFamilyMember.familyMember);
+    this.setFamilyAndFamilyMember(familyAndFamilyMember);
     this.mode = 'cases';
   }
 
   public doInspectFamilyMember(familyAndFamilyMember) {
-    this.setFamily(familyAndFamilyMember.family);
-    this.setFamilyMember(familyAndFamilyMember.familyMember);
+    this.setFamilyAndFamilyMember(familyAndFamilyMember);
     this.mode = 'mig';
   }
 
-  public setFamily(family) {
-    this.family = family;
-    this.familyMember = null;
+  public setFamilyAndFamilyMember(familyAndFamilyMember) {
+    this.family = familyAndFamilyMember.family;
+    this.familyMember = familyAndFamilyMember.familyMember;
   }
 
-  public setFamilyMember(familyMember) {
-    this.familyMember = familyMember;
+  public setFamily(family:Family) {
+    this.family = family;
+    this.familyMember = null;
   }
 
   public doUpdateFamilies(families) {

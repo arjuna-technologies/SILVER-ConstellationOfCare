@@ -9,7 +9,7 @@
       <p [style.margin]="'0 8px 5px'" [style.textAlign]="'center'">Click to view health record for:</p>
       <mat-grid-list cols="1" rowHeight="fit" [style.height.px]="40*family.familyMembers.length">
         <mat-grid-tile *ngFor="let familyMember of family.familyMembers">
-          <cnstll-family-member-menu-item [familyMember]="familyMember"
+          <cnstll-family-member-menu-item [family]="family" [familyMember]="familyMember"
                                           (selectFamilyMember)="doSelectFamilyAndFamilyMember($event)"
                                           (inspectFamilyMember)="doInspectFamilyMember($event)"
                                           [hasConsents]="hasConsents[familyMember.nhsNumber]"></cnstll-family-member-menu-item>

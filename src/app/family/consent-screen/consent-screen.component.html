@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title [className]="'familyFormTitle'">
+      <h3 *ngIf="!consented">{{familyMember.getFullName()}} has <span class='consent-status not-consented'>not been consented</span>.
+      </h3>
+      <h3 *ngIf="consented">{{familyMember.getFullName()}} has <span class='consent-status consented'>consented</span> to
+        the following statement:</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <h4>Purpose</h4>
+    <p>Your worker from the Early Help team will be able to see your records held by your GP surgery.
+      It will help them to know about any illnesses or problems you have.
+      They can talk to you about this if you wish, and think about how they can support you and your family.</p>
+    <h4>Details</h4>
+    <ul>
+      <li>Illnesses or problems you have talked to medical staff at your GP surgery about.</li>
+      <li>Details of when you have seen the doctor or nurse, and visits you have booked and did not go to.</li>
+      <li>Names and roles of health staff you have seen.</li>
+      <li>Name and roles of health staff your details have been sent to if you need further care, and the reason why you
+        need further care.
+      </li>
+    </ul>
+    <h4>Statement</h4>
+    <p>
+      I am happy for my records held by my GP surgery to be viewed by Gateshead Council to inform the care my family and
+      I receive from Gateshead Council Early Help services.
+      I understand that I can change my mind and choose not to give consent at any time, by informing my support worker.
+      They will record my choice, which will stop any records being viewed in the future.
+    </p>
+    <h4>Support Worker Agreement</h4>
+    <p>
+      I, [Support Worker Name], confirm that in recording the consent for {{familyMember.getFullName()}} by pressing the
+      'Record Consent' button below, that this individual has read or been read the entirety of the text above and has
+      given their consent verbally or writing.
+      I also confirm that should this individual inform me that they wish to revoke their consent for this purpose, I
+      will return to this page and update their consent using the 'Revoke Consent' button below, at my earliest
+      convenience.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <div [style.textAlign]="'center'">
+      <button mat-button id='record-consent' [disabled]="!familyMember.nhsNumber" (click)="recordConsent()">Record
+        Consent for {{familyMember.getFullName()}}
+      </button>
+      <button mat-button id='revoke-consent' [disabled]="!familyMember.nhsNumber" (click)="revokeConsent()">Revoke
+        Consent for {{familyMember.getFullName()}}
+      </button>
+      <button mat-button (click)="closePanel()"><span>Back to Family</span></button>
+    </div>
+  </mat-card-actions>
+</mat-card>

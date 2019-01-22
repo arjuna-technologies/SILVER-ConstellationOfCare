@@ -26,9 +26,6 @@ export class FamilyMemberChooserButtonComponent implements OnInit, OnChanges {
   public loading: boolean = false;
 
   @Output()
-  public selectFamilyAndFamilyMember: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
   public selectFamilyOnly: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()

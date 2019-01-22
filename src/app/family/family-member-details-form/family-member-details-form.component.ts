@@ -14,7 +14,6 @@ import {
 import {FamilyMember} from '../family-member';
 import {MIGPatientTrace} from '../../mig/mig-patienttrace';
 import {MIGDataService} from '../../mig/mig-data.service';
-import {ConsentsService} from '../../consent/consents.service';
 
 export interface Gender {
   value: string;
@@ -105,6 +104,9 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   nhsMatchesForDisplay: MatchForDisplay[] = [];
 
   @Input()
+  public mode: string = 'cases'; // could also be 'consent'
+
+  @Input()
   public editing: any = false;
 
   @Input()
@@ -116,7 +118,10 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   @Output()
   public editedFamilyMemberSaver: EventEmitter<FamilyMember> = new EventEmitter<FamilyMember>();
 
-  constructor(private migDataService: MIGDataService, private consentsService: ConsentsService) {
+  @Output()
+  public close: EventEmitter<any> = new EventEmitter();
+
+  constructor(private migDataService: MIGDataService) {
   }
 
   ngOnInit() {
@@ -196,17 +201,6 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     }
   }
 
-  private recordConsent() {
-    let nhsNumber = this.familyMemberToEdit.nhsNumber;
-    this.consentsService.createConsentRecord(nhsNumber);
-  }
-
-  private revokeConsent() {
-    let nhsNumber = this.familyMemberToEdit.nhsNumber;
-    this.consentsService.revokeConsentRecord(nhsNumber);
-  }
-
-
   private processPatientTraceResults(patientTraceResults: MIGPatientTrace): void {
     let ptr = patientTraceResults;
     if (ptr.status && ptr.patientMatchs.length > 0) {
@@ -273,4 +267,9 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
     this.editedFamilyMemberSaver.emit(editedFamilyMember);
     this.doPatientTrace();
   }
+
+  public closePanel() {
+    this.close.emit(null);
+  }
+
 }

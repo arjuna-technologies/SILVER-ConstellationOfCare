@@ -55,6 +55,7 @@ import { FamilyFormComponent } from './family/family-form/family-form.component'
 import { FamiliesFormComponent } from './family/families-form/families-form.component';
 import { CaseManagementScreenComponent } from './admin/case-management-screen/case-management-screen.component';
 import { FamilyListPanelComponent } from './family/family-list-panel/family-list-panel.component';
+import { ConsentScreenComponent } from './family/consent-screen/consent-screen.component';
 
 @NgModule
 ({
@@ -79,6 +80,7 @@ import { FamilyListPanelComponent } from './family/family-list-panel/family-list
         FamiliesFormComponent,
         CaseManagementScreenComponent,
         FamilyListPanelComponent,
+        ConsentScreenComponent,
     ],
     imports:
     [

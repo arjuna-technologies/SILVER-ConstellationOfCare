@@ -61,10 +61,10 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     });
   }
 
-  public doInspectFamilyMember(familyMember: FamilyMember): void {
+  public doInspectFamilyMember(familyAndFamilyMember): void {
     this.inspectFamilyMember.emit({
-      family: this.family,
-      familyMember: familyMember
+      family: familyAndFamilyMember.family,
+      familyMember: familyAndFamilyMember.familyMember
     });
   }
 
@@ -131,6 +131,13 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.indexOfCurrentlyEditingFamilyMember = -1;
   }
 
+  public familyMemberClosed() {
+    this.currentlyEditingFamilyMember = null;
+    this.indexOfCurrentlyEditingFamilyMember = -1;
+    this.mode='cases';
+    this.checkConsents();
+  }
+
   public addFamilyMember() {
     let newFamilyMember = new FamilyMember({});
     this.currentlyEditingFamilyMember = newFamilyMember;
@@ -140,6 +147,12 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   public editFamilyMember(index: number, familyMember: FamilyMember) {
     this.currentlyEditingFamilyMember = familyMember;
     this.indexOfCurrentlyEditingFamilyMember = index;
+  }
+
+  public editConsent(index: number, familyMember: FamilyMember) {
+    this.currentlyEditingFamilyMember = familyMember;
+    this.indexOfCurrentlyEditingFamilyMember = index;
+    this.mode='consent';
   }
 
   public saveFamily(event) {
