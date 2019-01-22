@@ -3,3 +3,19 @@ span.closeCard:hover {
   cursor: pointer;
 }
 
+
+mat-icon.personIcon {
+  color: dodgerblue !important;
+}
+
+mat-icon.hasConsentsIcon {
+  color: green !important;
+}
+
+mat-icon.noConsentsIcon {
+  color: red !important;
+}
+
+mat-icon.unknownConsentsIcon {
+  color: orange !important;
+}

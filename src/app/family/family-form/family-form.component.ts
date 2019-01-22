@@ -119,9 +119,6 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngAfterViewInit() {
     this.checkConsents();
-    if (this.family && this.family.id) {
-      this.id.nativeElement.value = this.family.id;
-    }
   }
 
   ngOnChanges() {

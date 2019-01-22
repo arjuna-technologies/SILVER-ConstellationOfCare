@@ -14,6 +14,7 @@ div.form-row {
 .mat-card-actions {
   justify-content: center;
   display: flex !important;
+  padding-bottom:10px;
 }
 
 .consented {
@@ -23,3 +24,9 @@ div.form-row {
 .not-consented {
   color: #d1001c;
 }
+
+button.mat-stroked-button {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+

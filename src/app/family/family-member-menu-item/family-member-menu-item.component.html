@@ -1,15 +1,6 @@
 <div>
   <button mat-menu-item (click)="doInspectFamilyMember()">
     <mat-icon ngClass="personIcon">person</mat-icon>
-    <mat-icon *ngIf="hasConsents=='unknown'" ngClass="unknownConsentsIcon" title="Checking for consent...">
-      cached
-    </mat-icon>
-    <mat-icon *ngIf="hasConsents=='false'" ngClass="noConsentsIcon" title="No consents recorded.">
-      not_interested
-    </mat-icon>
-    <mat-icon *ngIf="hasConsents=='true'" ngClass="hasConsentsIcon" title="Consents have been recorded.">
-      check
-    </mat-icon>
     <span> {{familyMember?.getFullName()}}</span>
   </button>
 </div>

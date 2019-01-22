@@ -15,11 +15,11 @@
   </mat-card>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="doLogin(username.value, password.value)">
+  <button mat-stroked-button color="primary" (click)="doLogin(username.value, password.value)">
     <mat-icon>person</mat-icon>
     <span>Login</span>
   </button>
-  <button mat-button mat-dialog-close>
+  <button mat-stroked-button color="primary" mat-dialog-close>
     <mat-icon>clear</mat-icon>
     <span>Cancel</span>
   </button>
