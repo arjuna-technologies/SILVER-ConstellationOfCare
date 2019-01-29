@@ -13,17 +13,20 @@
           <mat-tab label="Timeline">
             <cnstll-health-timeline [events]="information.events"></cnstll-health-timeline>
           </mat-tab>
-          <mat-tab label="Raw Data">
-            <cnstll-mig-healthdomain [format]="format" [information]="information"></cnstll-mig-healthdomain>
+          <mat-tab label="Medical Event Log">
+            <cnstll-mig-healthdomain-unified-events [unified_events]="unified_events"></cnstll-mig-healthdomain-unified-events>
+          </mat-tab>
+          <mat-tab label="Documents">
+            <cnstll-mig-healthdomain-documents [format]="format" [documents]="information.documents"></cnstll-mig-healthdomain-documents>
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>
       <mat-card-content *ngIf="information && (information.status === 'No Consent')">
-        <h3>No Consent has been given.</h3>
+        <h3>No Consent has been given. Please go back and ensure consent for this case has been sought and recorded for this individual.</h3>
       </mat-card-content>
 
       <mat-card-content *ngIf="information && (information.status === 'Failed')">
-        <h3>The request for information has failed.</h3>
+        <h3>The request for information has failed. If this problem persists, please contact the SILVER project team.</h3>
       </mat-card-content>
     </mat-drawer-content>
     <mat-drawer *ngIf="information && familyMember" opened #constellationDrawer position="end" mode="side">

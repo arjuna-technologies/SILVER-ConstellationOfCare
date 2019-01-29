@@ -41,6 +41,8 @@ import { MIGHealthDomainEncountersComponent }   from './mig/mig-healthdomain-enc
 import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-problems/mig-healthdomain-problems.component';
 import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
 import { MIGHealthDomainDocumentsComponent }    from './mig/mig-healthdomain-documents/mig-healthdomain-documents.component';
+import { MIGHealthDomainUnifiedEventsComponent } from './mig/mig-healthdomain-unified-events/mig-healthdomain-unified-events.component';
+
 import { ConstellationComponent }               from './report/constellation/constellation.component';
 import { FamilyMemberDetailsFormComponent }     from './family/family-member-details-form/family-member-details-form.component';
 
@@ -72,6 +74,7 @@ import { ConsentScreenComponent } from './family/consent-screen/consent-screen.c
         MIGHealthDomainProblemsComponent,
         MIGHealthDomainEventsComponent,
         MIGHealthDomainDocumentsComponent,
+        MIGHealthDomainUnifiedEventsComponent,
         ConstellationComponent,
         HealthTimelineComponent,
         CaseManagementButtonComponent,
@@ -80,7 +83,7 @@ import { ConsentScreenComponent } from './family/consent-screen/consent-screen.c
         FamiliesFormComponent,
         CaseManagementScreenComponent,
         FamilyListPanelComponent,
-        ConsentScreenComponent,
+        ConsentScreenComponent
     ],
     imports:
     [
