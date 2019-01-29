@@ -147,14 +147,11 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
       if (event.description) {
         label = `[${event.code}] ${event.description}`;
       }
-      if (event.code=="1371") {
-        console.dir(event);
-      }
       let user = event.authorisingUserInRole;
       let endTimeToShow = event.endTime;
-      if (endTimeToShow - event.startTime < 14) {
+      if (+endTimeToShow - +event.startTime < 14) {
         // if less than two weeks long, make it two weeks long (so it shows up)
-        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), event.startTime.getDate() + 14);
+        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + 14);
       }
       let times = [{"starting_time": event.startTime, "ending_time": endTimeToShow}];
       main.processedData.push({user: user, name: name, label: label, times: times});

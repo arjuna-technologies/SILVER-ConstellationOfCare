@@ -35,13 +35,13 @@ export class MIGUnifiedEvent {
     this.significance = significance;
   }
 
-  public static createFromEncounter(migInformationIndexService: MIGInformationIndexService,encounter: MIGEncounter): MIGUnifiedEvent[] {
+  public static createFromEncounter(migInformationIndexService: MIGInformationIndexService, encounter: MIGEncounter): MIGUnifiedEvent[] {
     let unified_events: MIGUnifiedEvent[] = [];
-    let done_event_ids : string[] = [];
+    let done_event_ids: string[] = [];
     for (let component of encounter.components) {
       let encounter_event_id = component.event;
       // only add events we've not already added for this encounter
-      if (done_event_ids.indexOf(encounter_event_id)==-1) {
+      if (done_event_ids.indexOf(encounter_event_id) == -1) {
         done_event_ids.push(encounter_event_id);
         let event = migInformationIndexService.eventMap.get(encounter_event_id);
         let id = encounter.id + "_" + encounter_event_id;
@@ -61,8 +61,8 @@ export class MIGUnifiedEvent {
           hideEndTime = false;
         }
         let availabilityTime = new Date(event.availabilityTimeStamp);
-        let authorisingUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService,event.authorisingUserInRole);
-        let enteredByUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService,event.enteredByUserInRole);
+        let authorisingUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService, event.authorisingUserInRole);
+        let enteredByUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService, event.enteredByUserInRole);
         let code = event.code ? event.code["code"] : null;
         let description = event.code ? event.code["displayName"] : null;
         if (!description) {
@@ -79,54 +79,10 @@ export class MIGUnifiedEvent {
     return unified_events;
   }
 
-  public static patientMapping(migInformationIndexService: MIGInformationIndexService,patientId: string): string {
-    return migInformationIndexService.basicPatientMapping(patientId);
-  }
-
-  public static organisationMapping(migInformationIndexService: MIGInformationIndexService,organisationId: string): string {
-    let org = migInformationIndexService.basicOrganisationMapping(organisationId);
-    if (org == "EMISWebCR1 50005") {
-      org = "EMIS Test Org";
-    }
-    return org;
-  }
-
-  public static userInRoleMapping(migInformationIndexService: MIGInformationIndexService, userInRoleId: string): string {
-    return migInformationIndexService.basicUserInRoleMapping(userInRoleId);
-  }
-
-  public static significanceMapping(significance: string): string
-  {
-    if (significance == 'S')
-      return 'Significant';
-    else if (significance == 'M')
-      return 'Minor';
-    else
-      return 'Unknown';
-  }
-
-  /**
-   *
-   * @param startTime the start date time to add onto
-   * @param durationString the string - expects a string such as "28 D"
-   */
-  private static getDateFromDuration(startTime:Date,durationString:string) {
-    let endTime = null;
-    if (durationString) {
-      let parts = durationString.split(" ");
-      if (parts.length == 2 && parts[1].toUpperCase() == "D") {
-        if (parseInt(parts[0]) > 0) {
-          endTime = new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDate() + parseInt(parts[0]));
-        }
-      }
-    }
-    return endTime;
-  }
-
-  public static createFromProblem(migInformationIndexService: MIGInformationIndexService,problem: MIGProblem): MIGUnifiedEvent {
+  public static createFromProblem(migInformationIndexService: MIGInformationIndexService, problem: MIGProblem): MIGUnifiedEvent {
     let id = problem.id;
     let event = migInformationIndexService.eventMap.get(id);
-    let patient = MIGUnifiedEvent.patientMapping(migInformationIndexService,event.patient);
+    let patient = MIGUnifiedEvent.patientMapping(migInformationIndexService, event.patient);
     let dataType = problem.status == 'A' ? "Active Problem" : (problem.status == 'I' ? "Inactive Problem" : `Problem (${problem.status})`);
     let eventType = event.eventType;
     let startTime = new Date(event.effectiveTime);
@@ -142,7 +98,7 @@ export class MIGUnifiedEvent {
     // if problem has duration set but no end time, use that to calculate end time - if we can.
     // assumed format = "nn D" e.g. "28 D".
     // if can't interpret, rely on the fallbacks above
-    let time = MIGUnifiedEvent.getDateFromDuration(startTime,problem.expectedDuration)
+    let time = MIGUnifiedEvent.getDateFromDuration(startTime, problem.expectedDuration)
     if (time) {
       endTime = time;
       hideEndTime = false;
@@ -154,13 +110,57 @@ export class MIGUnifiedEvent {
     }
 
     let availabilityTime = new Date(event.availabilityTimeStamp);
-    let authorisingUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService,event.authorisingUserInRole);
-    let enteredByUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService,event.enteredByUserInRole);
+    let authorisingUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService, event.authorisingUserInRole);
+    let enteredByUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService, event.enteredByUserInRole);
     let code = event.code["code"];
     let description = event.code["displayName"];
-    let organisation = MIGUnifiedEvent.organisationMapping(migInformationIndexService,event.organisation);
+    let organisation = MIGUnifiedEvent.organisationMapping(migInformationIndexService, event.organisation);
     let significance = MIGUnifiedEvent.significanceMapping(problem.significance);
     let unifiedEvent = new MIGUnifiedEvent(id, patient, dataType, eventType, startTime, endTime, hideEndTime, availabilityTime, authorisingUserInRole, enteredByUserInRole, code, description, organisation, significance);
     return unifiedEvent;
+  }
+
+
+  public static patientMapping(migInformationIndexService: MIGInformationIndexService, patientId: string): string {
+    return migInformationIndexService.basicPatientMapping(patientId);
+  }
+
+  public static organisationMapping(migInformationIndexService: MIGInformationIndexService, organisationId: string): string {
+    let org = migInformationIndexService.basicOrganisationMapping(organisationId);
+    if (org == "EMISWebCR1 50005") {
+      org = "EMIS Test Org";
+    }
+    return org;
+  }
+
+  public static userInRoleMapping(migInformationIndexService: MIGInformationIndexService, userInRoleId: string): string {
+    return migInformationIndexService.basicUserInRoleMapping(userInRoleId);
+  }
+
+  public static significanceMapping(significance: string): string {
+    if (significance == 'S')
+      return 'Significant';
+    else if (significance == 'M')
+      return 'Minor';
+    else
+      return 'Unknown';
+  }
+
+  /**
+   *
+   * @param startTime the start date time to add onto
+   * @param durationString the string - expects a string such as "28 D"
+   */
+  private static getDateFromDuration(startTime: Date, durationString: string) {
+    let endTime = null;
+    if (durationString) {
+      let parts = durationString.split(" ");
+      if (parts.length == 2 && parts[1].toUpperCase() == "D") {
+        if (parseInt(parts[0]) > 0) {
+          endTime = new Date(startTime.getFullYear(), startTime.getMonth(), +startTime.getDate() + parseInt(parts[0]));
+        }
+      }
+    }
+    return endTime;
   }
 }
