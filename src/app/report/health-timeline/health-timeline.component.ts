@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import * as d3timelines from 'd3-timelines';
 import * as d3 from 'd3';
 
-import {MIGEvent} from '../../mig/mig-event';
+import {MIGUnifiedEvent} from '../../mig/mig-unified-event';
 import {MIGInformationIndexService} from '../../mig/mig-information-index.service';
 import {MatCheckbox} from "@angular/material";
 
@@ -16,7 +16,7 @@ let width = 250;
 export class HealthTimelineComponent implements OnInit, OnChanges {
   private chart: any;
   private svg: any;
-  private width: any = 1000;
+  private width: any = 1200;
   private height: any = 700;
   private safeToDraw = false;
   private stillNeedToDraw = false;
@@ -37,8 +37,8 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
     }
   }
 
-  @Input('events')
-  private events: MIGEvent[];
+  @Input('unified_events')
+  private unified_events: MIGUnifiedEvent[];
 
   public includeInactive: boolean;
 
@@ -141,22 +141,23 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
   private processEventDataForChart(): void {
     var main = this;
     main.processedData = [];
-    this.events.forEach(function (event, index) {
-      let problem = main.migInformationIndexService.problemMap.get(event.id);
-      if (problem) {
-        if (problem.status == 'A' || (main.includeInactive && problem.status == 'I')) {
-          let name = event.displayTerm;
-          let label = event.displayTerm;
-          let startTime = new Date(event.effectiveTime);
-          let user = event.authorisingUserInRole;
-          let endTime = new Date();
-          if (problem.endTime) {
-            endTime = new Date(problem.endTime);
-          }
-          let times = [{"starting_time": startTime, "ending_time": endTime}];
-          main.processedData.push({user: user, name: name, label: label, times: times});
-        }
+    this.unified_events.forEach(function (event, index) {
+      let name = event.code;
+      let label = event.dataType;
+      if (event.description) {
+        label = `[${event.code}] ${event.description}`;
       }
+      if (event.code=="1371") {
+        console.dir(event);
+      }
+      let user = event.authorisingUserInRole;
+      let endTimeToShow = event.endTime;
+      if (endTimeToShow - event.startTime < 14) {
+        // if less than two weeks long, make it two weeks long (so it shows up)
+        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), event.startTime.getDate() + 14);
+      }
+      let times = [{"starting_time": event.startTime, "ending_time": endTimeToShow}];
+      main.processedData.push({user: user, name: name, label: label, times: times});
     });
   }
 

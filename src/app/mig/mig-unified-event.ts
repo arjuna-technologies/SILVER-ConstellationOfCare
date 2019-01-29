@@ -65,6 +65,11 @@ export class MIGUnifiedEvent {
         let enteredByUserInRole = MIGUnifiedEvent.userInRoleMapping(migInformationIndexService,event.enteredByUserInRole);
         let code = event.code ? event.code["code"] : null;
         let description = event.code ? event.code["displayName"] : null;
+        if (!description) {
+          // if nothing on the event, use the encounter's component entry
+          code = component.heading["code"];
+          description = component.heading["displayName"];
+        }
         let organisation = MIGUnifiedEvent.organisationMapping(migInformationIndexService, event.organisation); // use event org instead of set from encounter
         let significance = null;
         let unified_event = new MIGUnifiedEvent(id, patient, dataType, eventType, startTime, endTime, hideEndTime, availabilityTime, authorisingUserInRole, enteredByUserInRole, code, description, organisation, significance);

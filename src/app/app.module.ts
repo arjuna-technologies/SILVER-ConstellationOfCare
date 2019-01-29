@@ -36,10 +36,6 @@ import { FamilyChooserButtonComponent }         from './family/family-chooser-bu
 import { FamilyMemberChooserButtonComponent }   from './family/family-member-chooser-button/family-member-chooser-button.component';
 import { FamilyMemberMenuItemComponent }        from './family/family-member-menu-item/family-member-menu-item.component';
 import { MIGInformationComponent }              from './mig/mig-information/mig-information.component';
-import { MIGHealthDomainComponent }             from './mig/mig-healthdomain/mig-healthdomain.component';
-import { MIGHealthDomainEncountersComponent }   from './mig/mig-healthdomain-encounters/mig-healthdomain-encounters.component';
-import { MIGHealthDomainProblemsComponent }     from './mig/mig-healthdomain-problems/mig-healthdomain-problems.component';
-import { MIGHealthDomainEventsComponent }       from './mig/mig-healthdomain-events/mig-healthdomain-events.component';
 import { MIGHealthDomainDocumentsComponent }    from './mig/mig-healthdomain-documents/mig-healthdomain-documents.component';
 import { MIGHealthDomainUnifiedEventsComponent } from './mig/mig-healthdomain-unified-events/mig-healthdomain-unified-events.component';
 
@@ -69,10 +65,6 @@ import { ConsentScreenComponent } from './family/consent-screen/consent-screen.c
         FamilyMemberChooserButtonComponent,
         FamilyMemberMenuItemComponent,
         MIGInformationComponent,
-        MIGHealthDomainComponent,
-        MIGHealthDomainEncountersComponent,
-        MIGHealthDomainProblemsComponent,
-        MIGHealthDomainEventsComponent,
         MIGHealthDomainDocumentsComponent,
         MIGHealthDomainUnifiedEventsComponent,
         ConstellationComponent,
