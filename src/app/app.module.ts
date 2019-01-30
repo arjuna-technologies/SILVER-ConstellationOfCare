@@ -47,6 +47,7 @@ import { FamilyDataService }          from './family/family-data.service';
 import { MIGDataService }             from './mig/mig-data.service';
 import { MIGInformationIndexService } from './mig/mig-information-index.service';
 import { HealthTimelineComponent } from './report/health-timeline/health-timeline.component';
+import { MIGHealthTimelineComponent } from './report/mig-health-timeline/mig-health-timeline.component';
 import { StorageService }             from './storage.service';
 import { CaseManagementButtonComponent } from './report/case-management-button/case-management-button.component';
 import { FamilyFormComponent } from './family/family-form/family-form.component';
@@ -69,6 +70,7 @@ import { ConsentScreenComponent } from './family/consent-screen/consent-screen.c
         MIGHealthDomainUnifiedEventsComponent,
         ConstellationComponent,
         HealthTimelineComponent,
+        MIGHealthTimelineComponent,
         CaseManagementButtonComponent,
         FamilyMemberDetailsFormComponent,
         FamilyFormComponent,

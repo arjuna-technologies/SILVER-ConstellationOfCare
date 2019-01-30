@@ -1,6 +1,6 @@
 <mat-table #constellationTable [dataSource]="constellationDataSource">
   <ng-container matColumnDef="data">
-    <mat-header-cell *matHeaderCellDef>Constellation of Care</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Recently Involved Medical Professionals</mat-header-cell>
     <mat-cell *matCellDef="let reportDataRow" [attr.data-id]="reportDataRow.id">
       <div *ngIf="reportDataRow.personName">
         <span class="name">{{reportDataRow.personName}}</span>

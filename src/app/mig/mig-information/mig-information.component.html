@@ -11,7 +11,7 @@
       <mat-card-content *ngIf="information && (information.status === 'Success')">
         <mat-tab-group>
           <mat-tab label="Timeline">
-            <cnstll-health-timeline [unified_events]="unified_events"></cnstll-health-timeline>
+            <cnstll-mig-health-timeline [unified_events]="unified_events"></cnstll-mig-health-timeline>
           </mat-tab>
           <mat-tab label="Medical Event Log">
             <cnstll-mig-healthdomain-unified-events [unified_events]="unified_events"></cnstll-mig-healthdomain-unified-events>
