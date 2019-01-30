@@ -1,0 +1,59 @@
+<mat-card *ngIf="!currentlyEditingFamilyMember&&mode=='cases'">
+  <mat-card-header>
+    <mat-card-title [className]="'familyFormTitle'">
+      <h3><span>{{family.getFamilyNameLongForm()}}</span></h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content [style.display]="'flex'" [style.flexDirection]="'column'">
+    <mat-form-field [style.margin]="'0 auto'">
+      <mat-label [style.margin]="'0 auto'">Case ID for Family</mat-label>
+      <input [style.margin]="'0 auto'" matInput #id type="text" id="id" name="id" placeholder="e.g. C29384" [value]="family && family.id ? family.id  : ''"/>
+      <mat-hint align="end">This is entirely for your own use.</mat-hint>
+    </mat-form-field>
+    <h4 *ngIf="family && family.familyMembers && family.familyMembers.length==0" [style.margin]="'0 auto'" class="no-members">No
+      family
+      members added yet.</h4>
+    <mat-list *ngIf="family && family.familyMembers && family.familyMembers.length>0">
+      <h4 [style.margin]="'0 8px 5px'" [style.textAlign]="'center'">Click name to view health record for:</h4>
+      <mat-list-item [style.width]="'30%'" [style.margin]="'0 auto'" *ngFor="let familyMember of family.familyMembers;index as index2">
+        <cnstll-family-member-menu-item [style.margin]="'0 auto'" [familyMember]="familyMember" [family]="family"
+                                        (selectFamilyMember)="doSelectFamilyAndFamilyMember($event)"
+                                        (inspectFamilyMember)="doInspectFamilyMember($event)"
+                                        [hasConsents]="hasConsents[familyMember.nhsNumber]"></cnstll-family-member-menu-item>
+        &nbsp;&nbsp;&nbsp;
+        <button [style.margin]="'0 auto'" mat-stroked-button color="primary" [attr.data-index]="index2" class="family-member-edit-button"
+                (click)="editFamilyMember(index2,familyMember)">
+          <mat-icon ngClass="createIcon">create</mat-icon>Details</button>
+        &nbsp;
+        <button [style.margin]="'0 auto'" mat-stroked-button color="primary" [attr.data-index]="index2" class="family-member-consent-button"
+                (click)="editConsent(index2,familyMember)">
+          <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='unknown'" ngClass="unknownConsentsIcon" title="Checking for consent...">cached</mat-icon>
+          <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='false'" ngClass="noConsentsIcon" title="No consents recorded.">not_interested</mat-icon>
+          <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='true'" ngClass="hasConsentsIcon" title="Consents have been recorded.">check</mat-icon>
+          Consent
+        </button>
+        <mat-divider [inset]="true"></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-stroked-button color="primary" (click)="addFamilyMember($event)">Add a new family member...</button>
+    <!--button mat-stroked-button color="primary" (click)="saveFamily($event)">Save {{ family ?
+      family.getFamilyNameLongForm() : 'family'}}
+    </button-->
+    <button mat-stroked-button color="primary" (click)="deleteFamily($event)">Delete the {{family.getFamilyName()}} family</button>
+    <button mat-stroked-button color="primary" (click)="closePanel()"><span [style.textAlign]="'center'">Back to Case List</span></button>
+  </mat-card-actions>
+</mat-card>
+<cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember&&mode=='cases'"
+                                   [indexOfFamilyMember]="indexOfCurrentlyEditingFamilyMember"
+                                   [family]="family"
+                                   [editing]="!isCurrentlyEditingFamilyMemberNew()"
+                                   [familyMemberToEdit]="currentlyEditingFamilyMember"
+                                   (newFamilyMemberSaver)="newFamilyMemberSaved($event)"
+                                   (familyMemberDeleter)="deleteFamilyMember($event)"
+                                   (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"
+                                   (close)="familyMemberClosed($event)"></cnstll-family-member-details-form>
+<cnstll-consent-screen *ngIf="mode=='consent'" [family]="family" [familyMember]="currentlyEditingFamilyMember"
+                       [consented]="hasConsents[currentlyEditingFamilyMember.nhsNumber]=='true'"
+                       (close)="familyMemberClosed($event)"></cnstll-consent-screen>

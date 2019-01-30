@@ -1,0 +1,26 @@
+label, mat-label {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  width: 300px !important;
+}
+
+.clickable-nhs-match {
+  cursor: pointer;
+}
+
+.nhs-no-match {
+  cursor: no-drop;
+}
+
+.clickable-nhs-match,
+.nhs-no-match {
+  background-color: lightgray;
+}
+
+.clickable-nhs-match:hover {
+  background-color: lightblue;
+  color: black;
+}

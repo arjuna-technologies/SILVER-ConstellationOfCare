@@ -1,0 +1,30 @@
+mat-list-item {
+  height: inherit !important;
+}
+
+h2.family-tile-header {
+  cursor: pointer;
+  color: dodgerblue;
+}
+
+h2.family-tile-header:hover {
+  text-decoration: underline;
+}
+
+h2.family-tile-header,
+h2.family-tile-header + p > button {
+  display: block;
+  margin: 0 auto;
+}
+
+h2.family-tile-header + p > button {
+  width: 100px;
+}
+
+.mat-grid-tile .mat-figure {
+  flex-direction: column;
+}
+
+h3 {
+  margin-top: 0px;
+}

@@ -1,5 +1,12 @@
-.toolbar-spacer
-{
-        flex:           1 1 auto;
+.toolbar-spacer {
+  flex: 1 1 auto;
 }
 
+.mat-menu,
+.mat-menu-item,
+.mat-menu-item-content,
+.mat-list,
+.mat-list-item,
+.mat-list-item-content {
+  padding: 3px;
+}

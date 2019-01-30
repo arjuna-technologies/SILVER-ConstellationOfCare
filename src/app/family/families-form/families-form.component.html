@@ -1,0 +1,33 @@
+<cnstll-family-form *ngIf="family" [family]="family" [familyMember]="familyMember" [mode]="mode"
+                    (close)="viewFamily(null)"
+                    (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"
+                    (inspectFamilyMember)="doInspectFamilyMember($event)"
+                    (familyDeleter)="deleteFamily($event)"
+                    [editing]="!isCurrentFamilyNew()" (newFamilySaver)="newFamilySaved($event)"
+                    (editedFamilySaver)="editedFamilySaved($event)"></cnstll-family-form>
+<mat-card *ngIf="!family">
+  <mat-card-header>
+    <mat-card-title><h3>Family/Case Records</h3></mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list [style.display]="'flex'" [style.justifyContent]="'center'">
+      <mat-list-item *ngIf="!families || families.length==0">
+        <h2><span [style.textAlign]="'center'">No Families Stored.</span></h2>
+      </mat-list-item>
+      <div *ngIf="families && families.length>0">
+        <mat-list-item [style.textAlign]="'center'" *ngFor="let family of families;index as index;last as last">
+          <div>
+            <h2 [style.marginBottom]="'8px'" [ngClass]="['family-tile-header', 'family-name']" *ngIf="!expanded[index]" (click)="viewFamily(family)">
+              <mat-icon ngClass="peopleIcon" [style.fontSize]="'1.35em'" [style.verticalAlign]="'middle'" [style.height]="'inherit'" [style.width]="'inherit'">people</mat-icon>
+              <span [style.marginLeft]="'8px'">{{ family.getFamilyNameLongForm() }}</span>
+            </h2>
+          </div>
+        </mat-list-item>
+      </div>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-stroked-button color="primary" (click)="addFamily($event)">Add a new family...</button>
+    <button mat-stroked-button color="primary" (click)="addTestFamilies($event)">Add Test Families</button>
+  </mat-card-actions>
+</mat-card>

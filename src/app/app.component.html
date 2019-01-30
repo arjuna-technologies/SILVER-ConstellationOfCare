@@ -1,32 +1,36 @@
-<mat-toolbar color="primary">
+<div class="main-page">
+  <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <span>SILVER Constellation of Care</span>
-        <span class="toolbar-spacer"></span>
-        <button mat-button *ngIf="group"><mat-icon>group</mat-icon> {{group}} </button>
-        <button mat-button *ngIf="org"><mat-icon>domain</mat-icon> {{org}} </button>
-        <button mat-button (click)="doOpenLoginDialog()">
-            <mat-icon>person</mat-icon>
-            <span *ngIf="username"> {{username}} </span>
-            <span *ngIf="! username"> Login </span>
-        </button>
+      <span>SILVER Health Data Interface</span>
+      <span class="toolbar-spacer"></span>
+      <div *ngIf="username">
+        <cnstll-family-chooser-button [username]="username" #familyChooserButton [families]="families" [family]="family"
+                                      [familyMember]="familyMember" [mode]="mode"
+                                      (selectFamilyOnly)="doSelectFamilyOnly($event)"></cnstll-family-chooser-button>
+        <cnstll-family-member-chooser-button #familyMemberChooserButton *ngIf="family" [families]="families"
+                                             [family]="family" [familyMember]="familyMember" [mode]="mode"
+                                             (selectFamilyOnly)="doSelectFamilyOnly($event)"
+                                             (inspectFamilyMember)="doInspectFamilyMember($event)"></cnstll-family-member-chooser-button>
+        <cnstll-case-management-button #caseManagementButton [families]="families" [family]="family"
+                                       [familyMember]="familyMember" [mode]="mode" [username]="username"
+                                       (launchCaseManagementScreen)="doSelectFamilyOnly(null)"></cnstll-case-management-button>
+      </div>
+      <button mat-button (click)="doOpenLoginDialog()">
+        <mat-icon>home</mat-icon>
+        <span *ngIf="username" title="Click to change user"> {{username}} </span>
+        <span *ngIf="! username"> Login </span>
+      </button>
     </mat-toolbar-row>
+  </mat-toolbar>
 
-    <mat-toolbar-row *ngIf="username">
-        <button mat-button (click)="familiesdrawer.toggle()">
-            <mat-icon>group</mat-icon>
-            <span>Families</span>
-        </button>
-    </mat-toolbar-row>
-</mat-toolbar>
-
-<mat-drawer-container style="height: 100%">
-    <mat-drawer #familiesdrawer position="start" mode="side">
-        <cnstll-family-bookmarks (closeSelect)="familiesdrawer.close()" (familySelect)="miginformation.doLoadInformation(null); family.doShowFamily($event)"></cnstll-family-bookmarks>
-    </mat-drawer>
-
-    <cnstll-family #family (selectNHSNumber)="miginformation.doLoadInformation($event)"></cnstll-family>
-
-    <mat-divider [inset]="true"></mat-divider>
-
-    <cnstll-mig-information #miginformation></cnstll-mig-information>
-</mat-drawer-container>
+  <cnstll-mig-information #miginformation *ngIf="mode=='mig'&&familyMember" [families]="families" [family]="family"
+                          [familyMember]="familyMember" [mode]="mode"
+                          (close)="doSelectFamilyOnly($event)"></cnstll-mig-information>
+  <cnstll-case-management-screen #caseManagementScreen *ngIf="username&&mode=='cases'" [families]="families"
+                                 [family]="family"
+                                 [familyMember]="familyMember" [mode]="mode" [username]="username"
+                                 (updateFamilies)="doUpdateFamilies($event)"
+                                 (selectFamilyOnly)="doSelectFamilyOnly($event)"
+                                 (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"
+                                 (inspectFamilyMember)="doInspectFamilyMember($event)"></cnstll-case-management-screen>
+</div>

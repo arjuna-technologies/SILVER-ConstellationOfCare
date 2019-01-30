@@ -24,7 +24,7 @@ export class ConstellationComponent implements OnChanges, DoCheck {
   public constellationDisplayedColumns: string[];
 
   constructor(private migInformationIndexService: MIGInformationIndexService) {
-    this.constellationDisplayedColumns = ['personName', 'roleName', 'orgName'];
+    this.constellationDisplayedColumns = ['data'];
     this.constellationDataSource = new MatTableDataSource();
     this.constellationDataSource.data = null;
   }
@@ -33,10 +33,11 @@ export class ConstellationComponent implements OnChanges, DoCheck {
     let data = [];
     if (this.information) {
       for (let userInRole of this.information.userInRoles) {
+        let id = userInRole.id;
         let professionalName = this.userMapping(userInRole.id);
         let roleName = this.roleMapping(userInRole.role);
         let organisationName = this.roleOrgMapping(userInRole.role);
-          let dataRow = new ReportData(professionalName,roleName,organisationName);
+        let dataRow = new ReportData(id, professionalName, roleName, organisationName);
         data.push(dataRow);
       }
       this.constellationDataSource.data = data;
@@ -48,35 +49,35 @@ export class ConstellationComponent implements OnChanges, DoCheck {
       this.constellationDataSource.paginator.firstPage();
   }
 
-  public ngDoCheck(): void
-  {
-    if (this.constellationDataSource.paginator != this.constellationPaginator)
-    {
+  public ngDoCheck(): void {
+    if (this.constellationDataSource.paginator != this.constellationPaginator) {
       this.constellationDataSource.paginator = this.constellationPaginator;
       this.constellationDataSource.paginator.firstPage();
     }
   }
 
-  public userMapping(userId: string): string
-  {
+  public userMapping(userId: string): string {
     return this.migInformationIndexService.basicUserMapping(userId);
   }
 
-  public roleMapping(roleId: string): string
-  {
+  public roleMapping(roleId: string): string {
     return this.migInformationIndexService.basicRoleMapping(roleId);
   }
 
-  public roleOrgMapping(roleId: string): string
-  {
-    if (roleId)
-    {
+  public roleOrgMapping(roleId: string): string {
+    if (roleId) {
       const role: MIGRole = this.migInformationIndexService.roleMap.get(roleId);
 
-      if (role && role.organisation)
-        return this.migInformationIndexService.basicOrganisationMapping(role.organisation);
-      else
+      if (role && role.organisation) {
+        let org = this.migInformationIndexService.basicOrganisationMapping(role.organisation);
+        if (org == "EMISWebCR1 50005") {
+          org = "EMIS Test Org";
+        }
+        return org;
+      }
+      else {
         return '';
+      }
     }
     else
       return '';

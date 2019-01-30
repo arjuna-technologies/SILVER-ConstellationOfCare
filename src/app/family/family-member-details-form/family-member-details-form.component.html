@@ -1,0 +1,106 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title *ngIf="editing">
+      <h3>
+        {{editing ? 'Editing' : 'Adding'}} {{firstName ? firstName.value : 'family member'}} {{surname ? surname.value
+        :
+        ''}}:
+      </h3>
+    </mat-card-title>
+    <mat-card-title *ngIf="!editing">
+      <h3>Adding new family member:</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="start center" style="margin-left:10px;margin-top:10px;">
+      <div fxFlex="30%"></div>
+      <div fxFlex="40%">
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput #firstName type="text" class="firstName" name="firstName"
+                 [value]="familyMemberToEdit.firstName ? familyMemberToEdit.firstName  : ''"
+                 placeholder="e.g. John"/>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+          <mat-label>Surname</mat-label>
+          <input matInput #surname type="text" class="surname" name="surname"
+                 [value]="familyMemberToEdit.surname ? familyMemberToEdit.surname : ''"
+                 placeholder="e.g. Smith"/>
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <mat-label>Date of Birth</mat-label>
+          <input matInput #dateOfBirth [matDatepicker]="dateOfBirthPicker" placeholder="e.g. 1/11/1975" type="text"
+                 class="dateOfBirth" name="dateOfBirth">
+          <mat-datepicker-toggle matSuffix [for]="dateOfBirthPicker"></mat-datepicker-toggle>
+          <mat-datepicker startAt="multi-year" #dateOfBirthPicker></mat-datepicker>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+          <mat-label>Legal Gender</mat-label>
+          <mat-select #gender type="text" class="gender" name="gender" [(ngModel)]="legalGender">
+            <mat-option *ngFor="let gender of genders" [value]="gender.value">
+              {{gender.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <mat-label>NHS Number</mat-label>
+          <input matInput #nhsNumber type="text" class="nhsNumber" name="nhsNumber"
+                 [value]="familyMemberToEdit.nhsNumber ? familyMemberToEdit.nhsNumber : ''"
+                 placeholder="e.g. 6358274937"/>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+          <mat-label>Role in Family</mat-label>
+          <input matInput #role type="text" class="role" name="role"
+                 [value]="familyMemberToEdit.role ? familyMemberToEdit.role : ''" width="200"
+                 placeholder="e.g. Guardian, Grandmother, Stepfather"/>
+        </mat-form-field>
+        <br/>
+      </div>
+      <div fxFlex="30%" style="margin-left:15px;">
+        <div>
+          <h4>Possible NHS Number Matches</h4>
+          <p>If you know as a minimum the date of birth AND gender AND either the postcode OR surname, you can check against NHS records to find the right individual. Enter the details you know and click the 'Lookup NHS Number' button below.</p><span [style.textAlign]="'center'">Once you get a match you can click it to copy the NHS number.</span>
+        </div>
+        <div>
+          <mat-list matList #matches type="text">
+            <mat-list-item ngClass="clickable-nhs-match" matListItem *ngFor="let match of nhsMatchesForDisplay"
+                           (click)="clickNHSMatch(match)"> {{ match.displayText }}
+            </mat-list-item>
+          </mat-list>
+          <mat-list *ngIf="nhsMatchesForDisplay.length==0" #matches type="text" class="matches" name="matches">
+            <mat-list-item matListItem ngClass="nhs-no-match">No matches yet. Modify names, date of birth, gender or
+              postcode and try again.
+            </mat-list-item>
+          </mat-list>
+          <mat-form-field>
+            <mat-label>Postcode: (for NHS number lookup only)</mat-label>
+            <input matInput #postcode placeholder="e.g. NE1 7RL" type="text" class="postcode" name="postcode" value="">
+            <mat-hint align="end">This will not be stored.</mat-hint>
+          </mat-form-field>
+          &nbsp;
+        </div>
+        <div>
+          <button mat-stroked-button color="primary" id='ept-button' [disabled]="isEPTButtonDisabled()" align="end" (click)="doPatientTrace()">
+            Lookup NHS Number
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-stroked-button color="primary" id='save-member-button' [disabled]="isSaveMemberButtonDisabled()" (click)="saveFamilyMember()">
+      Save {{firstName ? firstName.value : 'family member'}} {{surname ? surname.value : ''}}
+    </button>
+    <button mat-stroked-button color="primary" id='delete-button' [disabled]="isSaveMemberButtonDisabled()" (click)="deleteFamilyMember()">
+      Delete {{firstName ? firstName.value : 'family member'}}
+    </button>
+    <button mat-stroked-button color="primary" id='cancel-button' (click)="closePanel()">
+      Cancel
+    </button>
+  </mat-card-actions>
+</mat-card>

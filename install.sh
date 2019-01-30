@@ -1,17 +1,17 @@
 #/bin/sh
 
-npm update
+npm install
 
 ng version
 
-ng build --dev
+ng build
 
-if [ -d '../constellationofcare-website' ]; then
-    rm -rf ../constellationofcare-website/*
+if [ -d '../silver-root-website' ]; then
+    rm -rf ../silver-root-website/*
 fi
 
-mkdir ../constellationofcare-website
+mkdir -p ../silver-root-website
 
 if [ -d 'dist' ]; then
-    mv dist/* ../constellationofcare-website/.
+    mv dist/constellation/* ../silver-root-website/.
 fi
