@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Family} from '../family';
 import {FamilyMember} from '../family-member';
 import {ConsentsService} from '../../consent/consents.service';
 
@@ -8,6 +9,9 @@ import {ConsentsService} from '../../consent/consents.service';
   styleUrls: ['./consent-screen.component.scss']
 })
 export class ConsentScreenComponent implements OnInit {
+
+  @Input()
+  public family: Family;
 
   @Input()
   public familyMember: FamilyMember;
@@ -36,6 +40,6 @@ export class ConsentScreenComponent implements OnInit {
   }
 
   private closePanel() {
-    this.close.emit(null);
+    this.close.emit(this.family);
   }
 }

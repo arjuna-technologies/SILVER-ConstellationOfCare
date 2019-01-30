@@ -11,6 +11,7 @@ import {
   EventEmitter
 } from '@angular/core';
 
+import {Family} from '../family';
 import {FamilyMember} from '../family-member';
 import {MIGPatientTrace} from '../../mig/mig-patienttrace';
 import {MIGDataService} from '../../mig/mig-data.service';
@@ -108,6 +109,9 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
 
   @Input()
   public editing: any = false;
+
+  @Input()
+  public family: Family;
 
   @Input()
   public familyMemberToEdit: FamilyMember;
@@ -278,7 +282,7 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   }
 
   public closePanel() {
-    this.close.emit(null);
+    this.close.emit(this.family);
   }
 
 }

@@ -143,8 +143,9 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.indexOfCurrentlyEditingFamilyMember = -1;
   }
 
-  public familyMemberClosed() {
+  public familyMemberClosed(family:Family) {
     this.currentlyEditingFamilyMember = null;
+    this.family=family;
     this.indexOfCurrentlyEditingFamilyMember = -1;
     this.mode='cases';
     this.checkConsents();

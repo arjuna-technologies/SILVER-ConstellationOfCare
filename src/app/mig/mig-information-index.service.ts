@@ -160,12 +160,12 @@ export class MIGInformationIndexService
             return '';
     }
 
-    public basicUserInRoleMapping(userInRoleId: string): string
+    public basicUserInRoleMapping(userInRoleId: string,separator:string): string
     {
         let userInRole: MIGUserInRole = this.userInRoleMap.get(userInRoleId);
 
         if (userInRole)
-            return this.basicUserMapping(userInRole.user) + ' - ' + this.basicRoleMapping(userInRole.role);
+            return this.basicUserMapping(userInRole.user) + separator + this.basicRoleMapping(userInRole.role);
         else
             return '';
     }

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnChanges, ViewChild}             from '@angular/core';
+import {Component, OnInit, Input, OnChanges, ViewChild, EventEmitter, Output}             from '@angular/core';
 import {MatPaginator, MatTabGroup, MatTab, MatTableDataSource} from '@angular/material';
 
 import {MIGDataService}             from '../mig-data.service';
@@ -25,6 +25,9 @@ export class MIGInformationComponent implements OnInit, OnChanges {
   @Input()
   public family: Family;
 
+  @Output()
+  public close: EventEmitter<any> = new EventEmitter();
+
   @Input()
   public familyMember: FamilyMember;
 
@@ -35,8 +38,6 @@ export class MIGInformationComponent implements OnInit, OnChanges {
   public loading: boolean;
 
   public constructor(private migDataService: MIGDataService, private migInformationIndexService: MIGInformationIndexService) {
-    this.information = null;
-    this.familyMember = null;
     this.format = 'report';
     this.loading = false;
   }
@@ -61,6 +62,7 @@ export class MIGInformationComponent implements OnInit, OnChanges {
     else {
       this.loading = false;
       this.familyMember = null;
+      this.family = null;
       this.information = null;
     }
   }
@@ -94,4 +96,9 @@ export class MIGInformationComponent implements OnInit, OnChanges {
 
     this.migInformationIndexService.createIndexes(null);
   }
+
+  public closePanel() {
+    this.close.emit(this.family);
+  }
+
 }

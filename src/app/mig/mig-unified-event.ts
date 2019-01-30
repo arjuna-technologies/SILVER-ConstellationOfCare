@@ -134,7 +134,7 @@ export class MIGUnifiedEvent {
   }
 
   public static userInRoleMapping(migInformationIndexService: MIGInformationIndexService, userInRoleId: string): string {
-    return migInformationIndexService.basicUserInRoleMapping(userInRoleId);
+    return migInformationIndexService.basicUserInRoleMapping(userInRoleId,"<br/>");
   }
 
   public static significanceMapping(significance: string): string {

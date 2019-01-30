@@ -35,7 +35,7 @@ export class FamilyMemberMenuItemComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
   }
-  
+
   public doInspectFamilyMember(): void {
     this.inspectFamilyMember.emit({
       family: this.family,

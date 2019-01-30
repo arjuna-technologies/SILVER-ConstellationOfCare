@@ -24,8 +24,10 @@
   </mat-toolbar>
 
   <cnstll-mig-information #miginformation *ngIf="mode=='mig'&&familyMember" [families]="families" [family]="family"
-                          [familyMember]="familyMember" [mode]="mode"></cnstll-mig-information>
-  <cnstll-case-management-screen #caseManagementScreen *ngIf="username&&mode=='cases'" [families]="families" [family]="family"
+                          [familyMember]="familyMember" [mode]="mode"
+                          (close)="doSelectFamilyOnly($event)"></cnstll-mig-information>
+  <cnstll-case-management-screen #caseManagementScreen *ngIf="username&&mode=='cases'" [families]="families"
+                                 [family]="family"
                                  [familyMember]="familyMember" [mode]="mode" [username]="username"
                                  (updateFamilies)="doUpdateFamilies($event)"
                                  (selectFamilyOnly)="doSelectFamilyOnly($event)"

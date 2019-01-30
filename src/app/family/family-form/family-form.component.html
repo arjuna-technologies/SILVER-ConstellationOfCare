@@ -16,7 +16,7 @@
     <mat-list *ngIf="family && family.familyMembers && family.familyMembers.length>0">
       <h4 [style.margin]="'0 8px 5px'" [style.textAlign]="'center'">Click name to view health record for:</h4>
       <mat-list-item [style.width]="'30%'" [style.margin]="'0 auto'" *ngFor="let familyMember of family.familyMembers;index as index2">
-        <cnstll-family-member-menu-item [style.margin]="'0 auto'" [familyMember]="familyMember"
+        <cnstll-family-member-menu-item [style.margin]="'0 auto'" [familyMember]="familyMember" [family]="family"
                                         (selectFamilyMember)="doSelectFamilyAndFamilyMember($event)"
                                         (inspectFamilyMember)="doInspectFamilyMember($event)"
                                         [hasConsents]="hasConsents[familyMember.nhsNumber]"></cnstll-family-member-menu-item>
@@ -47,12 +47,13 @@
 </mat-card>
 <cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember&&mode=='cases'"
                                    [indexOfFamilyMember]="indexOfCurrentlyEditingFamilyMember"
+                                   [family]="family"
                                    [editing]="!isCurrentlyEditingFamilyMemberNew()"
                                    [familyMemberToEdit]="currentlyEditingFamilyMember"
                                    (newFamilyMemberSaver)="newFamilyMemberSaved($event)"
                                    (familyMemberDeleter)="deleteFamilyMember($event)"
                                    (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"
                                    (close)="familyMemberClosed($event)"></cnstll-family-member-details-form>
-<cnstll-consent-screen *ngIf="mode=='consent'" [familyMember]="currentlyEditingFamilyMember"
+<cnstll-consent-screen *ngIf="mode=='consent'" [family]="family" [familyMember]="currentlyEditingFamilyMember"
                        [consented]="hasConsents[currentlyEditingFamilyMember.nhsNumber]=='true'"
                        (close)="familyMemberClosed($event)"></cnstll-consent-screen>
