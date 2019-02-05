@@ -107,9 +107,6 @@ export class FilterControlsComponent implements OnInit {
   public current_start_date: Date = new Date(this.current_end_date.getFullYear() - 2, this.current_end_date.getMonth(), this.current_end_date.getDate());
 
   public filter(start_date:Date,end_date:Date, selected_data_types:string[] ) {
-    console.log('filtering with:');
-    console.log(start_date,end_date);
-    console.log('currently matching: ',selected_data_types);
     this.filtered_events = this.unified_events.filter((unified_event) => {
       let includeThisEvent = false;
       if (unified_event.startTime >= start_date && unified_event.endTime <= end_date) {
