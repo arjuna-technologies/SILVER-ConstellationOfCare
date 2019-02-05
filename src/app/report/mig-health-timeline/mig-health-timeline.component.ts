@@ -19,6 +19,9 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
   private safeToDraw = false;
   private stillNeedToDraw = false;
 
+  // define the valid data types. The last one will be used as a catchall for any unexpected types.
+  private valid_data_type_list: string[] = ['Active Problem', 'Inactive Problem', 'Encounter', 'Other'];
+
   public markSafeToDraw(): void {
     this.safeToDraw = true;
     if (this.stillNeedToDraw && this.active) {
@@ -107,7 +110,13 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
         // if less than two weeks long, make it two weeks long (so it shows up)
         endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + 14);
       }
-      let group = event.dataType;
+      let group;
+      if (main.valid_data_type_list.indexOf(event.dataType)>-1) {
+        group = event.dataType;
+      } else {
+        // use the last category, assumed to be a catchall.
+        group = main.valid_data_type_list[main.valid_data_type_list.length];
+      }
       let dataToAddToGroup = {
         label: event.description,
         data: [{

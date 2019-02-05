@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild} from '@angular/core';
 import {NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS} from "@angular/material";
 import {MatDatepickerInputEvent} from "@angular/material/datepicker";
+import {FormControl} from '@angular/forms';
 
 import {MIGUnifiedEvent} from '../../mig/mig-unified-event';
 
@@ -63,7 +64,22 @@ export const APP_DATE_FORMATS =
 })
 export class FilterControlsComponent implements OnInit {
 
-  constructor() {
+  constructor(){
+    this.bind_data();
+  }
+
+  bind_data() {
+    this.data_type_filter.setValue(this.data_type_list.slice()); // set all types enabled
+    /*
+    const default_data_type_list: any[] = [
+      this.data_type_list[0], // Active Problems
+      this.data_type_list[1], // Inactive Problems
+      this.data_type_list[2], // Encounters
+      this.data_type_list[3]  // Other
+    ];
+    this.data_type_filter.setValue(default_data_type_list);
+    */
+
   }
 
   // by default, we filter on the last two years
@@ -76,20 +92,43 @@ export class FilterControlsComponent implements OnInit {
 
   public filtered_events: MIGUnifiedEvent[];
 
+  public data_type_filter: FormControl = new FormControl();
+
+  public data_type_list: string[] = ['Active Problem', 'Inactive Problem', 'Encounter', 'Other'];
+  // TODO this should move up to mig information, and be passed in here, and to health timeline
+
   @Output()
   public filtered: EventEmitter<MIGUnifiedEvent[]> = new EventEmitter();
 
   @Input()
-  public currentEndDate: Date = new Date();
+  public current_end_date: Date = new Date();
 
   @Input()
-  public currentStartDate: Date = new Date(this.currentEndDate.getFullYear() - 2, this.currentEndDate.getMonth(), this.currentEndDate.getDate());
+  public current_start_date: Date = new Date(this.current_end_date.getFullYear() - 2, this.current_end_date.getMonth(), this.current_end_date.getDate());
 
-  public filter() {
+  public filter(start_date:Date,end_date:Date, selected_data_types:string[] ) {
+    console.log('filtering with:');
+    console.log(start_date,end_date);
+    console.log('currently matching: ',selected_data_types);
     this.filtered_events = this.unified_events.filter((unified_event) => {
-      return unified_event.startTime >= this.currentStartDate && unified_event.endTime <= this.currentEndDate;
+      let includeThisEvent = false;
+      if (unified_event.startTime >= start_date && unified_event.endTime <= end_date) {
+        if (selected_data_types.indexOf(unified_event.dataType)>-1) {
+          includeThisEvent = true;
+        }
+      }
+      return includeThisEvent;
     });
     this.filtered.emit(this.filtered_events);
+  }
+
+  public check_if_all_data_types_selected() {
+    return this.data_type_filter.value.length == this.data_type_list.length;
+  }
+
+  public data_types_changed(event) {
+    // assumption: this.data_type_filter.value list will eventually be correct, but may not be yet, which is why we don't use it.
+    this.filter(this.current_start_date,this.current_end_date,event.value);
   }
 
   public showAllData() {
@@ -101,33 +140,34 @@ export class FilterControlsComponent implements OnInit {
         earliestDate = event.startTime;
       }
     }
-    this.currentStartDate = earliestDate;
-    this.currentEndDate = today;
-    this.filter();
+    this.current_start_date = earliestDate;
+    this.current_end_date = today;
+    this.filter(this.current_start_date,this.current_end_date,this.data_type_filter.value);
   }
 
   public showLastTwoYears() {
     // find earliest date
     let today = new Date();
     let twoYearsAgo = new Date(today.getFullYear() - 2, today.getMonth(), today.getDate());
-    this.currentStartDate = twoYearsAgo;
-    this.currentEndDate = today;
-    this.filter();
+    this.current_start_date = twoYearsAgo;
+    this.current_end_date = today;
+    this.filter(this.current_start_date,this.current_end_date,this.data_type_filter.value);
   }
 
   dateChanged(type:string, event:MatDatepickerInputEvent<Date>){
     if (type=='startDate') {
-      this.currentStartDate = event.value;
+      this.current_start_date = event.value;
     } else if (type=='endDate') {
-      this.currentEndDate = event.value;
+      this.current_end_date = event.value;
     } else {
       console.error(`invalid type ${type}`);
       return null;
     }
-    this.filter();
+    this.filter(this.current_start_date,this.current_end_date,this.data_type_list);
   }
 
   ngOnInit() {
-    this.filter(); // since we set a default 2 year span, we do a filter right from the start
+    // since we set a default 2 year span, we do a filter right from the start
+    this.filter(this.current_start_date,this.current_end_date,this.data_type_list);
   }
 }
