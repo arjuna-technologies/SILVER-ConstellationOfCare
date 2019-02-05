@@ -1,0 +1,47 @@
+<mat-card [className]="'no-padding'">
+  <mat-card-header>
+    <mat-card-title [className]="'no-bottom-margin'"><h3 [style.margin]="'0px auto'">Filtering Controls</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="start center" style="margin-left:10px;margin-top:10px;">
+      <div fxFlex="30%"></div>
+      <div fxFlex="40%" fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field>
+          <mat-label>Start Date:</mat-label>
+          <input matInput #startDate [matDatepicker]="startDatePicker" placeholder="e.g. 1/1/2017" type="text"
+                 class="startDate" name="startDate" [value]="currentStartDate"
+                 (dateInput)="dateChanged('startDate',$event)" (dateChange)="dateChanged('startDate',$event)">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker startAt="multi-year" #startDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>End Date:</mat-label>
+          <input matInput #endDate [matDatepicker]="endDatePicker" placeholder="e.g. 1/1/2019" type="text"
+                 class="endDate" name="endDate" [value]="currentEndDate"
+                 (dateInput)="dateChanged('endDate',$event)" (dateChange)="dateChanged('endDate',$event)">
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker startAt="multi-year" #endDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="unified_events && filtered_events && unified_events.length>filtered_events.length" fxLayout="row"
+         fxLayoutAlign="start center">
+      <div fxFlex="100%">
+        <span [style.display]="'block'" [style.textAlign]="'center'" [className]="'filter-warning'">Note: The data shown below has been filtered. {{unified_events.length-filtered_events.length}} of the {{unified_events.length}} available event records are currently hidden.
+          <button
+            mat-stroked-button class="btn btn-secondary" (click)="showAllData()">Show All Records</button>
+          <button
+            mat-stroked-button class="btn btn-secondary" (click)="showLastTwoYears()">Show Last 2 Years Only</button></span>
+      </div>
+    </div>
+    <div *ngIf="unified_events && (!filtered_events || filtered_events.length==unified_events.length)" fxLayout="row"
+         fxLayoutAlign="start center">
+      <div fxFlex="100%">
+        <span [style.display]="'block'" [style.textAlign]="'center'" [className]="'filter-warning'">Showing all {{unified_events.length}} event records.
+          <button
+            mat-stroked-button class="btn btn-secondary" (click)="showLastTwoYears()">Show Last 2 Years Only</button></span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

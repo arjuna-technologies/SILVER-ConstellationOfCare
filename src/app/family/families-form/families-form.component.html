@@ -19,7 +19,7 @@
           <div>
             <h2 [style.marginBottom]="'8px'" [ngClass]="['family-tile-header', 'family-name']" *ngIf="!expanded[index]" (click)="viewFamily(family)">
               <mat-icon ngClass="peopleIcon" [style.fontSize]="'1.35em'" [style.verticalAlign]="'middle'" [style.height]="'inherit'" [style.width]="'inherit'">people</mat-icon>
-              <span [style.marginLeft]="'8px'">{{ family.getFamilyNameLongForm() }}</span>
+              <span [style.marginLeft]="'8px'">[{{family.id}}] {{ family.getFamilyNameLongForm() }}</span>
             </h2>
           </div>
         </mat-list-item>

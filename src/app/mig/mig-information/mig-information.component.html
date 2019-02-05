@@ -1,23 +1,27 @@
 <mat-card *ngIf="information || loading">
   <mat-drawer-container style="height: 100%">
     <mat-drawer-content #timelineDrawer>
-      <mat-card-title *ngIf="information && familyMember">
+      <mat-card-title [style.margin.bottom]="'0px !important'" *ngIf="information && familyMember" [style.textAlign]="'center'">
         Health Information for {{familyMember.getFullName()}} (NHS No. {{information.nhsNumber}})
       </mat-card-title>
       <mat-card-content *ngIf="loading">
-        <h4>Loading health information for {{familyMember.getFullName()}}...</h4>
+        <h4 [style.margin]="'0px auto 10px'">Loading health information for {{familyMember.getFullName()}}...</h4>
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </mat-card-content>
       <mat-card-content *ngIf="information && (information.status === 'Success')">
-        <mat-tab-group>
+        <cnstll-filter-controls [unified_events]="unified_events" (filtered)="doFiltered($event)"></cnstll-filter-controls>
+        <mat-tab-group #healthTabs>
           <mat-tab label="Timeline">
-            <cnstll-mig-health-timeline [unified_events]="unified_events"></cnstll-mig-health-timeline>
+            <cnstll-mig-health-timeline [active]="healthTabs.selectedIndex==0" [unified_events]="filtered_unified_events && filtered_unified_events.length > 0  ? filtered_unified_events : unified_events"></cnstll-mig-health-timeline>
           </mat-tab>
-          <mat-tab label="Medical Event Log">
-            <cnstll-mig-healthdomain-unified-events [unified_events]="unified_events"></cnstll-mig-healthdomain-unified-events>
+          <mat-tab label="Event Log">
+            <cnstll-mig-healthdomain-unified-events [active]="healthTabs.selectedIndex==1" [unified_events]="filtered_unified_events && filtered_unified_events.length > 0 ? filtered_unified_events : unified_events"></cnstll-mig-healthdomain-unified-events>
+          </mat-tab>
+          <mat-tab label="Professionals Involved">
+            <cnstll-constellation [active]="healthTabs.selectedIndex==2" [unified_events]="filtered_unified_events && filtered_unified_events.length > 0 ? filtered_unified_events : unified_events" [information]="information"></cnstll-constellation>
           </mat-tab>
           <mat-tab label="Documents">
-            <cnstll-mig-healthdomain-documents [format]="format" [documents]="information.documents"></cnstll-mig-healthdomain-documents>
+            <cnstll-mig-healthdomain-documents [active]="healthTabs.selectedIndex==3"[format]="format" [documents]="information.documents"></cnstll-mig-healthdomain-documents>
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>
@@ -29,9 +33,6 @@
         <h3>The request for information has failed. If this problem persists, please contact the SILVER project team.</h3>
       </mat-card-content>
     </mat-drawer-content>
-    <mat-drawer *ngIf="information && familyMember" opened #constellationDrawer position="end" mode="side">
-      <cnstll-constellation [information]="information"></cnstll-constellation>
-    </mat-drawer>
   </mat-drawer-container>
   <mat-card-actions>
     <button mat-stroked-button color="primary" (click)="closePanel()"><span [style.textAlign]="'center'">Back to Family</span></button>

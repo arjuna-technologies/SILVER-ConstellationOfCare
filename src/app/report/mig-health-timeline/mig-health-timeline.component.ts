@@ -21,7 +21,7 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
 
   public markSafeToDraw(): void {
     this.safeToDraw = true;
-    if (this.stillNeedToDraw) {
+    if (this.stillNeedToDraw && this.active) {
       this.drawChart();
     }
   }
@@ -38,6 +38,9 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
   @Input('unified_events')
   private unified_events: MIGUnifiedEvent[];
 
+  @Input('active')
+  private active: boolean;
+
   public includeInactive: boolean;
 
   private processedData: any = [];
@@ -46,8 +49,17 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
     this.includeInactive = true;
   }
 
+  public ngOnInit(): void {
+    if (this.safeToDraw && this.active) {
+      this.drawChart();
+    }
+    else {
+      this.stillNeedToDraw = true;
+    }
+  }
+
   public ngOnChanges(): void {
-    if (this.safeToDraw) {
+    if (this.safeToDraw && this.active) {
       this.drawChart();
     }
     else {
@@ -58,8 +70,8 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
   private drawChart(): void {
     this.processEventDataForChart();
     let timelineEl = document.querySelector("#timeline");
-    timelineEl.innerHTML="";
     if (timelineEl) {
+      timelineEl.innerHTML="";
       var today = new Date();
       var y = today.getFullYear();
       var m = today.getMonth();
@@ -71,9 +83,11 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
         .leftMargin(200)
         .rightMargin(300)
         .width(1200)
+        .enableOverview(true)
         .maxLineHeight(60)
         .zScaleLabel('Read Code')
-        .zQualitative(true);
+        .zQualitative(true)
+        .timeFormat('%d/%m/%Y')
       this.stillNeedToDraw = false;
     }
   }
@@ -85,11 +99,11 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
       let name = event.code;
       let label = event.dataType;
       if (event.description) {
-        label = `[${event.code}] ${event.description}`;
+        label = `${event.description}<br/>[${event.code}]`;
       }
       let user = event.authorisingUserInRole;
       let endTimeToShow = event.endTime;
-      if (+endTimeToShow - +event.startTime < 14) {
+      if (+endTimeToShow - +event.startTime < 7) {
         // if less than two weeks long, make it two weeks long (so it shows up)
         endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + 14);
       }
@@ -99,7 +113,7 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
         data: [{
           timeRange: [new Date(+event.startTime),new Date(+endTimeToShow)],
           val: event.eventType,
-          labelVal: label + '<br/>' + event.authorisingUserInRole + '<br/>' + event.organisation
+          labelVal: label + '<br/>' + event.authorisingUserInRole.split(" - ").join("<br/>") + '<br/>' + event.organisation
         }]
       };
       if (!dataByGroup.hasOwnProperty(group)) {
@@ -117,12 +131,4 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
     }
   }
 
-  public ngOnInit(): void {
-    if (this.safeToDraw) {
-      this.drawChart();
-    }
-    else {
-      this.stillNeedToDraw = true;
-    }
-  }
 }

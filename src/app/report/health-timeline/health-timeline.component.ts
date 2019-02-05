@@ -42,6 +42,9 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
 
   public includeInactive: boolean;
 
+  @Input('active')
+  private active: boolean;
+
   private processedData: any = [];
 
   public constructor(private migInformationIndexService: MIGInformationIndexService) {
@@ -67,7 +70,7 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(): void {
-    if (this.safeToDraw) {
+    if (this.safeToDraw && this.active) {
       this.drawChart();
     }
     else {
@@ -94,9 +97,9 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
   }
 
   private drawChart(): void {
-    this.processEventDataForChart();
     let timeline = document.querySelector("#timeline");
     if (timeline) {
+      this.processEventDataForChart();
       timeline.innerHTML = "";
       this.chart = d3timelines.timelines();
       let clearBarSelectionsFunction = this.clearAllBarSelections;
@@ -181,7 +184,7 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
   }
 
   public ngOnInit(): void {
-    if (this.safeToDraw) {
+    if (this.safeToDraw && this.active) {
       this.drawChart();
     }
     else {

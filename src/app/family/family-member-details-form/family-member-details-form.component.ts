@@ -87,13 +87,13 @@ export const APP_DATE_FORMATS =
 })
 export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, AfterContentInit {
 
-  @ViewChild('firstName') firstName: ElementRef;
-  @ViewChild('surname') surname: ElementRef;
-  @ViewChild('dateOfBirth') dateOfBirth: ElementRef;
-  @ViewChild('gender') legalGender: string;
-  @ViewChild('role') role: ElementRef;
-  @ViewChild('nhsNumber') nhsNumber: ElementRef;
-  @ViewChild('postcode') postcode: ElementRef;
+  @ViewChild('firstName',{read: ElementRef}) firstName: ElementRef;
+  @ViewChild('surname',{read: ElementRef}) surname: ElementRef;
+  @ViewChild('dateOfBirth',{read: ElementRef}) dateOfBirth: ElementRef;
+  @ViewChild('gender',{read: ElementRef}) legalGender: string;
+  @ViewChild('role',{read: ElementRef}) role: ElementRef;
+  @ViewChild('nhsNumber',{read: ElementRef}) nhsNumber: ElementRef;
+  @ViewChild('postcode',{read: ElementRef}) postcode: ElementRef;
 
   genders: Gender[] = [
     {value: 'Female', viewValue: 'Female'},
