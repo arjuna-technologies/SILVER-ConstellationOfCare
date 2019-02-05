@@ -25,7 +25,17 @@
         </mat-form-field>
       </div>
     </div>
-    <div *ngIf="unified_events && filtered_events && unified_events.length>filtered_events.length" fxLayout="row"
+    <div *ngIf="unified_events && filtered_events && filtered_events.length==0" fxLayout="row"
+         fxLayoutAlign="start center">
+      <div fxFlex="100%">
+        <span [style.display]="'block'" [style.textAlign]="'center'" [className]="'filter-warning'">There are no records available meeting the above criteria. All {{unified_events.length}} records have been hidden. Please expand the date range or remove some filters.
+          <button
+            mat-stroked-button class="btn btn-secondary" (click)="showAllData()">Show All Records</button>
+          <button
+            mat-stroked-button class="btn btn-secondary" (click)="showLastTwoYears()">Show Last 2 Years Only</button></span>
+      </div>
+    </div>
+    <div *ngIf="unified_events && filtered_events && filtered_events.length>0 && unified_events.length>filtered_events.length" fxLayout="row"
          fxLayoutAlign="start center">
       <div fxFlex="100%">
         <span [style.display]="'block'" [style.textAlign]="'center'" [className]="'filter-warning'">Note: The data shown below has been filtered. {{unified_events.length-filtered_events.length}} of the {{unified_events.length}} available event records are currently hidden.
