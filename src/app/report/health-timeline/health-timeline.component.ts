@@ -8,6 +8,8 @@ import {MatCheckbox} from "@angular/material";
 
 let width = 250;
 
+const minimum_event_length_in_days = 1;
+
 @Component({
   selector: 'cnstll-health-timeline',
   templateUrl: './health-timeline.component.html',
@@ -152,9 +154,9 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
       }
       let user = event.authorisingUserInRole;
       let endTimeToShow = event.endTime;
-      if (+endTimeToShow - +event.startTime < 14) {
+      if (+endTimeToShow - +event.startTime < minimum_event_length_in_days) {
         // if less than two weeks long, make it two weeks long (so it shows up)
-        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + 14);
+        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + minimum_event_length_in_days);
       }
       let times = [{"starting_time": event.startTime, "ending_time": endTimeToShow}];
       main.processedData.push({user: user, name: name, label: label, times: times});

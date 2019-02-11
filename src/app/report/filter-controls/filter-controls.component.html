@@ -29,7 +29,20 @@
             <mat-select-trigger>
               {{check_if_all_data_types_selected() ? 'All' : data_type_filter.value.join(", ")}}
             </mat-select-trigger>
-            <mat-option *ngFor="let data_type of data_type_list" [value]="data_type">{{data_type}}</mat-option>
+            <mat-option *ngFor="let data_type of get_all_data_types()" [value]="data_type">{{data_type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Select Event Type" [disableOptionCentering]="true" [formControl]="event_type_filter"
+                      multiple (selectionChange)="event_types_changed($event)">
+            <mat-select-trigger>
+              {{check_if_all_event_types_selected() ? 'All' : event_type_filter.value.join(", ")}}
+            </mat-select-trigger>
+            <mat-option [value]="-1" (click)="toggle_all_event_types(eventTypeToggler)"
+                        #eventTypeToggler
+            >&lt;Select/Deselect All&gt;</mat-option>
+            <mat-divider [inset]="false"></mat-divider>
+            <mat-option *ngFor="let event_type of get_all_event_types()" [value]="event_type">{{get_event_type_display_text(event_type)}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
