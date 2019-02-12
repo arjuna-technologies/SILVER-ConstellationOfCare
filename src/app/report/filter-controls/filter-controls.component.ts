@@ -12,6 +12,9 @@ const event_type_list: string[] = ['ALL', 'ALT', 'ANN', 'ATT', 'DRY', 'FH', 'IMM
   'INV', 'ISS', 'MED', 'OBS', 'OH', 'REF', 'REP', 'TR', 'VAL'];
 // TODO this should move up to mig information, and be passed in here, and to health timeline
 
+const problem_type_list: string[] = ['Significant', 'Minor'];
+// TODO this should move up to mig information, and be passed in here, and to health timeline
+
 export class AppDateAdapter extends NativeDateAdapter {
   parse(value: any): Date | null {
     if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
@@ -83,6 +86,10 @@ export class FilterControlsComponent implements OnInit {
     return data_type_list;
   }
 
+  get_all_problem_types() {
+    return problem_type_list;
+  }
+
   get_event_type_display_text(event_type) {
     switch (event_type) {
       case 'ALL':
@@ -134,7 +141,8 @@ export class FilterControlsComponent implements OnInit {
      this.data_type_filter.setValue(default_data_type_list);
      */
 
-    this.event_type_filter.setValue(event_type_list.slice()); // set all types enabled
+    this.event_type_filter.setValue(event_type_list.slice()); // set all event types enabled
+    this.problem_type_filter.setValue(problem_type_list.slice()); // set all problem types enabled
   }
 
   // by default, we filter on the last two years
@@ -151,6 +159,8 @@ export class FilterControlsComponent implements OnInit {
 
   public event_type_filter: FormControl = new FormControl();
 
+  public problem_type_filter: FormControl = new FormControl();
+
   @Output()
   public filtered: EventEmitter<MIGUnifiedEvent[]> = new EventEmitter();
 
@@ -166,12 +176,17 @@ export class FilterControlsComponent implements OnInit {
     let end_date: Date = filters.end_date;
     let selected_data_types: string = filters.selected_data_types;
     let selected_event_types: string = filters.selected_event_types;
+    let selected_problem_types: string = filters.selected_problem_types;
     this.filtered_events = this.unified_events.filter((unified_event) => {
       let includeThisEvent = false;
       if (unified_event.startTime >= start_date && unified_event.endTime <= end_date) {
         if (selected_data_types.indexOf(unified_event.dataType) > -1) {
           if (selected_event_types.indexOf(unified_event.eventType) > -1) {
-            includeThisEvent = true;
+            if ((unified_event.dataType!="Inactive Problem" && unified_event.dataType!="Active Problem") ||
+            ((unified_event.significance=="Significant" && selected_problem_types.indexOf("Significant")>-1)||
+            (unified_event.significance=="Minor" && selected_problem_types.indexOf("Minor")>-1))) {
+              includeThisEvent = true;
+            }
           }
         }
       }
@@ -188,12 +203,8 @@ export class FilterControlsComponent implements OnInit {
     return this.data_type_filter.value.length == data_type_list.length;
   }
 
-  public are_all_event_types_selected() {
-    if (this.event_type_filter.value.length == event_type_list.length) {
-      return 'selected';
-    } else {
-      return '';
-    }
+  public check_if_all_problem_types_selected() {
+    return this.problem_type_filter.value.length == problem_type_list.length;
   }
 
   public toggle_all_event_types(eventTypeToggler) {
@@ -205,7 +216,8 @@ export class FilterControlsComponent implements OnInit {
           start_date: this.current_start_date,
           end_date: this.current_end_date,
           selected_data_types: this.data_type_filter.value,
-          selected_event_types: all_event_types
+          selected_event_types: all_event_types,
+          selected_problem_types: this.problem_type_filter.value
         }
       );
     }
@@ -215,7 +227,8 @@ export class FilterControlsComponent implements OnInit {
           start_date: this.current_start_date,
           end_date: this.current_end_date,
           selected_data_types: this.data_type_filter.value,
-          selected_event_types: []
+          selected_event_types: [],
+          selected_problem_types: this.problem_type_filter.value
         }
       );
     }
@@ -227,7 +240,20 @@ export class FilterControlsComponent implements OnInit {
         start_date: this.current_start_date,
         end_date: this.current_end_date,
         selected_data_types: this.data_type_filter.value,
-        selected_event_types: event.value
+        selected_event_types: event.value,
+        selected_problem_types: this.problem_type_filter.value
+      }
+    );
+  }
+
+  public problem_types_changed(event) {
+    // assumption: this.problem_type_filter.value list will eventually be correct, but may not be yet, which is why we don't use it.
+    this.filter({
+        start_date: this.current_start_date,
+        end_date: this.current_end_date,
+        selected_data_types: this.data_type_filter.value,
+        selected_event_types: this.event_type_filter.value,
+        selected_problem_types: event.value
       }
     );
   }
@@ -238,7 +264,8 @@ export class FilterControlsComponent implements OnInit {
         start_date: this.current_start_date,
         end_date: this.current_end_date,
         selected_data_types: event.value,
-        selected_event_types: this.event_type_filter.value
+        selected_event_types: this.event_type_filter.value,
+        selected_problem_types: this.problem_type_filter.value
       }
     );
   }
@@ -258,7 +285,8 @@ export class FilterControlsComponent implements OnInit {
       start_date: this.current_start_date,
       end_date: this.current_end_date,
       selected_data_types: this.data_type_filter.value,
-      selected_event_types: this.event_type_filter.value
+      selected_event_types: this.event_type_filter.value,
+      selected_problem_types: this.problem_type_filter.value
     });
   }
 
@@ -272,7 +300,8 @@ export class FilterControlsComponent implements OnInit {
       start_date: this.current_start_date,
       end_date: this.current_end_date,
       selected_data_types: this.data_type_filter.value,
-      selected_event_types: this.event_type_filter.value
+      selected_event_types: this.event_type_filter.value,
+      selected_problem_types: this.problem_type_filter.value
     });
   }
 
@@ -289,7 +318,8 @@ export class FilterControlsComponent implements OnInit {
       start_date: this.current_start_date,
       end_date: this.current_end_date,
       selected_data_types: data_type_list,
-      selected_event_types: event_type_list
+      selected_event_types: event_type_list,
+      selected_problem_types: problem_type_list
     });
   }
 
@@ -299,7 +329,8 @@ export class FilterControlsComponent implements OnInit {
       start_date: this.current_start_date,
       end_date: this.current_end_date,
       selected_data_types: data_type_list,
-      selected_event_types: event_type_list
+      selected_event_types: event_type_list,
+      selected_problem_types: problem_type_list
     });
   }
 }

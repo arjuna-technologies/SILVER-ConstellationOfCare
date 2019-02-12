@@ -45,6 +45,15 @@
             <mat-option *ngFor="let event_type of get_all_event_types()" [value]="event_type">{{get_event_type_display_text(event_type)}}</mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Select Significance (for Problems)" [disableOptionCentering]="true" [formControl]="problem_type_filter"
+                      multiple (selectionChange)="problem_types_changed($event)">
+            <mat-select-trigger>
+              {{check_if_all_problem_types_selected() ? 'All' : problem_type_filter.value.join(", ")}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let problem_type of get_all_problem_types()" [value]="problem_type">{{problem_type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
     <div *ngIf="unified_events && filtered_events && filtered_events.length==0" fxLayout="row"
