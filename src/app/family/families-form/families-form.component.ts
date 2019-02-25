@@ -115,7 +115,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   public addFamily() {
     let members: FamilyMember[] = [];
     let newFamily = new Family({
-      id: this.getNewFamilyID(),
+      id: '',
       familyMembers: members
     });
     this.indexOfCurrentlyEditingFamily = -1;
@@ -178,10 +178,21 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.indexOfCurrentlyEditingFamily = index;
   }
 
-  public deleteFamily(indexOfFamilyToDelete) {
-    this.families.splice(indexOfFamilyToDelete, 1);
-    this.familyDataService.saveFamilies(this.username, this.families);
-    this.doSelectFamilyOnly(null);
+  public deleteFamily(idOfFamilyToDelete) {
+    let indexOfFamilyToDelete = -1;
+    for (let i in this.families) {
+      let family = this.families[i]
+      if (family.id==idOfFamilyToDelete) {
+        indexOfFamilyToDelete = i;
+      }
+    }
+    if (indexOfFamilyToDelete > -1) {
+      this.families.splice(indexOfFamilyToDelete, 1);
+      this.familyDataService.saveFamilies(this.username, this.families);
+      this.doSelectFamilyOnly(null);
+    } else {
+      console.log('Error deleting family: Case ID '+idOfFamilyToDelete+' not found.');
+    }
   }
 
   public newFamilySaved(family: Family) {

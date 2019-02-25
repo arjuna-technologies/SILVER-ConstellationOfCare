@@ -3,7 +3,7 @@
                     (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"
                     (inspectFamilyMember)="doInspectFamilyMember($event)"
                     (familyDeleter)="deleteFamily($event)"
-                    [editing]="!isCurrentFamilyNew()" (newFamilySaver)="newFamilySaved($event)"
+                    [editing]="!isCurrentFamilyNew()" [caseIDSaved]="family && family.id" (newFamilySaver)="newFamilySaved($event)"
                     (editedFamilySaver)="editedFamilySaved($event)"></cnstll-family-form>
 <mat-card *ngIf="!family">
   <mat-card-header>
@@ -27,7 +27,7 @@
     </mat-list>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button color="primary" (click)="addFamily($event)">Add a new family...</button>
+    <button mat-stroked-button color="primary" (click)="addFamily($event)">Add a new Case...</button>
     <button mat-stroked-button color="primary" (click)="addTestFamilies($event)">Add Test Families</button>
   </mat-card-actions>
 </mat-card>

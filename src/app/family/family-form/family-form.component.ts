@@ -24,6 +24,11 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   // the case ID
   @ViewChild('id') id: ElementRef;
 
+  private enteredID: string;
+
+  @Input()
+  public caseIDSaved: boolean = true; // when the case ID has been saved, it cannot be changed, as consents are tied to it.
+
   @Input()
   public family: Family;
 
@@ -102,8 +107,26 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
+  private saveCaseID() {
+    this.caseIDSaved = true;
+    let id = this.id.nativeElement.value;
+    let newFamily = new Family({
+      id: id,
+      familyMembers: []
+    });
+    this.newFamilySaver.emit(newFamily);
+  }
+
   private deleteFamily() {
-    this.familyDeleter.emit(this.indexOfFamily);
+    this.familyDeleter.emit(this.family.id);
+  }
+
+  private isCreateCaseButtonDisabled() {
+    if (!this.enteredID || this.enteredID =="" | this.enteredID.length==0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   private deleteFamilyMember(index) {
@@ -123,6 +146,10 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnChanges() {
     this.checkConsents();
+  }
+
+  private caseIDChanged() {
+    this.enteredID = this.id.nativeElement.value;
   }
 
   public currentlyEditingFamilyMember: FamilyMember;
