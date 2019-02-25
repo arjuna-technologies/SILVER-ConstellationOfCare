@@ -178,12 +178,12 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.indexOfCurrentlyEditingFamily = index;
   }
 
-  public deleteFamily(idOfFamilyToDelete) {
-    let indexOfFamilyToDelete = -1;
+  public deleteFamily(idOfFamilyToDelete:string) {
+    let indexOfFamilyToDelete:number = -1;
     for (let i in this.families) {
-      let family = this.families[i]
+      let family = this.families[i];
       if (family.id==idOfFamilyToDelete) {
-        indexOfFamilyToDelete = i;
+        indexOfFamilyToDelete = parseInt(i);
       }
     }
     if (indexOfFamilyToDelete > -1) {

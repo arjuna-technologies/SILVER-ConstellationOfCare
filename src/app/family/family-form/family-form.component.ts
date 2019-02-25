@@ -51,7 +51,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   public editedFamilySaver: EventEmitter<Family> = new EventEmitter<Family>();
 
   @Output()
-  public familyDeleter: EventEmitter<number> = new EventEmitter<number>();
+  public familyDeleter: EventEmitter<string> = new EventEmitter<string>();
 
   @Input()
   public hasConsents = {}; // for each family member, one of "unknown", "true" or "false"
@@ -122,7 +122,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   private isCreateCaseButtonDisabled() {
-    if (!this.enteredID || this.enteredID =="" | this.enteredID.length==0) {
+    if (!this.enteredID || this.enteredID =="" || this.enteredID.length==0) {
       return true;
     } else {
       return false;
