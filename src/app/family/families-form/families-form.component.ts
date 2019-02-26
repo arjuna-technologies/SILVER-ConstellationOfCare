@@ -189,7 +189,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     }
     // revoke consent for all family members
     let familyMembersToRevoke = this.families[indexOfFamilyToDelete].familyMembers;
-    for (let familyMember:FamilyMember of familyMembersToRevoke) {
+    for (let familyMember of familyMembersToRevoke) {
       let nhsNumber = familyMember.nhsNumber;
       this.consentsService.revokeConsentRecord(nhsNumber,idOfFamilyToDelete);
     }
