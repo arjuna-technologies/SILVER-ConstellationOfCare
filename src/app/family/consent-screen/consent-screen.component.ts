@@ -29,13 +29,13 @@ export class ConsentScreenComponent implements OnInit {
 
   private recordConsent() {
     let nhsNumber = this.familyMember.nhsNumber;
-    this.consentsService.createConsentRecord(nhsNumber);
+    this.consentsService.createConsentRecord(nhsNumber,this.family.id);
     this.consented = true;
   }
 
   private revokeConsent() {
     let nhsNumber = this.familyMember.nhsNumber;
-    this.consentsService.revokeConsentRecord(nhsNumber);
+    this.consentsService.revokeConsentRecord(nhsNumber,this.family.id);
     this.consented = false;
   }
 

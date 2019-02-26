@@ -117,6 +117,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.newFamilySaver.emit(newFamily);
   }
 
+  // a.k.a. close case. Will revoke all members' consents first
   private deleteFamily() {
     this.familyDeleter.emit(this.family.id);
   }

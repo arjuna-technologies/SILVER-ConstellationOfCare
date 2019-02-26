@@ -22,6 +22,10 @@ const CONSENT_TYPE_TO_USE = CONSENT_TYPE_MIG_DEMO;
 
 export class ConsentsService {
 
+  private getConsentNameWithCaseID(caseID:string) {
+    return `[${caseID}] ${CONSENT_NAME_TO_USE}`;
+  }
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -54,8 +58,8 @@ export class ConsentsService {
   }
 
   // creates both the consent context and the consent
-  public createConsentRecord(nhsNumber: string): Promise<any> {
-    let consentName = CONSENT_NAME_TO_USE;
+  public createConsentRecord(nhsNumber: string,caseID: string): Promise<any> {
+    let consentName = this.getConsentNameWithCaseID(caseID);
     let consentId = this.generatePseudoUniqueId();
     let consentContextId = this.generatePseudoUniqueId();
     let parentThis = this;
@@ -69,27 +73,24 @@ export class ConsentsService {
   }
 
   // creates both the consent context and the consent
-  public revokeConsentRecord(nhsNumber: string): Promise<any> {
-    let consentName = CONSENT_NAME_TO_USE;
+  public revokeConsentRecord(nhsNumber: string,caseID: string): Promise<any> {
+    let consentName = this.getConsentNameWithCaseID(caseID);
     return this.listConsentContexts(nhsNumber).then(
       (listOfConsentContexts: any) => {
         if (listOfConsentContexts) {
           for (let consentContext of listOfConsentContexts) {
-            if (consentContext.name == consentName) {
-              // found the right one, now we can set about deleting it and its consent
-              let consentID = consentContext.consent_id;
-              let consentContextID = consentContext.id;
-              // delete consent context
-              return this.deleteConsentContext(consentContextID).then(
-                (deleteConsentContextResponse) => {
-                  return this.deleteConsent(consentID).then(
-                    (deleteConsentResponse) => {
-                      //console.log('successfully deleted consent');
-                    }
-                  )
-                }
-              );
-            }
+            let consentID = consentContext.consent_id;
+            let consentContextID = consentContext.id;
+            // delete consent context
+            return this.deleteConsentContext(consentContextID).then(
+              (deleteConsentContextResponse) => {
+                return this.deleteConsent(consentID).then(
+                  (deleteConsentResponse) => {
+                    //console.log('successfully deleted consent');
+                  }
+                )
+              }
+            );
           }
         }
       }

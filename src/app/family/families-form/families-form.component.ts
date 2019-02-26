@@ -1,7 +1,7 @@
 import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {Family} from '../family';
 import {FamilyMember} from '../family-member';
-
+import {ConsentsService} from '../../consent/consents.service';
 import {FamilyDataService} from '../family-data.service';
 import {MatGridList, MatGridTile} from '@angular/material';
 
@@ -96,7 +96,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.family = family;
   }
 
-  constructor(private familyDataService: FamilyDataService) {
+  constructor(private familyDataService: FamilyDataService,private consentsService: ConsentsService) {
 
   }
 
@@ -179,6 +179,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   }
 
   public deleteFamily(idOfFamilyToDelete:string) {
+    // find family
     let indexOfFamilyToDelete:number = -1;
     for (let i in this.families) {
       let family = this.families[i];
@@ -186,6 +187,13 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
         indexOfFamilyToDelete = parseInt(i);
       }
     }
+    // revoke consent for all family members
+    let familyMembersToRevoke = this.families[indexOfFamilyToDelete].familyMembers;
+    for (let familyMember:FamilyMember of familyMembersToRevoke) {
+      let nhsNumber = familyMember.nhsNumber;
+      this.consentsService.revokeConsentRecord(nhsNumber,idOfFamilyToDelete);
+    }
+    // now delete it.
     if (indexOfFamilyToDelete > -1) {
       this.families.splice(indexOfFamilyToDelete, 1);
       this.familyDataService.saveFamilies(this.username, this.families);
