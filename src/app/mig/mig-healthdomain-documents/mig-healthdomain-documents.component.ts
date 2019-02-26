@@ -11,7 +11,7 @@ import { MIGDocument } from '../mig-document';
 })
 export class MIGHealthDomainDocumentsComponent implements OnChanges, DoCheck
 {
-    public documentDisplayedColumns = [ 'id', 'name', 'description', 'observations', 'code' ];
+    public documentDisplayedColumns = [ 'id', 'name', 'description', 'observation', 'code' ];
     public documentDataSource: MatTableDataSource<MIGDocument>;
 
     @Input()
@@ -30,6 +30,11 @@ export class MIGHealthDomainDocumentsComponent implements OnChanges, DoCheck
 
     public ngOnChanges(): void
     {
+        if (this.format === 'raw')
+            this.documentDisplayedColumns = [ 'id', 'name', 'description', 'observation', 'code' ];
+        else
+            this.documentDisplayedColumns = [ 'name', 'description', 'observation', 'code' ];
+
         if (this.documents)
             this.documentDataSource.data = this.documents;
         else
