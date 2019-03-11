@@ -97,7 +97,7 @@
       Save {{firstName ? firstName.value : 'family member'}} {{surname ? surname.value : ''}}
     </button>
     <button mat-stroked-button color="primary" id='delete-button' [disabled]="isSaveMemberButtonDisabled()" (click)="deleteFamilyMember()">
-      Delete {{firstName ? firstName.value : 'family member'}}
+      Remove {{firstName ? firstName.value : 'family member'}} from case
     </button>
     <button mat-stroked-button color="primary" id='cancel-button' (click)="closePanel()">
       Cancel
