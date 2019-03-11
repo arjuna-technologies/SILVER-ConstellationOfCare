@@ -41,12 +41,9 @@ export class FamilyDataService {
 
   public loadFamily(familyId: string): Promise<Family> {
     let family: Family = null;
-    console.log(this.families);
     for (let current of this.families)
       if (familyId === current.id)
         family = current;
-
-    console.log('in the FDS, id ', familyId, ' was loaded, family is', family);
 
     return new Promise(resolve => resolve(family));
   }

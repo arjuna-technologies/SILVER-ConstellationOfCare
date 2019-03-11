@@ -187,20 +187,23 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
         indexOfFamilyToDelete = parseInt(i);
       }
     }
-    // revoke consent for all family members
-    let familyMembersToRevoke = this.families[indexOfFamilyToDelete].familyMembers;
-    for (let familyMember of familyMembersToRevoke) {
-      let nhsNumber = familyMember.nhsNumber;
-      this.consentsService.revokeConsentRecord(nhsNumber,idOfFamilyToDelete);
-    }
-    // now delete it.
     if (indexOfFamilyToDelete > -1) {
+      // revoke consent for all family members
+      let familyMembersToRevoke = this.families[indexOfFamilyToDelete].familyMembers;
+      for (let familyMember of familyMembersToRevoke) {
+        let nhsNumber = familyMember.nhsNumber;
+        this.consentsService.revokeConsentRecord(nhsNumber,idOfFamilyToDelete);
+      }
+      // TODO this should also revoke for anyone who has consent with that case ID, even if we don't have their NHS no.
+
+      // now remove this family.
       this.families.splice(indexOfFamilyToDelete, 1);
+      // now save it back.
       this.familyDataService.saveFamilies(this.username, this.families);
-      this.doSelectFamilyOnly(null);
     } else {
-      console.log('Error deleting family: Case ID '+idOfFamilyToDelete+' not found.');
+      console.log('Error closing case: Case ID '+idOfFamilyToDelete+' not found.');
     }
+    this.doSelectFamilyOnly(null);
   }
 
   public newFamilySaved(family: Family) {
