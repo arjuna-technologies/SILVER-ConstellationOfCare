@@ -6,7 +6,7 @@
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="start center" style="margin-left:10px;margin-top:10px;">
       <div fxFlex="10%"></div>
-      <div fxFlex="80%" fxLayout="row" fxLayoutAlign="space-between">
+      <div fxFlex="80%" fxLayout="row wrap" fxLayoutAlign="space-between">
         <mat-form-field>
           <mat-label [class.red-input]="current_start_date_is_invalid">Start Date:</mat-label>
           <input matInput #startDate [matDatepicker]="startDatePicker" placeholder="e.g. 1/1/2017" type="text"
@@ -60,7 +60,7 @@
     </div>
     <div *ngIf="unified_events && filtered_events && filtered_events.length==0" fxLayout="row"
          fxLayoutAlign="start center">
-      <div fxFlex="100%">
+      <div fxFlex="100%" fxLayout="row wrap">
         <span [style.display]="'block'" [style.textAlign]="'center'" [className]="'filter-warning'">There are no records available meeting the above criteria. All {{unified_events.length}} records have been hidden. Please expand the date range or remove some filters.
           <button
             mat-stroked-button class="btn btn-secondary" (click)="showAllData()">Show All Records</button>
