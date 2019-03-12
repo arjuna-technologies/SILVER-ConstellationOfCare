@@ -170,6 +170,10 @@ export class FilterControlsComponent implements OnInit {
   @Input()
   public current_start_date: Date = new Date(this.current_end_date.getFullYear() - 2, this.current_end_date.getMonth(), this.current_end_date.getDate());
 
+  public current_start_date_is_invalid = false;
+
+  public current_end_date_is_invalid = false;
+
   public filter(filters: any) {
     //start_date: Date, end_date: Date, selected_data_types: string[]
     let start_date: Date = filters.start_date;
@@ -305,22 +309,37 @@ export class FilterControlsComponent implements OnInit {
     });
   }
 
-  dateChanged(type: string, event: MatDatepickerInputEvent<Date>) {
-    if (type == 'startDate') {
-      this.current_start_date = event.value;
-    } else if (type == 'endDate') {
-      this.current_end_date = event.value;
+  possibleDateChanged(type: string, event) {
+    let dateString:string = event.targetElement.value.toString();
+    let parts = dateString.split('/');
+    if (parts.length==3 && parseInt(parts[0])>0 && parseInt(parts[0])<32 && parseInt(parts[1])>0 &&
+      parseInt(parts[1])<13 && parts[2].length==4 && parseInt(parts[2])>1900 && parseInt(parts[2])<9999) {
+      // date is valid
+      if (type=="endDate") {
+        this.current_end_date_is_invalid = false;
+        this.current_end_date = new Date(parseInt(parts[2]),parseInt(parts[1])-1,parseInt(parts[0]));
+      }
+      if (type=="startDate") {
+        this.current_start_date_is_invalid = false;
+        this.current_start_date = new Date(parseInt(parts[2]),parseInt(parts[1])-1,parseInt(parts[0]));
+      }
+      // now trigger an update
+      this.filter({
+        start_date: this.current_start_date,
+        end_date: this.current_end_date,
+        selected_data_types: data_type_list,
+        selected_event_types: event_type_list,
+        selected_problem_types: problem_type_list
+      });
     } else {
-      console.error(`invalid type ${type}`);
-      return null;
+      // date is invalid
+      if (type=="endDate") {
+        this.current_end_date_is_invalid = true;
+      }
+      if (type=="startDate") {
+        this.current_start_date_is_invalid = true;
+      }
     }
-    this.filter({
-      start_date: this.current_start_date,
-      end_date: this.current_end_date,
-      selected_data_types: data_type_list,
-      selected_event_types: event_type_list,
-      selected_problem_types: problem_type_list
-    });
   }
 
   ngOnInit() {
