@@ -19,6 +19,8 @@ export class MIGInformationComponent implements OnInit, OnChanges {
 
   public unified_events: MIGUnifiedEvent[] = [];
 
+  public filtered_unified_events: MIGUnifiedEvent[] = [];
+
   @Input()
   public families: Family[];
 
@@ -67,27 +69,29 @@ export class MIGInformationComponent implements OnInit, OnChanges {
     }
   }
 
-  private createUnifiedEvents(migInformation:MIGInformation) {
+  private createUnifiedEvents(migInformation: MIGInformation) {
     let unified_events = [];
     for (let problem of migInformation.problems) {
-      let event = MIGUnifiedEvent.createFromProblem(this.migInformationIndexService,problem);
+      let event = MIGUnifiedEvent.createFromProblem(this.migInformationIndexService, problem);
       unified_events.push(event);
     }
     for (let encounter of migInformation.encounters) {
-      let events = MIGUnifiedEvent.createFromEncounter(this.migInformationIndexService,encounter);
+      let events = MIGUnifiedEvent.createFromEncounter(this.migInformationIndexService, encounter);
       unified_events = unified_events.concat(events);
     }
-    unified_events.sort(function(event1,event2){return event2.startTime - event1.startTime});
+    unified_events.sort(function (event1, event2) {
+      return event2.startTime - event1.startTime
+    });
     this.unified_events = unified_events;
   }
 
   private doLoadInformationSuccessHandler(migInformation: MIGInformation) {
     this.information = migInformation;
-    this.loading = false;
 
     this.migInformationIndexService.createIndexes(migInformation);
 
     this.createUnifiedEvents(migInformation);
+    this.loading = false;
   }
 
   private doLoadInformationErrorHandler(error: any) {
@@ -95,6 +99,10 @@ export class MIGInformationComponent implements OnInit, OnChanges {
     this.loading = false;
 
     this.migInformationIndexService.createIndexes(null);
+  }
+
+  public doFiltered(filtered_events: MIGUnifiedEvent[]) {
+    this.filtered_unified_events = filtered_events;
   }
 
   public closePanel() {

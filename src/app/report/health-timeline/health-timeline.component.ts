@@ -8,6 +8,8 @@ import {MatCheckbox} from "@angular/material";
 
 let width = 250;
 
+const minimum_event_length_in_days = 1;
+
 @Component({
   selector: 'cnstll-health-timeline',
   templateUrl: './health-timeline.component.html',
@@ -42,6 +44,9 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
 
   public includeInactive: boolean;
 
+  @Input('active')
+  private active: boolean;
+
   private processedData: any = [];
 
   public constructor(private migInformationIndexService: MIGInformationIndexService) {
@@ -67,7 +72,7 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(): void {
-    if (this.safeToDraw) {
+    if (this.safeToDraw && this.active) {
       this.drawChart();
     }
     else {
@@ -94,9 +99,9 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
   }
 
   private drawChart(): void {
-    this.processEventDataForChart();
     let timeline = document.querySelector("#timeline");
     if (timeline) {
+      this.processEventDataForChart();
       timeline.innerHTML = "";
       this.chart = d3timelines.timelines();
       let clearBarSelectionsFunction = this.clearAllBarSelections;
@@ -149,9 +154,9 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
       }
       let user = event.authorisingUserInRole;
       let endTimeToShow = event.endTime;
-      if (+endTimeToShow - +event.startTime < 14) {
+      if (+endTimeToShow - +event.startTime < minimum_event_length_in_days) {
         // if less than two weeks long, make it two weeks long (so it shows up)
-        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + 14);
+        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + minimum_event_length_in_days);
       }
       let times = [{"starting_time": event.startTime, "ending_time": endTimeToShow}];
       main.processedData.push({user: user, name: name, label: label, times: times});
@@ -181,7 +186,7 @@ export class HealthTimelineComponent implements OnInit, OnChanges {
   }
 
   public ngOnInit(): void {
-    if (this.safeToDraw) {
+    if (this.safeToDraw && this.active) {
       this.drawChart();
     }
     else {

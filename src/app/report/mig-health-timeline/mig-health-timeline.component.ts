@@ -9,6 +9,8 @@ import {MIGInformationIndexService} from '../../mig/mig-information-index.servic
 
 //let width = 250;
 
+const minimum_event_length_in_days = 1;
+
 @Component({
   selector: 'cnstll-mig-health-timeline',
   templateUrl: 'mig-health-timeline.component.html',
@@ -19,9 +21,12 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
   private safeToDraw = false;
   private stillNeedToDraw = false;
 
+  // define the valid data types. The last one will be used as a catchall for any unexpected types.
+  private valid_data_type_list: string[] = ['Active Problem', 'Inactive Problem', 'Encounter', 'Other'];
+
   public markSafeToDraw(): void {
     this.safeToDraw = true;
-    if (this.stillNeedToDraw) {
+    if (this.stillNeedToDraw && this.active) {
       this.drawChart();
     }
   }
@@ -38,6 +43,9 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
   @Input('unified_events')
   private unified_events: MIGUnifiedEvent[];
 
+  @Input('active')
+  private active: boolean;
+
   public includeInactive: boolean;
 
   private processedData: any = [];
@@ -46,8 +54,8 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
     this.includeInactive = true;
   }
 
-  public ngOnChanges(): void {
-    if (this.safeToDraw) {
+  public ngOnInit(): void {
+    if (this.safeToDraw && this.active) {
       this.drawChart();
     }
     else {
@@ -55,11 +63,42 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
     }
   }
 
+  public ngOnChanges(): void {
+    if (this.safeToDraw && this.active) {
+      this.drawChart();
+    }
+    else {
+      this.stillNeedToDraw = true;
+    }
+  }
+
+  private get_event_type_display_text(event_type): string {
+    switch (event_type) {
+      case 'ALL': return 'Allergies';
+      case 'ALT': return 'Alerts';
+      case 'ANN': return 'Annotations (EMIS)';
+      case 'ATT': return 'Attachments';
+      case 'DRY': return 'Diary Entries';
+      case 'FH': return 'Family History';
+      case 'IMM': return 'Immunisations';
+      case 'INV': return 'Investigations';
+      case 'ISS': return 'Medication Issues';
+      case 'MED': return 'Medications';
+      case 'OBS': return 'Observations';
+      case 'OH': return 'Order Headers (EMIS)';
+      case 'REF': return 'Referrals';
+      case 'REP': return 'Reports';
+      case 'TR': return 'Test Requests';
+      case 'VAL': return 'Values (Test Results etc.)';
+      default: return `${event_type} Events`;
+    }
+  }
+
   private drawChart(): void {
     this.processEventDataForChart();
     let timelineEl = document.querySelector("#timeline");
-    timelineEl.innerHTML="";
     if (timelineEl) {
+      timelineEl.innerHTML="";
       var today = new Date();
       var y = today.getFullYear();
       var m = today.getMonth();
@@ -71,9 +110,11 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
         .leftMargin(200)
         .rightMargin(300)
         .width(1200)
+        .enableOverview(true)
         .maxLineHeight(60)
         .zScaleLabel('Read Code')
-        .zQualitative(true);
+        .zQualitative(true)
+        .timeFormat('%d/%m/%Y')
       this.stillNeedToDraw = false;
     }
   }
@@ -85,21 +126,28 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
       let name = event.code;
       let label = event.dataType;
       if (event.description) {
-        label = `[${event.code}] ${event.description}`;
+        label = `${event.description}<br/>[${event.code}]`;
       }
       let user = event.authorisingUserInRole;
       let endTimeToShow = event.endTime;
-      if (+endTimeToShow - +event.startTime < 14) {
-        // if less than two weeks long, make it two weeks long (so it shows up)
-        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + 14);
+      if (+endTimeToShow - +event.startTime < minimum_event_length_in_days) {
+        // if less than minimum length long, make it that long (so it shows up)
+        endTimeToShow = new Date(endTimeToShow.getFullYear(), endTimeToShow.getMonth(), +event.startTime.getDate() + minimum_event_length_in_days);
       }
-      let group = event.dataType;
+      let group;
+      if (main.valid_data_type_list.indexOf(event.dataType)>-1) {
+        group = event.dataType;
+      } else {
+        // use the last category, assumed to be a catchall.
+        group = main.valid_data_type_list[main.valid_data_type_list.length];
+      }
+      let niceEventType = main.get_event_type_display_text(event.eventType);
       let dataToAddToGroup = {
         label: event.description,
         data: [{
           timeRange: [new Date(+event.startTime),new Date(+endTimeToShow)],
-          val: event.eventType,
-          labelVal: label + '<br/>' + event.authorisingUserInRole + '<br/>' + event.organisation
+          val: niceEventType ? niceEventType : event.eventType,
+          labelVal: label + '<br/>' + event.authorisingUserInRole.split(" - ").join("<br/>") + '<br/>' + event.organisation
         }]
       };
       if (!dataByGroup.hasOwnProperty(group)) {
@@ -117,12 +165,4 @@ export class MIGHealthTimelineComponent implements OnInit, OnChanges {
     }
   }
 
-  public ngOnInit(): void {
-    if (this.safeToDraw) {
-      this.drawChart();
-    }
-    else {
-      this.stillNeedToDraw = true;
-    }
-  }
 }

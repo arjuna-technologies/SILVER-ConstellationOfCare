@@ -8,9 +8,9 @@
     <mat-list-item *ngFor="let famMember of family.familyMembers; index as index; last as last">
       <cnstll-family-member-menu-item [family]="family" [familyMember]="famMember"
                                       (inspectFamilyMember)="doInspectFamilyMember($event)"></cnstll-family-member-menu-item>
-      <mat-divider [inset]="true"></mat-divider>
+      <mat-divider *ngIf="!last" [inset]="true"></mat-divider>
     </mat-list-item>
-    <mat-list-item>
+    <mat-list-item *ngIf="mode=='mig'">
       <button mat-stroked-button color="primary" (click)="doSelectFamilyOnly(family)">View whole family</button>
     </mat-list-item>
   </mat-list>

@@ -1,16 +1,21 @@
 <mat-card *ngIf="!currentlyEditingFamilyMember&&mode=='cases'">
   <mat-card-header>
     <mat-card-title [className]="'familyFormTitle'">
-      <h3><span>{{family.getFamilyNameLongForm()}}</span></h3>
+      <h3 *ngIf="caseIDSaved"><span>{{family.getFamilyNameLongForm()}}</span></h3>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content [style.display]="'flex'" [style.flexDirection]="'column'">
-    <mat-form-field [style.margin]="'0 auto'">
+    <mat-form-field *ngIf="!caseIDSaved" [style.margin]="'0 auto'">
       <mat-label [style.margin]="'0 auto'">Case ID for Family</mat-label>
-      <input [style.margin]="'0 auto'" matInput #id type="text" id="id" name="id" placeholder="e.g. C29384" [value]="family && family.id ? family.id  : ''"/>
-      <mat-hint align="end">This is entirely for your own use.</mat-hint>
+      <input [style.margin]="'0 auto'" matInput #id type="text" (keyup)="caseIDChanged()" id="id" name="id" placeholder="e.g. C29384" [value]="family && family.id ? family.id  : ''"/>
+      <mat-hint align="start">All consents will be recorded against this case ID.</mat-hint>
     </mat-form-field>
-    <h4 *ngIf="family && family.familyMembers && family.familyMembers.length==0" [style.margin]="'0 auto'" class="no-members">No
+    <mat-form-field *ngIf="caseIDSaved" [style.margin]="'0 auto 20px'">
+      <mat-label [style.margin]="'0 auto'">Case ID for Family</mat-label>
+      <input [style.margin]="'0 auto'" matInput [disabled]="true" #id type="text" id="id" name="id" [value]="family && family.id ? family.id  : ''"/>
+      <mat-hint align="start">The case ID is used for consent tracking and cannot be changed.</mat-hint>
+    </mat-form-field>
+    <h4 *ngIf="caseIDSaved && family && family.familyMembers && family.familyMembers.length==0" [style.margin]="'0 auto'" class="no-members">No
       family
       members added yet.</h4>
     <mat-list *ngIf="family && family.familyMembers && family.familyMembers.length>0">
@@ -37,12 +42,13 @@
     </mat-list>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button color="primary" (click)="addFamilyMember($event)">Add a new family member...</button>
+    <button *ngIf="!caseIDSaved" id="save-case-id-button" mat-stroked-button color="primary" [disabled]="isCreateCaseButtonDisabled()"  (click)="saveCaseID($event)">Create Case</button>
+    <button *ngIf="caseIDSaved" id="add-family-member-button" mat-stroked-button color="primary" (click)="addFamilyMember($event)">Add a new family member...</button>
     <!--button mat-stroked-button color="primary" (click)="saveFamily($event)">Save {{ family ?
       family.getFamilyNameLongForm() : 'family'}}
     </button-->
-    <button mat-stroked-button color="primary" (click)="deleteFamily($event)">Delete the {{family.getFamilyName()}} family</button>
-    <button mat-stroked-button color="primary" (click)="closePanel()"><span [style.textAlign]="'center'">Back to Case List</span></button>
+    <button *ngIf="caseIDSaved" id="close-case-button" mat-stroked-button color="primary" (click)="deleteFamily($event)">Close case {{family.id}} {{ family && family.getFamilyName() ? 'for the '+family.getFamilyName()+' family' : '' }}</button>
+    <button id="back-to-case-list-button" mat-stroked-button color="primary" (click)="closePanel()"><span [style.textAlign]="'center'">Back to Case List</span></button>
   </mat-card-actions>
 </mat-card>
 <cnstll-family-member-details-form *ngIf="currentlyEditingFamilyMember&&mode=='cases'"

@@ -3,7 +3,7 @@
                     (selectFamilyAndFamilyMember)="doSelectFamilyAndFamilyMember($event)"
                     (inspectFamilyMember)="doInspectFamilyMember($event)"
                     (familyDeleter)="deleteFamily($event)"
-                    [editing]="!isCurrentFamilyNew()" (newFamilySaver)="newFamilySaved($event)"
+                    [editing]="!isCurrentFamilyNew()" [caseIDSaved]="family && family.id" (newFamilySaver)="newFamilySaved($event)"
                     (editedFamilySaver)="editedFamilySaved($event)"></cnstll-family-form>
 <mat-card *ngIf="!family">
   <mat-card-header>
@@ -19,7 +19,7 @@
           <div>
             <h2 [style.marginBottom]="'8px'" [ngClass]="['family-tile-header', 'family-name']" *ngIf="!expanded[index]" (click)="viewFamily(family)">
               <mat-icon ngClass="peopleIcon" [style.fontSize]="'1.35em'" [style.verticalAlign]="'middle'" [style.height]="'inherit'" [style.width]="'inherit'">people</mat-icon>
-              <span [style.marginLeft]="'8px'">{{ family.getFamilyNameLongForm() }}</span>
+              <span [style.marginLeft]="'8px'">[{{family.id}}] {{ family.getFamilyNameLongForm() }}</span>
             </h2>
           </div>
         </mat-list-item>
@@ -27,7 +27,7 @@
     </mat-list>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-stroked-button color="primary" (click)="addFamily($event)">Add a new family...</button>
-    <button mat-stroked-button color="primary" (click)="addTestFamilies($event)">Add Test Families</button>
+    <button mat-stroked-button color="primary" (click)="addFamily($event)">Add a New Case...</button>
+    <button mat-stroked-button color="primary" (click)="addTestFamilies($event)">Add Sample Cases</button>
   </mat-card-actions>
 </mat-card>

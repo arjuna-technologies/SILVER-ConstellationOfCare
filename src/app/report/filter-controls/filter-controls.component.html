@@ -1,0 +1,95 @@
+<mat-card [className]="'no-padding'">
+  <mat-card-header>
+    <mat-card-title [className]="'no-bottom-margin'"><h3 [style.margin]="'0px auto'">Filtering Controls</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="start center" style="margin-left:10px;margin-top:10px;">
+      <div fxFlex="10%"></div>
+      <div fxFlex="80%" fxLayout="row wrap" fxLayoutAlign="space-between">
+        <mat-form-field>
+          <mat-label [class.red-input]="current_start_date_is_invalid">Start Date:</mat-label>
+          <input matInput #startDate [matDatepicker]="startDatePicker" placeholder="e.g. 1/1/2017" type="text"
+                 class="startDate" [class.red-input]="current_start_date_is_invalid" name="startDate" [value]="current_start_date"
+                 (dateInput)="possibleDateChanged('startDate',$event)" (dateChange)="possibleDateChanged('startDate',$event)" > <!-- /*(keyup)="possibleDateChanged('startDate',$event)"*/-->
+          <mat-hint *ngIf="current_start_date_is_invalid" class="red-hint" align="start">Use date format DD/MM/YYYY.</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker startAt="multi-year" #startDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label [class.red-input]="current_end_date_is_invalid">End Date:</mat-label>
+          <input matInput #endDate [matDatepicker]="endDatePicker" placeholder="e.g. 1/1/2019" type="text"
+                 class="endDate" [class.red-input]="current_end_date_is_invalid" name="endDate" [value]="current_end_date"
+                 (dateInput)="possibleDateChanged('endDate',$event)" (dateChange)="possibleDateChanged('endDate',$event)" > <!-- (keyup)="possibleDateChanged('endDate',$event)" -->
+          <mat-hint *ngIf="current_end_date_is_invalid" class="red-hint" align="start">Use date format DD/MM/YYYY.</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker startAt="multi-year" #endDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Select Record Type" [disableOptionCentering]="true" [formControl]="data_type_filter"
+                      multiple (selectionChange)="data_types_changed($event)">
+            <mat-select-trigger>
+              {{check_if_all_data_types_selected() ? 'All Record Types' : data_type_filter.value.join(", ")}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let data_type of get_all_data_types()" [value]="data_type">{{data_type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Select Event Type" [disableOptionCentering]="true" [formControl]="event_type_filter"
+                      multiple (selectionChange)="event_types_changed($event)">
+            <mat-select-trigger>
+              {{check_if_all_event_types_selected() ? 'All Event Types' : event_type_filter.value.join(", ")}}
+            </mat-select-trigger>
+            <mat-option [value]="-1" (click)="toggle_all_event_types(eventTypeToggler)"
+                        #eventTypeToggler
+            >&lt;Select/Deselect All&gt;</mat-option>
+            <mat-divider [inset]="false"></mat-divider>
+            <mat-option *ngFor="let event_type of get_all_event_types()" [value]="event_type">{{get_event_type_display_text(event_type)}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Select Significance (for Problems)" [disableOptionCentering]="true" [formControl]="problem_type_filter"
+                      multiple (selectionChange)="problem_types_changed($event)">
+            <mat-select-trigger>
+              {{check_if_all_problem_types_selected() ? 'All Problems' : problem_type_filter.value.join(", ")}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let problem_type of get_all_problem_types()" [value]="problem_type">{{problem_type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="unified_events && filtered_events && filtered_events.length==0" fxLayout="row"
+         fxLayoutAlign="start center">
+      <div fxFlex="100%" fxLayout="row wrap">
+        <span [style.display]="'block'" [style.textAlign]="'center'" [className]="'filter-warning'">There are no records available meeting the above criteria. All {{unified_events.length}} records have been hidden. Please expand the date range or remove some filters.
+          <button
+            mat-stroked-button class="btn btn-secondary" (click)="showAllData()">Show All Records</button>
+          <button
+            mat-stroked-button class="btn btn-secondary"
+            (click)="showLastTwoYears()">Show Last 2 Years Only</button></span>
+      </div>
+    </div>
+    <div
+      *ngIf="unified_events && filtered_events && filtered_events.length>0 && unified_events.length>filtered_events.length"
+      fxLayout="row"
+      fxLayoutAlign="start center">
+      <div fxFlex="100%">
+        <span [style.display]="'block'" [style.textAlign]="'center'" [className]="'filter-warning'">Note: The data shown below has been filtered. {{unified_events.length-filtered_events.length}} of the {{unified_events.length}} available event records are currently hidden.
+          <button
+            mat-stroked-button class="btn btn-secondary" (click)="showAllData()">Show All Records</button>
+          <button
+            mat-stroked-button class="btn btn-secondary"
+            (click)="showLastTwoYears()">Show Last 2 Years Only</button></span>
+      </div>
+    </div>
+    <div *ngIf="unified_events && (!filtered_events || filtered_events.length==unified_events.length)" fxLayout="row"
+         fxLayoutAlign="start center">
+      <div fxFlex="100%">
+        <span [style.display]="'block'" [style.textAlign]="'center'" [className]="'filter-warning'">Showing all {{unified_events.length}} event records.
+          <button
+            mat-stroked-button class="btn btn-secondary"
+            (click)="showLastTwoYears()">Show Last 2 Years Only</button></span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
