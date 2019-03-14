@@ -68,7 +68,7 @@ export class MIGDataService
 
     let queryString = queryStringParts.join('&');
 
-    return this.httpClient.get(`http://dataservice-mig.silver.arjuna.com/data/ws/mig/patienttrace?${queryString}`)
+    return this.httpClient.get(`http://dataservice-mig.silver.arjuna.com/data/ws/mig/extendedpatienttrace?${queryString}`)
       .toPromise()
       .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
       .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));
