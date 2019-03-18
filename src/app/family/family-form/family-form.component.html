@@ -33,8 +33,8 @@
         <button [style.margin]="'0 auto'" mat-stroked-button color="primary" [attr.data-index]="index2" class="family-member-consent-button"
                 (click)="editConsent(index2,familyMember)">
           <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='unknown'" ngClass="unknownConsentsIcon" title="Checking for consent...">cached</mat-icon>
-          <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='false'" ngClass="noConsentsIcon" title="No consents recorded.">not_interested</mat-icon>
-          <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='true'" ngClass="hasConsentsIcon" title="Consents have been recorded.">check</mat-icon>
+          <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='false'" ngClass="noConsentsIcon" title="No consent recorded for case {{savedID}}.">not_interested</mat-icon>
+          <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='true'" ngClass="hasConsentsIcon" title="Consent has been recorded for case {{savedID}}.">check</mat-icon>
           Consent
         </button>
         <mat-divider [inset]="true"></mat-divider>
@@ -60,6 +60,6 @@
                                    (familyMemberDeleter)="deleteFamilyMember($event)"
                                    (editedFamilyMemberSaver)="editedFamilyMemberSaved($event)"
                                    (close)="familyMemberClosed($event)"></cnstll-family-member-details-form>
-<cnstll-consent-screen *ngIf="mode=='consent'" [family]="family" [familyMember]="currentlyEditingFamilyMember"
+<cnstll-consent-screen *ngIf="mode=='consent'" [family]="family" [familyMember]="currentlyEditingFamilyMember" [caseID]="savedID"
                        [consented]="hasConsents[currentlyEditingFamilyMember.nhsNumber]=='true'"
                        (close)="familyMemberClosed($event)"></cnstll-consent-screen>

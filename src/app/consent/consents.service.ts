@@ -139,6 +139,25 @@ export class ConsentsService {
       .catch((error) => Promise.resolve(this.errorHandler(nhsNumber, error)));
   }
 
+  public checkIfConsentedForThisCase(nhsNumber: string,caseID:string): Promise<any> {
+    return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
+      .toPromise()
+      .then((listOfConsentContexts: any) => {
+        let found = false;
+        if (listOfConsentContexts.length>0) {
+          for (let context of listOfConsentContexts) {
+            let startString = `[${caseID}]`;
+            if (context.name.toString().startsWith(startString)) {
+              found = true;
+            }
+          }
+        }
+        return Promise.resolve(found);
+      })
+      .catch((error) => Promise.resolve(this.errorHandlerCase(nhsNumber, caseID, error)));
+  }
+
+
   private successHandler(nhsNumber: string, response: any): any {
     return {
       nhsNumber: nhsNumber,
@@ -149,6 +168,14 @@ export class ConsentsService {
   private errorHandler(nhsNumber: string, error: any): any {
     return {
       nhsNumber: nhsNumber,
+      response: error
+    }
+  }
+
+  private errorHandlerCase(nhsNumber: string, caseID:string, error: any): any {
+    return {
+      nhsNumber: nhsNumber,
+      caseID: caseID,
       response: error
     }
   }

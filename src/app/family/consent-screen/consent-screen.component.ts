@@ -19,6 +19,9 @@ export class ConsentScreenComponent implements OnInit {
   @Input()
   public consented: boolean = false;
 
+  @Input()
+  public caseID: string;
+
   @Output()
   public close: EventEmitter<any> = new EventEmitter();
 
