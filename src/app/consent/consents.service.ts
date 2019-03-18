@@ -130,7 +130,7 @@ export class ConsentsService {
       .catch((error) => Promise.resolve(this.errorHandler(consentId, error)));
   }
 
-  private listConsentContexts(nhsNumber: string): Promise<any> {
+  public listConsentContexts(nhsNumber: string): Promise<any> {
     return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
       .toPromise()
       .then((listOfConsentContexts: any) => {
