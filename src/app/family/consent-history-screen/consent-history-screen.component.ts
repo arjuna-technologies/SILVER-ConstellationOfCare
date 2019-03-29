@@ -49,15 +49,15 @@ export class ConsentHistoryScreenComponent implements OnInit {
         if (consent.name.indexOf("SILVER Family Data Interface Consent")) {
           let consent_object = {
             caseID: main.getCaseIDFromName(consent.name),
-            created: new Date(consent.createddate),
-            modified: new Date(consent.lastmodifieddate),
+            created: new Date(consent.createddate).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " "),
+            modified: new Date(consent.lastmodifieddate).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " "),
             events: []
           };
           for (let i in consent.history.events) {
             let source_event = consent.history.events[i];
             let output_event = {
               type: source_event.eventtype,
-              time: new Date(source_event.timestamp),
+              time: new Date(source_event.timestamp).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " at "),
               organisation: source_event.info['Organisation Name'],
               authorising_user: source_event.info['Requester Name']
             };
