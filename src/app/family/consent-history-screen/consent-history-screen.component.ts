@@ -41,6 +41,16 @@ export class ConsentHistoryScreenComponent implements OnInit {
     return caseID;
   }
 
+  private niceTime(time:any) {
+    let str = time.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " at ");
+    // now flip the date part
+    let dateParts = str.split(" at ");
+    let firstPart = dateParts[0];
+    let firstPartParts = firstPart.split('/');
+    console.log(firstPartParts);
+    return `${firstPartParts[2]}/${firstPartParts[1]}/${firstPartParts[0]} at ${dateParts[1]}`;
+  }
+
   ngOnInit() {
     let main=this;
     this.consentsService.getConsentHistory(this.familyMember.nhsNumber,this.caseID).then(function(response) {
@@ -49,15 +59,15 @@ export class ConsentHistoryScreenComponent implements OnInit {
         if (consent.name.indexOf("SILVER Family Data Interface Consent")) {
           let consent_object = {
             caseID: main.getCaseIDFromName(consent.name),
-            created: new Date(consent.createddate).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " "),
-            modified: new Date(consent.lastmodifieddate).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " "),
+            created: main.niceTime(new Date(consent.createddate)),
+            modified: main.niceTime(new Date(consent.lastmodifieddate)),
             events: []
           };
           for (let i in consent.history.events) {
             let source_event = consent.history.events[i];
             let output_event = {
               type: source_event.eventtype,
-              time: new Date(source_event.timestamp).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " at "),
+              time: main.niceTime(new Date(source_event.timestamp)),
               organisation: source_event.info['Organisation Name'],
               authorising_user: source_event.info['Requester Name']
             };
