@@ -56,6 +56,7 @@ import {CaseManagementScreenComponent} from './admin/case-management-screen/case
 import {FamilyListPanelComponent} from './family/family-list-panel/family-list-panel.component';
 import {ConsentScreenComponent} from './family/consent-screen/consent-screen.component';
 import {FilterControlsComponent} from './report/filter-controls/filter-controls.component';
+import { ConsentHistoryScreenComponent } from './family/consent-history-screen/consent-history-screen.component';
 
 @NgModule
 ({
@@ -78,7 +79,8 @@ import {FilterControlsComponent} from './report/filter-controls/filter-controls.
     CaseManagementScreenComponent,
     FamilyListPanelComponent,
     ConsentScreenComponent,
-    FilterControlsComponent
+    FilterControlsComponent,
+    ConsentHistoryScreenComponent
   ],
   imports: [
     BrowserModule,

@@ -202,6 +202,12 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.mode='consent';
   }
 
+  public viewHistory(index: number, familyMember: FamilyMember) {
+    this.currentlyEditingFamilyMember = familyMember;
+    this.indexOfCurrentlyEditingFamilyMember = index;
+    this.mode='history';
+  }
+
   public saveFamily(event) {
     if (this.editing) {
       this.saveEditedFamily(event);

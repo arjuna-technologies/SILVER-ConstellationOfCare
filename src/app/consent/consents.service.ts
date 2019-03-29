@@ -157,6 +157,12 @@ export class ConsentsService {
       .catch((error) => Promise.resolve(this.errorHandlerCase(nhsNumber, caseID, error)));
   }
 
+  public getConsentHistory(nhsNumber:string,caseID:string): Promise<any> {
+    return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consenterhistorydef/consenterhistory/' + nhsNumber)
+      .toPromise()
+      .then((response: any) => Promise.resolve(this.successHandlerCase(nhsNumber, caseID, response)))
+      .catch((error) => Promise.resolve(this.errorHandlerCase(nhsNumber, caseID, error)));
+  }
 
   private successHandler(nhsNumber: string, response: any): any {
     return {
@@ -169,6 +175,14 @@ export class ConsentsService {
     return {
       nhsNumber: nhsNumber,
       response: error
+    }
+  }
+
+  private successHandlerCase(nhsNumber: string, caseID:string, response: any): any {
+    return {
+      nhsNumber: nhsNumber,
+      caseID: caseID,
+      response: response
     }
   }
 

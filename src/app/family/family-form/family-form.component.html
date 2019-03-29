@@ -20,23 +20,30 @@
       members added yet.</h4>
     <mat-list *ngIf="family && family.familyMembers && family.familyMembers.length>0">
       <h4 [style.margin]="'0 8px 5px'" [style.textAlign]="'center'">Click name to view health record for:</h4>
-      <mat-list-item [style.width]="'30%'" [style.margin]="'0 auto'" *ngFor="let familyMember of family.familyMembers;index as index2">
-        <cnstll-family-member-menu-item [style.margin]="'0 auto'" [familyMember]="familyMember" [family]="family"
+      <mat-list-item [style.width]="'70%'" [style.margin]="'0 auto'" *ngFor="let familyMember of family.familyMembers;index as index2">
+        <cnstll-family-member-menu-item [style.minWidth]="'25em'" [style.margin]="'0 auto'" [familyMember]="familyMember" [family]="family" [role]="familyMember.role"
                                         (selectFamilyMember)="doSelectFamilyAndFamilyMember($event)"
                                         (inspectFamilyMember)="doInspectFamilyMember($event)"
                                         [hasConsents]="hasConsents[familyMember.nhsNumber]"></cnstll-family-member-menu-item>
         &nbsp;&nbsp;&nbsp;
-        <button [style.margin]="'0 auto'" mat-stroked-button color="primary" [attr.data-index]="index2" class="family-member-edit-button"
+        <button [style.margin]="'0 auto'" [style.minWidth]="'7em'" mat-stroked-button color="primary" [attr.data-index]="index2" class="family-member-edit-button"
                 (click)="editFamilyMember(index2,familyMember)">
           <mat-icon ngClass="createIcon">create</mat-icon>Details</button>
-        &nbsp;
-        <button [style.margin]="'0 auto'" mat-stroked-button color="primary" [attr.data-index]="index2" class="family-member-consent-button"
+        &nbsp;&nbsp;
+        <button [style.margin]="'0 auto'" [style.minWidth]="'8em'" mat-stroked-button color="primary" [attr.data-index]="index2" class="family-member-consent-button"
                 (click)="editConsent(index2,familyMember)">
           <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='unknown'" ngClass="unknownConsentsIcon" title="Checking for consent...">cached</mat-icon>
           <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='false'" ngClass="noConsentsIcon" title="No consent recorded for case {{savedID}}.">not_interested</mat-icon>
           <mat-icon *ngIf="hasConsents[familyMember.nhsNumber]=='true'" ngClass="hasConsentsIcon" title="Consent has been recorded for case {{savedID}}.">check</mat-icon>
           Consent
         </button>
+        &nbsp;&nbsp;
+        <button [style.margin]="'0 auto'" [style.minWidth]="'7.5em'" mat-stroked-button color="primary" [attr.data-index]="index2" class="family-member-history-button"
+                (click)="viewHistory(index2,familyMember)">
+          <mat-icon ngClass="historyIcon" title="Check consent history">history</mat-icon>
+          History
+        </button>
+
         <mat-divider [inset]="true"></mat-divider>
       </mat-list-item>
     </mat-list>
@@ -63,3 +70,6 @@
 <cnstll-consent-screen *ngIf="mode=='consent'" [family]="family" [familyMember]="currentlyEditingFamilyMember" [caseID]="savedID"
                        [consented]="hasConsents[currentlyEditingFamilyMember.nhsNumber]=='true'"
                        (close)="familyMemberClosed($event)"></cnstll-consent-screen>
+<cnstll-consent-history-screen *ngIf="mode=='history'" [family]="family" [familyMember]="currentlyEditingFamilyMember" [caseID]="savedID"
+                       [consented]="hasConsents[currentlyEditingFamilyMember.nhsNumber]=='true'"
+                       (close)="familyMemberClosed($event)"></cnstll-consent-history-screen>
