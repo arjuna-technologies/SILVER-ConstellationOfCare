@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title [className]="'familyFormTitle'">
+      <h3 *ngIf="!consented">{{familyMember.getFullName()}} is <span class='consent-status not-consented'>not currently consented</span> for case {{caseID}}.
+      </h3>
+      <h3 *ngIf="consented">{{familyMember.getFullName()}} is currently <span class='consent-status consented'>consented</span> for case {{caseID}}.</h3>
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="otherConsentedCaseIDs.length>1">
+      <h4>Warning: {{familyMember.getFullName()}} has already been consented in the following cases: {{otherConsentedCaseIDs.join(", ")}}.</h4>
+    </mat-card-subtitle>
+    <mat-card-subtitle *ngIf="otherConsentedCaseIDs.length==1">
+      <h4>Warning: {{familyMember.getFullName()}} has <span class='consent-status already-consented'>already been consented</span> in case {{otherConsentedCaseIDs[0]}}.</h4>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-divider [inset]="true"></mat-divider>
+    <h3>Consent History for {{familyMember.getFullName()}} [{{familyMember.nhsNumber}}]</h3>
+    <div *ngIf="!history">
+      <h4>Consent history is not available.</h4>
+    </div>
+    <div *ngIf="history">
+      <ng-container *ngFor="let consent of history;index as i">
+        <mat-list-item><h4 [style.marginBottom]="'0.75em'" [style.marginTop]="'0.75em'">Consented for Case <span class="used">{{consent.caseID}}</span>{{consent.caseID==caseID ? ' (this case) ' : ' '}}on {{consent.created}}<!--<span class="small"> (last used {{consent.modified}})</span>-->:</h4></mat-list-item>
+        <mat-list [style.marginLeft]="'20px'" *ngFor="let consent_event of consent.events;index as j">
+            <mat-list-item [style.height]="'1em'" *ngIf="consent_event.type=='create'"><mat-icon ngClass="consented">check</mat-icon>&nbsp;<span class="log-entry">Consent recorded by {{consent_event.authorising_user}} at {{consent_event.time}}</span></mat-list-item>
+            <mat-list-item [style.height]="'1em'" *ngIf="consent_event.type=='use'"><mat-icon ngClass="used">youtube_searched_for</mat-icon>&nbsp;<span class="log-entry">Consent used by {{consent_event.authorising_user}} at {{consent_event.time}}</span></mat-list-item>
+            <mat-list-item [style.height]="'1em'" *ngIf="consent_event.type=='remove'"><mat-icon ngClass="revoked">not_interested</mat-icon>&nbsp;<span class="log-entry">Consent revocation recorded by {{consent_event.authorising_user}} at {{consent_event.time}}</span></mat-list-item>
+        </mat-list>
+        <mat-divider [style.marginTop]="'0.75em'" [inset]="true"></mat-divider>
+      </ng-container>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div [style.textAlign]="'center'">
+      <button mat-stroked-button color="primary" (click)="closePanel()"><span>Back to Family</span></button>
+    </div>
+  </mat-card-actions>
+</mat-card>

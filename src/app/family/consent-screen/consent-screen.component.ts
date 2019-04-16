@@ -19,12 +19,28 @@ export class ConsentScreenComponent implements OnInit {
   @Input()
   public consented: boolean = false;
 
+  @Input()
+  public caseID: string;
+m
+  public otherConsentedCaseIDs: string[] = [];
+
   @Output()
   public close: EventEmitter<any> = new EventEmitter();
 
   constructor(private consentsService: ConsentsService) { }
 
   ngOnInit() {
+    let main=this;
+    this.consentsService.listConsentContexts(this.familyMember.nhsNumber).then(function(response) {
+      let consentedCaseIDs:string[] = [];
+      for(let context of response) {
+        let id = context.name.split("]")[0].split("[")[1];
+        if (id!=main.caseID) {
+          consentedCaseIDs.push(id);
+        }
+      }
+      main.otherConsentedCaseIDs = consentedCaseIDs;
+    });
   }
 
   private recordConsent() {

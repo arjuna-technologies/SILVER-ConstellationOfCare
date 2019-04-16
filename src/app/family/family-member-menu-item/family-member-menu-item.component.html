@@ -1,6 +1,6 @@
 <div>
   <button mat-menu-item (click)="doInspectFamilyMember()">
     <mat-icon ngClass="personIcon">person</mat-icon>
-    <span> {{familyMember?.getFullName()}}</span>
+    <span> {{familyMember?.getFullName()}}{{role ? ' ('+role+')' : ''}}</span>
   </button>
 </div>

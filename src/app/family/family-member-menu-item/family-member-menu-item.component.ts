@@ -18,6 +18,9 @@ export class FamilyMemberMenuItemComponent implements OnChanges {
   public familyMember: FamilyMember;
 
   @Input()
+  public role: string;
+
+  @Input()
   public loading: boolean;
 
   @Input()

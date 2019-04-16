@@ -130,13 +130,38 @@ export class ConsentsService {
       .catch((error) => Promise.resolve(this.errorHandler(consentId, error)));
   }
 
-  private listConsentContexts(nhsNumber: string): Promise<any> {
+  public listConsentContexts(nhsNumber: string): Promise<any> {
     return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
       .toPromise()
       .then((listOfConsentContexts: any) => {
         return Promise.resolve(listOfConsentContexts);
       })
       .catch((error) => Promise.resolve(this.errorHandler(nhsNumber, error)));
+  }
+
+  public checkIfConsentedForThisCase(nhsNumber: string,caseID:string): Promise<any> {
+    return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
+      .toPromise()
+      .then((listOfConsentContexts: any) => {
+        let found = false;
+        if (listOfConsentContexts.length>0) {
+          for (let context of listOfConsentContexts) {
+            let startString = `[${caseID}]`;
+            if (context.name.toString().startsWith(startString)) {
+              found = true;
+            }
+          }
+        }
+        return Promise.resolve(found);
+      })
+      .catch((error) => Promise.resolve(this.errorHandlerCase(nhsNumber, caseID, error)));
+  }
+
+  public getConsentHistory(nhsNumber:string,caseID:string): Promise<any> {
+    return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consenterhistorydef/consenterhistory/' + nhsNumber)
+      .toPromise()
+      .then((response: any) => Promise.resolve(this.successHandlerCase(nhsNumber, caseID, response)))
+      .catch((error) => Promise.resolve(this.errorHandlerCase(nhsNumber, caseID, error)));
   }
 
   private successHandler(nhsNumber: string, response: any): any {
@@ -149,6 +174,22 @@ export class ConsentsService {
   private errorHandler(nhsNumber: string, error: any): any {
     return {
       nhsNumber: nhsNumber,
+      response: error
+    }
+  }
+
+  private successHandlerCase(nhsNumber: string, caseID:string, response: any): any {
+    return {
+      nhsNumber: nhsNumber,
+      caseID: caseID,
+      response: response
+    }
+  }
+
+  private errorHandlerCase(nhsNumber: string, caseID:string, error: any): any {
+    return {
+      nhsNumber: nhsNumber,
+      caseID: caseID,
       response: error
     }
   }

@@ -26,6 +26,8 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   private enteredID: string;
 
+  private savedID: string;
+
   @Input()
   public caseIDSaved: boolean = true; // when the case ID has been saved, it cannot be changed, as consents are tied to it.
 
@@ -100,7 +102,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     for (let familyMember of this.family.familyMembers) {
       let nhsNumber = parseInt(familyMember.nhsNumber);
       if (nhsNumber && nhsNumber > 0) {
-        this.hasConsentsService.hasConsents(familyMember.nhsNumber)
+        this.hasConsentsService.hasConsentForThisCase(familyMember.nhsNumber,this.savedID)
           .then((response: any) => this.hasConsentsSuccessHandler(response))
           .catch((error) => this.hasConsentsErrorHandler(error));
       }
@@ -110,6 +112,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   private saveCaseID() {
     this.caseIDSaved = true;
     let id = this.id.nativeElement.value;
+    this.savedID = id;
     let newFamily = new Family({
       id: id,
       familyMembers: []
@@ -130,8 +133,8 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  private deleteFamilyMember(index) {
-    this.family.familyMembers.splice(index);
+  private deleteFamilyMember(editedFamily) {
+    this.family = editedFamily;
     this.editedFamilySaver.emit(this.family);
   }
 
@@ -142,6 +145,7 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.savedID = this.id.nativeElement.value;
     this.checkConsents();
   }
 
@@ -196,6 +200,12 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.currentlyEditingFamilyMember = familyMember;
     this.indexOfCurrentlyEditingFamilyMember = index;
     this.mode='consent';
+  }
+
+  public viewHistory(index: number, familyMember: FamilyMember) {
+    this.currentlyEditingFamilyMember = familyMember;
+    this.indexOfCurrentlyEditingFamilyMember = index;
+    this.mode='history';
   }
 
   public saveFamily(event) {
