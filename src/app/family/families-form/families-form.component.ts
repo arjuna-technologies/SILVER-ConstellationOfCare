@@ -214,10 +214,18 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   }
 
   public editedFamilySaved(family: Family) {
-    this.doSelectFamilyOnly(null);
-    this.families[this.indexOfCurrentlyEditingFamily] = family;
+    let newFamilies:Family[] = [];
+    for (let f of this.families) {
+      if (f.id == family.id) {
+        newFamilies.push(family);
+      } else {
+        newFamilies.push(f);
+      }
+    }
+    this.families = newFamilies;
     this.indexOfCurrentlyEditingFamily = -1;
     this.familyDataService.saveFamilies(this.username, this.families);
+    this.doSelectFamilyOnly(null);
   }
 
   ngOnInit() {

@@ -133,8 +133,8 @@ export class FamilyFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  private deleteFamilyMember(index) {
-    this.family.familyMembers.splice(index);
+  private deleteFamilyMember(editedFamily) {
+    this.family = editedFamily;
     this.editedFamilySaver.emit(this.family);
   }
 
