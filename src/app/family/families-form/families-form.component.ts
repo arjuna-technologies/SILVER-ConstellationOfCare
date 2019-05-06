@@ -1,7 +1,7 @@
 import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {Family} from '../family';
 import {FamilyMember} from '../family-member';
-
+import {ConsentsService} from '../../consent/consents.service';
 import {FamilyDataService} from '../family-data.service';
 import {MatGridList, MatGridTile} from '@angular/material';
 
@@ -96,7 +96,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.family = family;
   }
 
-  constructor(private familyDataService: FamilyDataService) {
+  constructor(private familyDataService: FamilyDataService,private consentsService: ConsentsService) {
 
   }
 
@@ -115,7 +115,7 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   public addFamily() {
     let members: FamilyMember[] = [];
     let newFamily = new Family({
-      id: this.getNewFamilyID(),
+      id: '',
       familyMembers: members
     });
     this.indexOfCurrentlyEditingFamily = -1;
@@ -178,9 +178,31 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
     this.indexOfCurrentlyEditingFamily = index;
   }
 
-  public deleteFamily(indexOfFamilyToDelete) {
-    this.families.splice(indexOfFamilyToDelete, 1);
-    this.familyDataService.saveFamilies(this.username, this.families);
+  public deleteFamily(idOfFamilyToDelete:string) {
+    // find family
+    let indexOfFamilyToDelete:number = -1;
+    for (let i in this.families) {
+      let family = this.families[i];
+      if (family.id==idOfFamilyToDelete) {
+        indexOfFamilyToDelete = parseInt(i);
+      }
+    }
+    if (indexOfFamilyToDelete > -1) {
+      // revoke consent for all family members
+      let familyMembersToRevoke = this.families[indexOfFamilyToDelete].familyMembers;
+      for (let familyMember of familyMembersToRevoke) {
+        let nhsNumber = familyMember.nhsNumber;
+        this.consentsService.revokeConsentRecord(nhsNumber,idOfFamilyToDelete);
+      }
+      // TODO this should also revoke for anyone who has consent with that case ID, even if we don't have their NHS no.
+
+      // now remove this family.
+      this.families.splice(indexOfFamilyToDelete, 1);
+      // now save it back.
+      this.familyDataService.saveFamilies(this.username, this.families);
+    } else {
+      console.log('Error closing case: Case ID '+idOfFamilyToDelete+' not found.');
+    }
     this.doSelectFamilyOnly(null);
   }
 
@@ -192,10 +214,18 @@ export class FamiliesFormComponent implements OnInit, OnChanges {
   }
 
   public editedFamilySaved(family: Family) {
-    this.doSelectFamilyOnly(null);
-    this.families[this.indexOfCurrentlyEditingFamily] = family;
+    let newFamilies:Family[] = [];
+    for (let f of this.families) {
+      if (f.id == family.id) {
+        newFamilies.push(family);
+      } else {
+        newFamilies.push(f);
+      }
+    }
+    this.families = newFamilies;
     this.indexOfCurrentlyEditingFamily = -1;
     this.familyDataService.saveFamilies(this.username, this.families);
+    this.doSelectFamilyOnly(null);
   }
 
   ngOnInit() {

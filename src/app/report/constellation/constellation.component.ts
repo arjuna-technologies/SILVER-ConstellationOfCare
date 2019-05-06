@@ -5,6 +5,7 @@ import {ReportData} from '../report-data';
 import {MIGInformationIndexService} from '../../mig/mig-information-index.service';
 import {MIGRole} from '../../mig/mig-role';
 import {MIGOrganisation} from '../../mig/mig-organisation';
+import {MIGUnifiedEvent} from '../../mig/mig-unified-event';
 
 @Component({
   selector: 'cnstll-constellation',
@@ -15,6 +16,12 @@ export class ConstellationComponent implements OnChanges, DoCheck {
 
   @Input()
   public information: MIGInformation;
+
+  @Input('unified_events')
+  private unified_events: MIGUnifiedEvent[];
+
+  @Input('active')
+  private active: boolean;
 
   @ViewChild('constellationPaginator')
   public constellationPaginator: MatPaginator;

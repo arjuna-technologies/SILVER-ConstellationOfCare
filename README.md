@@ -1,4 +1,3 @@
-# SILVER-ConstellationOfCare
-SILVER - Constellation of Care
+# SILVER Family Health Data Interface
 
-test
+For a demo of this prototype system, please visit http://bit.ly/silver-videos

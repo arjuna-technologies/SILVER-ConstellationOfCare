@@ -116,7 +116,7 @@ export class AppComponent {
       this.username = '';
       this.org = '';
       this.group = '';
-
+      this.families = [];
       this.family = null;
       this.familyMember = null;
     }

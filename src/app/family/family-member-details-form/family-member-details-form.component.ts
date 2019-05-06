@@ -87,13 +87,13 @@ export const APP_DATE_FORMATS =
 })
 export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, AfterContentInit {
 
-  @ViewChild('firstName') firstName: ElementRef;
-  @ViewChild('surname') surname: ElementRef;
-  @ViewChild('dateOfBirth') dateOfBirth: ElementRef;
-  @ViewChild('gender') legalGender: string;
-  @ViewChild('role') role: ElementRef;
-  @ViewChild('nhsNumber') nhsNumber: ElementRef;
-  @ViewChild('postcode') postcode: ElementRef;
+  @ViewChild('firstName',{read: ElementRef}) firstName: ElementRef;
+  @ViewChild('surname',{read: ElementRef}) surname: ElementRef;
+  @ViewChild('dateOfBirth',{read: ElementRef}) dateOfBirth: ElementRef;
+  @ViewChild('gender',{read: ElementRef}) legalGender: string;
+  @ViewChild('role',{read: ElementRef}) role: ElementRef;
+  @ViewChild('nhsNumber',{read: ElementRef}) nhsNumber: ElementRef;
+  @ViewChild('postcode',{read: ElementRef}) postcode: ElementRef;
 
   genders: Gender[] = [
     {value: 'Female', viewValue: 'Female'},
@@ -126,7 +126,7 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   public editedFamilyMemberSaver: EventEmitter<FamilyMember> = new EventEmitter<FamilyMember>();
 
   @Output()
-  public familyMemberDeleter: EventEmitter<number> = new EventEmitter<number>();
+  public familyMemberDeleter: EventEmitter<Family> = new EventEmitter<Family>();
 
   @Output()
   public close: EventEmitter<any> = new EventEmitter();
@@ -236,7 +236,23 @@ export class FamilyMemberDetailsFormComponent implements OnInit, OnChanges, Afte
   }
 
   public deleteFamilyMember() {
-    this.familyMemberDeleter.emit(this.indexOfFamilyMember);
+    let otherFamilyMembers:FamilyMember[] = [];
+    for (let member of this.family.familyMembers) {
+      if ((member.nhsNumber==this.familyMemberToEdit.nhsNumber) &&
+      (member.dateOfBirth==this.familyMemberToEdit.dateOfBirth) &&
+      (member.firstName==this.familyMemberToEdit.firstName) &&
+      (member.gender==this.familyMemberToEdit.gender) &&
+      (member.surname==this.familyMemberToEdit.surname)) {
+        // don't copy it
+      } else {
+        otherFamilyMembers.push(member);
+      }
+    }
+    let editedFamily:Family = new Family( {
+      id: this.family.id,
+      familyMembers: otherFamilyMembers
+    });
+    this.familyMemberDeleter.emit(editedFamily);
   }
 
   public saveNewFamilyMember(event) {
