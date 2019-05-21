@@ -99,7 +99,7 @@ export class ConsentsService {
 
   private createConsentContext(nhsNumber: string, consentName: string, consentContextId: string, consentId: string): Promise<any> {
     let payload = this.createConsentContextPayload(nhsNumber, consentName, consentContextId, consentId);
-    return this.httpClient.post('https://chc-silver.ncl.ac.uk/consentengine/ws/consentcontextdef/consentcontext/' + consentContextId, payload)
+    return this.httpClient.post('https://chc-silver.ncl.ac.uk/services/consentengine/ws/consentcontextdef/consentcontext/' + consentContextId, payload)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandler(nhsNumber, response)))
       .catch((error) => Promise.resolve(this.errorHandler(nhsNumber, error)));
@@ -107,7 +107,7 @@ export class ConsentsService {
 
   private createConsent(nhsNumber: string, consentId: string): Promise<any> {
     let payload = this.createConsentPayload(consentId);
-    return this.httpClient.post('https://chc-silver.ncl.ac.uk/consentengine/ws/consentdef/consent/' + consentId, payload)
+    return this.httpClient.post('https://chc-silver.ncl.ac.uk/services/consentengine/ws/consentdef/consent/' + consentId, payload)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandler(nhsNumber, response)))
       .then(() => Promise.resolve(this.successHandler(nhsNumber, 'no response')))
@@ -115,7 +115,7 @@ export class ConsentsService {
   }
 
   private deleteConsentContext(consentContextId: string): Promise<any> {
-    return this.httpClient.delete('https://chc-silver.ncl.ac.uk/consentengine/ws/consentcontextdef/consentcontext/' + consentContextId)
+    return this.httpClient.delete('https://chc-silver.ncl.ac.uk/services/consentengine/ws/consentcontextdef/consentcontext/' + consentContextId)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandler(consentContextId, response)))
       .then(() => Promise.resolve(this.successHandler(consentContextId, 'no response')))
@@ -123,7 +123,7 @@ export class ConsentsService {
   }
 
   private deleteConsent(consentId: string): Promise<any> {
-    return this.httpClient.delete('https://chc-silver.ncl.ac.uk/consentengine/ws/consentdef/consent/' + consentId)
+    return this.httpClient.delete('https://chc-silver.ncl.ac.uk/services/consentengine/ws/consentdef/consent/' + consentId)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandler(consentId, response)))
       .then(() => Promise.resolve(this.successHandler(consentId, 'no response')))
@@ -131,7 +131,7 @@ export class ConsentsService {
   }
 
   public listConsentContexts(nhsNumber: string): Promise<any> {
-    return this.httpClient.get('https://chc-silver.ncl.ac.uk/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
+    return this.httpClient.get('https://chc-silver.ncl.ac.uk/services/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
       .toPromise()
       .then((listOfConsentContexts: any) => {
         return Promise.resolve(listOfConsentContexts);
@@ -140,7 +140,7 @@ export class ConsentsService {
   }
 
   public checkIfConsentedForThisCase(nhsNumber: string,caseID:string): Promise<any> {
-    return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
+    return this.httpClient.get('https://consentservice.silver.arjuna.com/services/consentengine/ws/consentcontextdef/consentcontexts?consenterid=' + nhsNumber)
       .toPromise()
       .then((listOfConsentContexts: any) => {
         let found = false;
@@ -158,7 +158,7 @@ export class ConsentsService {
   }
 
   public getConsentHistory(nhsNumber:string,caseID:string): Promise<any> {
-    return this.httpClient.get('http://consentservice.silver.arjuna.com/consentengine/ws/consenterhistorydef/consenterhistory/' + nhsNumber)
+    return this.httpClient.get('https://consentservice.silver.arjuna.com/services/consentengine/ws/consenterhistorydef/consenterhistory/' + nhsNumber)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandlerCase(nhsNumber, caseID, response)))
       .catch((error) => Promise.resolve(this.errorHandlerCase(nhsNumber, caseID, error)));
@@ -195,4 +195,3 @@ export class ConsentsService {
   }
 
 }
-

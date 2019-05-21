@@ -68,7 +68,7 @@ export class MIGDataService
 
     let queryString = queryStringParts.join('&');
 
-    return this.httpClient.get(`https://chc-silver.ncl.ac.uk/data/ws/mig/patienttrace?${queryString}`)
+    return this.httpClient.get(`https://chc-silver.ncl.ac.uk/services/data/ws/mig/patienttrace?${queryString}`)
       .toPromise()
       .then((response: any) => Promise.resolve(this.loadMIGPatientTraceSuccessHandler(response)))
       .catch((error) => Promise.resolve(this.loadMIGPatientTraceErrorHandler(error)));
@@ -78,14 +78,14 @@ export class MIGDataService
   {
     if (requestType)
     {
-      return this.httpClient.get('https://chc-silver.ncl.ac.uk/data/ws/mig/problems?nhs_number=' + nhsNumber + '&request_type=' + requestType)
+      return this.httpClient.get('https://chc-silver.ncl.ac.uk/services/data/ws/mig/problems?nhs_number=' + nhsNumber + '&request_type=' + requestType)
         .toPromise()
         .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
         .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));
     }
     else
     {
-      return this.httpClient.get('https://chc-silver.ncl.ac.uk/data/ws/mig/problems?nhs_number=' + nhsNumber)
+      return this.httpClient.get('https://chc-silver.ncl.ac.uk/services/data/ws/mig/problems?nhs_number=' + nhsNumber)
         .toPromise()
         .then((response: any) => Promise.resolve(this.loadMIGInformationSuccessHandler(nhsNumber, response)))
         .catch((error) => Promise.resolve(this.loadMIGInformationErrorHandler(nhsNumber, error)));

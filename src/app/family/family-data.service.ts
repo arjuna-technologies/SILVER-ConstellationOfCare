@@ -32,7 +32,7 @@ export class FamilyDataService {
   }
 
   public loadFamilies(username: string): Promise<Family[]> {
-    return this.httpClient.get(`https://chc-silver.ncl.ac.uk/storage/ws/storage/${username}`)
+    return this.httpClient.get(`https://chc-silver.ncl.ac.uk/services/storage/ws/storage/${username}`)
       .toPromise()
       .then((response) => {
         return this.processFamiliesResponse(response) as Family[];
@@ -51,7 +51,7 @@ export class FamilyDataService {
   public saveFamilies(username: string, families: Family[]) {
     this.families = families;
 
-    return this.httpClient.put(`https://chc-silver.ncl.ac.uk/storage/ws/storage/${username}`, {'families': this.families})
+    return this.httpClient.put(`https://chc-silver.ncl.ac.uk/services/storage/ws/storage/${username}`, {'families': this.families})
       .toPromise()
   }
 }

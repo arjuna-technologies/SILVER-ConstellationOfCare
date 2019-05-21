@@ -12,7 +12,7 @@ export class HasConsentsService {
   }
 
   public hasConsents(nhsNumber: string): Promise<any> {
-    return this.httpClient.get('https://chc-silver.ncl.ac.uk/data/ws/mig/hasconsents?nhs_number=' + nhsNumber)
+    return this.httpClient.get('https://chc-silver.ncl.ac.uk/services/data/ws/mig/hasconsents?nhs_number=' + nhsNumber)
       .toPromise()
       .then((response: any) => Promise.resolve(this.successHandler(nhsNumber, response)))
       .catch((error) => Promise.resolve(this.errorHandler(nhsNumber, error)));
