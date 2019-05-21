@@ -14,12 +14,9 @@
         <cnstll-case-management-button #caseManagementButton [families]="families" [family]="family"
                                        [familyMember]="familyMember" [mode]="mode" [username]="username"
                                        (launchCaseManagementScreen)="doSelectFamilyOnly(null)"></cnstll-case-management-button>
-      </div>
-      <button mat-button (click)="doOpenLoginDialog()">
         <mat-icon>home</mat-icon>
-        <span *ngIf="username" title="Click to change user"> {{username}} </span>
-        <span *ngIf="! username"> Login </span>
-      </button>
+        <span> {{username}} </span>
+      </div>
     </mat-toolbar-row>
   </mat-toolbar>
 

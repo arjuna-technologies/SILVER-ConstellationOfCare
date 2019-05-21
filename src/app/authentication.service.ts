@@ -1,17 +1,29 @@
 import { Injectable } from '@angular/core';
 
+declare var Keycloak: any;
+
 @Injectable()
 export class AuthenticationService
 {
-    constructor()
+    private keycloakAuth: any;
+
+    public constructor()
     {
     }
 
-    public authenticate(username: string, password: string): Promise<string>
+    public init(): Promise<any>
     {
-        if ((username !== '') && (password !== ''))
-            return new Promise(resolve => setTimeout(() => resolve(username), 500));
-        else
-            return new Promise(resolve => setTimeout(() => resolve(null), 500));
+        return new Promise((resolve, reject) => {
+            const config = { 'url': 'https://auth-chc-silver.ncl.ac.uk/auth', 'realm': 'SILVER', 'clientId': 'health-data-interface' };
+            this.keycloakAuth = new Keycloak(config);
+            this.keycloakAuth.init({ onLoad: 'login-required', flow: 'implicit' })
+                .success(() => { resolve(); })
+                .error(() => { reject(); });
+        });
+    }
+
+    public getToken(): string
+    {
+        return this.keycloakAuth.token;
     }
 }

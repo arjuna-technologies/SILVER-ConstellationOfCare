@@ -1,8 +1,10 @@
 import {NgModule}                from '@angular/core';
+import {APP_INITIALIZER}         from '@angular/core';
 import {BrowserModule}           from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule}        from '@angular/common/http';
+import {HTTP_INTERCEPTORS}       from '@angular/common/http';
 
 import {MatToolbarModule}     from '@angular/material/toolbar';
 import {MatCheckboxModule}    from '@angular/material/checkbox';
@@ -31,7 +33,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppComponent}                         from './app.component';
-import {LoginDialogComponent}                 from './login-dialog/login-dialog.component';
 import {FamilyChooserButtonComponent}         from './family/family-chooser-button/family-chooser-button.component';
 import {FamilyMemberChooserButtonComponent}   from './family/family-member-chooser-button/family-member-chooser-button.component';
 import {FamilyMemberMenuItemComponent}        from './family/family-member-menu-item/family-member-menu-item.component';
@@ -58,11 +59,17 @@ import {ConsentScreenComponent} from './family/consent-screen/consent-screen.com
 import {FilterControlsComponent} from './report/filter-controls/filter-controls.component';
 import { ConsentHistoryScreenComponent } from './family/consent-history-screen/consent-history-screen.component';
 
+import { AuthenticationTokenInterceptor } from './authenticationtoken-interceptor';
+
+export function authenticationFactory(authenticationService: AuthenticationService)
+{
+    return () => authenticationService.init();
+}
+
 @NgModule
 ({
   declarations: [
     AppComponent,
-    LoginDialogComponent,
     FamilyChooserButtonComponent,
     FamilyMemberChooserButtonComponent,
     FamilyMemberMenuItemComponent,
@@ -112,11 +119,19 @@ import { ConsentHistoryScreenComponent } from './family/consent-history-screen/c
     FlexLayoutModule,
     MatGridListModule
   ],
-  entryComponents: [
-    LoginDialogComponent
-  ],
   providers: [
     AuthenticationService,
+    {
+      provide:    APP_INITIALIZER,
+      useFactory: authenticationFactory,
+      deps:       [ AuthenticationService ],
+      multi:      true
+    },
+    {
+      provide:  HTTP_INTERCEPTORS,
+      useClass: AuthenticationTokenInterceptor,
+      multi:    true
+    },
     FamilyDataService,
     MIGDataService,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},

@@ -1,7 +1,6 @@
 import {Component, ViewChild, Input, ViewEncapsulation} from '@angular/core';
 import {MatDialog} from '@angular/material';
 
-import {LoginDialogComponent} from './login-dialog/login-dialog.component';
 import {FamilyMemberChooserButtonComponent} from './family/family-member-chooser-button/family-member-chooser-button.component';
 import {FamilyChooserButtonComponent} from './family/family-chooser-button/family-chooser-button.component';
 import {MIGInformationComponent} from './mig/mig-information/mig-information.component';
@@ -104,34 +103,5 @@ export class AppComponent {
         {code: MIGDataService.EVENT_REQUEST_NAME, label: 'Events'},
         {code: MIGDataService.PATIENTDETAIL_REQUEST_NAME, label: 'Patient Details'}
       ];
-    this.doOpenLoginDialog();
-  }
-
-  public doOpenLoginDialog(): void {
-    if (this.username === '') {
-      const loginDialogRef = this.dialog.open(LoginDialogComponent);
-      loginDialogRef.afterClosed().subscribe((username) => this.processAfterClose(username));
-    }
-    else {
-      this.username = '';
-      this.org = '';
-      this.group = '';
-      this.families = [];
-      this.family = null;
-      this.familyMember = null;
-    }
-  }
-
-  private processAfterClose(username: string): void {
-    if (username && (username !== '')) {
-      this.username = username;
-      this.org = 'Newcastle City Council';
-      this.group = 'Family Early Help';
-    }
-    else {
-      this.username = '';
-      this.org = '';
-      this.group = '';
-    }
   }
 }
